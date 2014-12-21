@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tukaani Xz
+Bundle-SymbolicName: org.tukaani.xz;singleton:=true
+Bundle-Version: 1.5.0
+Bundle-ClassPath: xz.jar
+Export-Package: org.tukaani.xz,
+ org.tukaani.xz.check,
+ org.tukaani.xz.common,
+ org.tukaani.xz.delta,
+ org.tukaani.xz.index,
+ org.tukaani.xz.lz,
+ org.tukaani.xz.lzma,
+ org.tukaani.xz.rangecoder,
+ org.tukaani.xz.simple
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

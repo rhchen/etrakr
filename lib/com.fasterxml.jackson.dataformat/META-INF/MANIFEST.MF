@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jackson Dataformat
+Bundle-SymbolicName: com.fasterxml.jackson.dataformat
+Bundle-Version: 2.4.3.qualifier
+Bundle-ClassPath: jackson-dataformat-csv-2.4.3.jar,
+ jackson-dataformat-smile-2.4.3.jar,
+ jackson-dataformat-xml-2.4.3.jar
+Export-Package: com.fasterxml.jackson.dataformat.csv,
+ com.fasterxml.jackson.dataformat.csv.impl,
+ com.fasterxml.jackson.dataformat.smile,
+ com.fasterxml.jackson.dataformat.smile.async,
+ com.fasterxml.jackson.dataformat.xml,
+ com.fasterxml.jackson.dataformat.xml.annotation,
+ com.fasterxml.jackson.dataformat.xml.deser,
+ com.fasterxml.jackson.dataformat.xml.jaxb,
+ com.fasterxml.jackson.dataformat.xml.ser,
+ com.fasterxml.jackson.dataformat.xml.util
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Commonstringutil
+Bundle-SymbolicName: net.sf.commonstringutil;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Natalino Nugeraha
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: net.sf.commonstringutil
+Bundle-ActivationPolicy: lazy

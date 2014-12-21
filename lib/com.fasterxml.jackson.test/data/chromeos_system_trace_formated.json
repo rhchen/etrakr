@@ -1,0 +1,919 @@
+{
+  "traceEvents" : [ {
+    "cat" : "__metadata",
+    "pid" : 5044,
+    "tid" : 5051,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_sort_index",
+    "args" : {
+      "sort_index" : -1
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5044,
+    "tid" : 5051,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_name",
+    "args" : {
+      "name" : "GPU Process"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5044,
+    "tid" : 5051,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "thread_name",
+    "args" : {
+      "name" : "Chrome_ChildIOThread"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5075,
+    "tid" : 13,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_sort_index",
+    "args" : {
+      "sort_index" : -5
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5075,
+    "tid" : 13,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_name",
+    "args" : {
+      "name" : "Renderer"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5075,
+    "tid" : 13,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_labels",
+    "args" : {
+      "labels" : "chrome://tracing"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5075,
+    "tid" : 12,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "thread_sort_index",
+    "args" : {
+      "sort_index" : -1
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5075,
+    "tid" : 13,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "thread_name",
+    "args" : {
+      "name" : "Chrome_ChildIOThread"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5243,
+    "tid" : 74,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_sort_index",
+    "args" : {
+      "sort_index" : -5
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5243,
+    "tid" : 74,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_name",
+    "args" : {
+      "name" : "Renderer"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5243,
+    "tid" : 74,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_labels",
+    "args" : {
+      "labels" : "The New York Times - Breaking News, World News & Multimedia"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5243,
+    "tid" : 73,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "thread_sort_index",
+    "args" : {
+      "sort_index" : -1
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5145,
+    "tid" : 28,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_sort_index",
+    "args" : {
+      "sort_index" : -5
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5145,
+    "tid" : 28,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_name",
+    "args" : {
+      "name" : "Renderer"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5145,
+    "tid" : 28,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_labels",
+    "args" : {
+      "labels" : "The New York Times - Breaking News, World News & Multimedia"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5145,
+    "tid" : 27,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "thread_sort_index",
+    "args" : {
+      "sort_index" : -1
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5173,
+    "tid" : 44,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_sort_index",
+    "args" : {
+      "sort_index" : -5
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5173,
+    "tid" : 44,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_name",
+    "args" : {
+      "name" : "Renderer"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5173,
+    "tid" : 44,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_labels",
+    "args" : {
+      "labels" : "The New York Times - Breaking News, World News & Multimedia"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5173,
+    "tid" : 43,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "thread_sort_index",
+    "args" : {
+      "sort_index" : -1
+    }
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443650636079,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15710472,
+        "diskinfo" : {
+          "io" : 2.0,
+          "io_time" : 1.5617019E8,
+          "read_time" : 6.875166E7,
+          "reads" : 1.3857167E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88992266E8,
+          "sectors_written" : 6.112151522E9,
+          "weighted_io_time" : 1.255672974E9,
+          "write_time" : 1.185976134E9,
+          "writes" : 6.5188628E7,
+          "writes_merged" : 3.3208722E7
+        },
+        "meminfo" : {
+          "active_anon" : 10804264,
+          "active_file" : 7842436,
+          "buffers" : 685608,
+          "cached" : 13703664,
+          "dirty" : 696,
+          "free" : 2774120,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 985064,
+          "inactive_file" : 6506528,
+          "pgmajfault" : 2545143,
+          "pswpin" : 28875,
+          "pswpout" : 214110,
+          "shmem" : 20504,
+          "slab" : 3310560,
+          "swap_free" : 32727528,
+          "swap_total" : 33472508,
+          "swap_used" : 744980,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 1237088,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443652636232,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15805196,
+        "diskinfo" : {
+          "io" : 0.0,
+          "io_time" : 1.5617112E8,
+          "read_time" : 6.875264E7,
+          "reads" : 1.3857248E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88993218E8,
+          "sectors_written" : 6.112152858E9,
+          "weighted_io_time" : 1.255674364E9,
+          "write_time" : 1.185976594E9,
+          "writes" : 6.5188662E7,
+          "writes_merged" : 3.3208865E7
+        },
+        "meminfo" : {
+          "active_anon" : 10892412,
+          "active_file" : 7842868,
+          "buffers" : 685620,
+          "cached" : 13701160,
+          "dirty" : 2308,
+          "free" : 2681888,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 981684,
+          "inactive_file" : 6506696,
+          "pgmajfault" : 2545143,
+          "pswpin" : 28875,
+          "pswpout" : 214110,
+          "shmem" : 16992,
+          "slab" : 3311176,
+          "swap_free" : 32727528,
+          "swap_total" : 33472508,
+          "swap_used" : 744980,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 1592246,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443654637016,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15897236,
+        "diskinfo" : {
+          "io" : 2.0,
+          "io_time" : 1.5617296E8,
+          "read_time" : 6.875364E7,
+          "reads" : 1.3857284E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.8899365E8,
+          "sectors_written" : 6.112155418E9,
+          "weighted_io_time" : 1.255677174E9,
+          "write_time" : 1.185978384E9,
+          "writes" : 6.5188783E7,
+          "writes_merged" : 3.3209097E7
+        },
+        "meminfo" : {
+          "active_anon" : 10983148,
+          "active_file" : 7843352,
+          "buffers" : 685664,
+          "cached" : 13714676,
+          "dirty" : 3384,
+          "free" : 2576288,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 994592,
+          "inactive_file" : 6506792,
+          "pgmajfault" : 2545143,
+          "pswpin" : 28875,
+          "pswpout" : 214110,
+          "shmem" : 30388,
+          "slab" : 3311060,
+          "swap_free" : 32727528,
+          "swap_total" : 33472508,
+          "swap_used" : 744980,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 1900656,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443656637297,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15877380,
+        "diskinfo" : {
+          "io" : 0.0,
+          "io_time" : 1.561739E8,
+          "read_time" : 6.8754E7,
+          "reads" : 1.3857292E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88993738E8,
+          "sectors_written" : 6.11215653E9,
+          "weighted_io_time" : 1.255678544E9,
+          "write_time" : 1.185979414E9,
+          "writes" : 6.5188862E7,
+          "writes_merged" : 3.3209164E7
+        },
+        "meminfo" : {
+          "active_anon" : 10962980,
+          "active_file" : 7843496,
+          "buffers" : 685708,
+          "cached" : 13712284,
+          "dirty" : 3568,
+          "free" : 2598492,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 992124,
+          "inactive_file" : 6506796,
+          "pgmajfault" : 2545143,
+          "pswpin" : 28875,
+          "pswpout" : 214110,
+          "shmem" : 27908,
+          "slab" : 3311076,
+          "swap_free" : 32727528,
+          "swap_total" : 33472508,
+          "swap_used" : 744980,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 2116938,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443658638103,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15936472,
+        "diskinfo" : {
+          "io" : 1.0,
+          "io_time" : 1.5617438E8,
+          "read_time" : 6.875442E7,
+          "reads" : 1.3857323E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88993986E8,
+          "sectors_written" : 6.11215713E9,
+          "weighted_io_time" : 1.255679144E9,
+          "write_time" : 1.185979594E9,
+          "writes" : 6.5188899E7,
+          "writes_merged" : 3.3209202E7
+        },
+        "meminfo" : {
+          "active_anon" : 11019900,
+          "active_file" : 7843576,
+          "buffers" : 685716,
+          "cached" : 13706804,
+          "dirty" : 3720,
+          "free" : 2544872,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 986664,
+          "inactive_file" : 6506760,
+          "pgmajfault" : 2545143,
+          "pswpin" : 28875,
+          "pswpout" : 214110,
+          "shmem" : 21944,
+          "slab" : 3311396,
+          "swap_free" : 32727528,
+          "swap_total" : 33472508,
+          "swap_used" : 744980,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 2381444,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443660638570,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15918664,
+        "diskinfo" : {
+          "io" : 0.0,
+          "io_time" : 1.5617554E8,
+          "read_time" : 6.875494E7,
+          "reads" : 1.3857351E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.8899425E8,
+          "sectors_written" : 6.112162538E9,
+          "weighted_io_time" : 1.255680814E9,
+          "write_time" : 1.185980744E9,
+          "writes" : 6.5189021E7,
+          "writes_merged" : 3.3209768E7
+        },
+        "meminfo" : {
+          "active_anon" : 11060768,
+          "active_file" : 7519444,
+          "buffers" : 668680,
+          "cached" : 13409824,
+          "dirty" : 4244,
+          "free" : 2876696,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 989312,
+          "inactive_file" : 6512216,
+          "pgmajfault" : 2545144,
+          "pswpin" : 28875,
+          "pswpout" : 214486,
+          "shmem" : 27180,
+          "slab" : 3253408,
+          "swap_free" : 32726024,
+          "swap_total" : 33472508,
+          "swap_used" : 746484,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 2750410,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443662638376,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15972868,
+        "diskinfo" : {
+          "io" : 1.0,
+          "io_time" : 1.5617657E8,
+          "read_time" : 6.875529E7,
+          "reads" : 1.3857378E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88994562E8,
+          "sectors_written" : 6.112164282E9,
+          "weighted_io_time" : 1.255682034E9,
+          "write_time" : 1.185981614E9,
+          "writes" : 6.5189097E7,
+          "writes_merged" : 3.3209929E7
+        },
+        "meminfo" : {
+          "active_anon" : 11115364,
+          "active_file" : 7519348,
+          "buffers" : 668724,
+          "cached" : 13406836,
+          "dirty" : 4652,
+          "free" : 2825436,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 986852,
+          "inactive_file" : 6512524,
+          "pgmajfault" : 2545144,
+          "pswpin" : 28875,
+          "pswpout" : 214486,
+          "shmem" : 23892,
+          "slab" : 3252980,
+          "swap_free" : 32726024,
+          "swap_total" : 33472508,
+          "swap_used" : 746484,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 3122595,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443664639143,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 16029600,
+        "diskinfo" : {
+          "io" : 1.0,
+          "io_time" : 1.5617708E8,
+          "read_time" : 6.875547E7,
+          "reads" : 1.3857402E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88994754E8,
+          "sectors_written" : 6.112165338E9,
+          "weighted_io_time" : 1.255682564E9,
+          "write_time" : 1.185981944E9,
+          "writes" : 6.5189133E7,
+          "writes_merged" : 3.3210008E7
+        },
+        "meminfo" : {
+          "active_anon" : 11170756,
+          "active_file" : 7519520,
+          "buffers" : 668756,
+          "cached" : 13407460,
+          "dirty" : 4972,
+          "free" : 2768048,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 986844,
+          "inactive_file" : 6512604,
+          "pgmajfault" : 2545144,
+          "pswpin" : 28875,
+          "pswpout" : 214486,
+          "shmem" : 24300,
+          "slab" : 3252920,
+          "swap_free" : 32726024,
+          "swap_total" : 33472508,
+          "swap_used" : 746484,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 3542284,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443666639924,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 16047456,
+        "diskinfo" : {
+          "io" : 0.0,
+          "io_time" : 1.5617764E8,
+          "read_time" : 6.875573E7,
+          "reads" : 1.3857423E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88994922E8,
+          "sectors_written" : 6.112166178E9,
+          "weighted_io_time" : 1.255683274E9,
+          "write_time" : 1.185982414E9,
+          "writes" : 6.5189173E7,
+          "writes_merged" : 3.3210074E7
+        },
+        "meminfo" : {
+          "active_anon" : 11187444,
+          "active_file" : 7519728,
+          "buffers" : 668792,
+          "cached" : 13402720,
+          "dirty" : 5296,
+          "free" : 2754896,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 981984,
+          "inactive_file" : 6512720,
+          "pgmajfault" : 2545144,
+          "pswpin" : 28875,
+          "pswpout" : 214486,
+          "shmem" : 19276,
+          "slab" : 3252920,
+          "swap_free" : 32726024,
+          "swap_total" : 33472508,
+          "swap_used" : 746484,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 3856633,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443668640591,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15941176,
+        "diskinfo" : {
+          "io" : 2.0,
+          "io_time" : 1.5617819E8,
+          "read_time" : 6.875601E7,
+          "reads" : 1.3857442E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88995162E8,
+          "sectors_written" : 6.112168026E9,
+          "weighted_io_time" : 1.255685574E9,
+          "write_time" : 1.185984374E9,
+          "writes" : 6.5189318E7,
+          "writes_merged" : 3.3210157E7
+        },
+        "meminfo" : {
+          "active_anon" : 11082308,
+          "active_file" : 7519852,
+          "buffers" : 668796,
+          "cached" : 13402892,
+          "dirty" : 4960,
+          "free" : 2861000,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 981964,
+          "inactive_file" : 6512744,
+          "pgmajfault" : 2545148,
+          "pswpin" : 28875,
+          "pswpout" : 214486,
+          "shmem" : 19272,
+          "slab" : 3252980,
+          "swap_free" : 32726024,
+          "swap_total" : 33472508,
+          "swap_used" : 746484,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 4219917,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443670642139,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15839384,
+        "diskinfo" : {
+          "io" : 1.0,
+          "io_time" : 1.5617877E8,
+          "read_time" : 6.875629E7,
+          "reads" : 1.3857455E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.88995274E8,
+          "sectors_written" : 6.112169026E9,
+          "weighted_io_time" : 1.255686324E9,
+          "write_time" : 1.185984894E9,
+          "writes" : 6.5189371E7,
+          "writes_merged" : 3.3210235E7
+        },
+        "meminfo" : {
+          "active_anon" : 10982712,
+          "active_file" : 7520012,
+          "buffers" : 668804,
+          "cached" : 13402988,
+          "dirty" : 4800,
+          "free" : 2962688,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 981972,
+          "inactive_file" : 6512716,
+          "pgmajfault" : 2545148,
+          "pswpin" : 28875,
+          "pswpout" : 214486,
+          "shmem" : 19280,
+          "slab" : 3253068,
+          "swap_free" : 32726024,
+          "swap_total" : 33472508,
+          "swap_used" : 746484,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 4529363,
+    "id" : "0x1"
+  }, {
+    "cat" : "disabled-by-default-system_stats",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 5443672642443,
+    "ph" : "O",
+    "name" : "base::TraceEventSystemStatsMonitor::SystemStats",
+    "args" : {
+      "snapshot" : {
+        "committed_memory" : 15778516,
+        "diskinfo" : {
+          "io" : 4.0,
+          "io_time" : 1.5618074E8,
+          "read_time" : 6.875666E7,
+          "reads" : 1.385746E7,
+          "reads_merged" : 786631.0,
+          "sectors_read" : 7.8899533E8,
+          "sectors_written" : 6.11217073E9,
+          "weighted_io_time" : 1.255688864E9,
+          "write_time" : 1.185986914E9,
+          "writes" : 6.5189542E7,
+          "writes_merged" : 3.3210319E7
+        },
+        "meminfo" : {
+          "active_anon" : 10923804,
+          "active_file" : 7520188,
+          "buffers" : 668896,
+          "cached" : 13402984,
+          "dirty" : 5000,
+          "free" : 3023468,
+          "gem_objects" : -1,
+          "gem_size" : -1,
+          "inactive_anon" : 981964,
+          "inactive_file" : 6512632,
+          "pgmajfault" : 2545152,
+          "pswpin" : 28875,
+          "pswpout" : 214486,
+          "shmem" : 19272,
+          "slab" : 3252940,
+          "swap_free" : 32726024,
+          "swap_total" : 33472508,
+          "swap_used" : 746484,
+          "total" : 32873864
+        },
+        "swapinfo" : {
+          "compr_data_size" : 0.0,
+          "compression_ratio" : 0.0,
+          "mem_used_total" : 0.0,
+          "num_reads" : 0.0,
+          "num_writes" : 0.0,
+          "orig_data_size" : 0.0
+        }
+      }
+    },
+    "tts" : 4737585,
+    "id" : "0x1"
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_sort_index",
+    "args" : {
+      "sort_index" : -6
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "process_name",
+    "args" : {
+      "name" : "Browser"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5014,
+    "tid" : 5036,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "thread_name",
+    "args" : {
+      "name" : "Chrome_IOThread"
+    }
+  }, {
+    "cat" : "__metadata",
+    "pid" : 5014,
+    "tid" : 5014,
+    "ts" : 0,
+    "ph" : "M",
+    "name" : "thread_name",
+    "args" : {
+      "name" : "CrBrowserMain"
+    }
+  } ],
+  "clientInfo" : {
+    "command_line" : "out/Release/chrome --login-user=stub-user@example.com --login-profile=test-user",
+    "version" : "Chrome/31.0.1613.0"
+  }
+}

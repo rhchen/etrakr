@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jackson Datatype
+Bundle-SymbolicName: com.fasterxml.jackson.datatype
+Bundle-Version: 2.4.3.qualifier
+Bundle-ClassPath: jackson-datatype-guava-2.4.3.jar,
+ jackson-datatype-hppc-2.4.3.jar
+Export-Package: com.fasterxml.jackson.datatype.guava,
+ com.fasterxml.jackson.datatype.guava.deser,
+ com.fasterxml.jackson.datatype.guava.deser.multimap,
+ com.fasterxml.jackson.datatype.guava.deser.multimap.list,
+ com.fasterxml.jackson.datatype.guava.deser.multimap.set,
+ com.fasterxml.jackson.datatype.guava.deser.util,
+ com.fasterxml.jackson.datatype.guava.ser,
+ com.fasterxml.jackson.datatype.hppc,
+ com.fasterxml.jackson.datatype.hppc.deser,
+ com.fasterxml.jackson.datatype.hppc.ser
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jackson Module
+Bundle-SymbolicName: com.fasterxml.jackson.module
+Bundle-Version: 2.4.3.qualifier
+Bundle-ClassPath: jackson-module-afterburner-2.4.3.jar,
+ jackson-module-mrbean-2.4.3.jar
+Export-Package: com.fasterxml.jackson.module.afterburner,
+ com.fasterxml.jackson.module.afterburner.asm,
+ com.fasterxml.jackson.module.afterburner.asm.signature,
+ com.fasterxml.jackson.module.afterburner.deser,
+ com.fasterxml.jackson.module.afterburner.ser,
+ com.fasterxml.jackson.module.afterburner.util,
+ com.fasterxml.jackson.module.mrbean,
+ com.fasterxml.jackson.module.mrbean.asm,
+ com.fasterxml.jackson.module.mrbean.asm.signature
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
