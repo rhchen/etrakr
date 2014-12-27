@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>net.sf.etrakr.aggregator</artifactId>
+  <packaging>pom</packaging>
+  <parent>
+  	<groupId>net.sf.etrakr</groupId>
+  	<artifactId>net.sf.etrakr.parent</artifactId>
+  	<version>1.0.0-SNAPSHOT</version>
+  	<relativePath>../../pom.xml</relativePath>
+  </parent>
+  <modules>
+  	<module>../../lib/com.fasterxml.jackson</module>
+  	<module>../../lib/com.fasterxml.jackson.dataformat</module>
+  	<module>../../lib/com.fasterxml.jackson.datatype</module>
+  	<module>../../lib/com.fasterxml.jackson.module</module>
+  	<module>../../lib/com.fasterxml.jackson.test</module>
+  	<module>../../lib/net.sf.commonstringutil</module>
+  	<module>../../chart/net.tourbook.chart</module>
+  	<module>../../chart/net.tourbook.common</module>
+  	<module>../../chart/net.tourbook.ext.jars</module>
+  	<module>../../lib/org.tukaani.xz</module>
+  </modules>
+</project>

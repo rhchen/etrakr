@@ -3,10 +3,10 @@
   <artifactId>org.tukaani.xz</artifactId>
   <packaging>eclipse-plugin</packaging>
   <parent>
-  	<groupId>notrace</groupId>
-  	<artifactId>net.sf.notrace.parent</artifactId>
+  	<groupId>net.sf.etrakr</groupId>
+  	<artifactId>net.sf.etrakr.aggregator</artifactId>
   	<version>1.0.0-SNAPSHOT</version>
-  	<relativePath>../net.sf.notrace.parent</relativePath>
+  	<relativePath>../../eclipse/net.sf.etrakr.aggregator</relativePath>
   </parent>
   <version>1.5.0</version>
 </project>

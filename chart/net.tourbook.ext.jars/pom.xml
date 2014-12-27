@@ -4,9 +4,9 @@
   <version>12.12.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
   <parent>
-  	<groupId>notrace</groupId>
-  	<artifactId>net.sf.notrace.parent</artifactId>
+  	<groupId>net.sf.etrakr</groupId>
+  	<artifactId>net.sf.etrakr.aggregator</artifactId>
   	<version>1.0.0-SNAPSHOT</version>
-  	<relativePath>../../notrace/net.sf.notrace.parent</relativePath>
+  	<relativePath>../../eclipse/net.sf.etrakr.aggregator</relativePath>
   </parent>
 </project>
