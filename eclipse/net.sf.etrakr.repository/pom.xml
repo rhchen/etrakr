@@ -8,4 +8,55 @@
   	<version>1.0.0-SNAPSHOT</version>
   	<relativePath>../net.sf.etrakr.aggregator</relativePath>
   </parent>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-director-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <!-- install the product using the p2 director -->
+            <id>materialize-products</id>
+            <goals>
+              <goal>materialize-products</goal>
+            </goals>
+          </execution>
+          <execution>
+            <!-- create zip file with the installed product -->
+            <id>archive-products</id>
+            <goals>
+              <goal>archive-products</goal>
+            </goals>
+            <configuration>
+                <formats>
+                    <linux>tar.gz</linux>
+                    <macosx>tar.gz</macosx>
+                    <solaris>zip</solaris>
+                    <win32>zip</win32>
+                </formats>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+		  <products>
+		    <product>
+		      <!-- select product with ID product.id; the archives get the classifiers "<os>.<ws>.<arch>" -->
+		      <id>net.sf.etrakr</id>
+		      <archiveFileName>net.sf.etrakr-${project.version}-</archiveFileName>
+		      <!-- <archiveFileName>net.sf.etrakr-viewer-${project.version}-${build.timestamp}</archiveFileName> -->
+		      <rootFolder>net.sf.etrakr</rootFolder>   
+		    </product>
+		    <!-- temp disable : select product with ID other.product.id for the classifiers "other-<os>.<ws>.<arch>" 
+		    <product>
+		      <id>notrace.e4product</id>
+		      <attachId>other</attachId>
+		    </product>
+		    -->
+		  </products>
+		</configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
