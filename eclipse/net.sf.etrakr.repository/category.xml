@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/net.sf.etrakr.feature_1.0.0.qualifier.jar" id="net.sf.etrakr.feature" version="1.0.0.qualifier">
+      <category name="net.sf.etrakr.category"/>
+   </feature>
+   <category-def name="net.sf.etrakr.category" label="net.sf.etrakr.category">
+      <description>
+         net.sf.etrakr.category
+      </description>
+   </category-def>
+</site>

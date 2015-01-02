@@ -27,6 +27,18 @@
       <import plugin="org.eclipse.linuxtools.tmf.ui" version="3.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.expressions"/>
       <import plugin="net.tourbook.ext.jars" version="12.12.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.cdt.core.native" version="5.7.0" match="compatible"/>
+      <import plugin="org.eclipse.core.contenttype" version="3.3.0" match="compatible"/>
+      <import plugin="org.eclipse.core.expressions" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.core.filebuffers" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.core.filesystem" version="1.1.0" match="compatible"/>
+      <import plugin="org.eclipse.core.resources" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.core.runtime" version="3.7.0" match="compatible"/>
+      <import plugin="org.eclipse.core.variables" version="3.1.100" match="compatible"/>
+      <import plugin="org.eclipse.ltk.core.refactoring" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.text" version="3.2.0" match="compatible"/>
+      <import plugin="com.ibm.icu" version="4.4.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.swt"/>
    </requires>
 
    <plugin
@@ -99,5 +111,26 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.cdt.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.core.native"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.swtchart"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

@@ -18,61 +18,41 @@ public class ApplicationActivator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "net.sf.etrakr.application"; //$NON-NLS-1$
 
-	private static BundleContext context;
-	
-	/**
+    /**
      * The default workspace name
      */
     public static final String WORKSPACE_NAME = ".traceviewer"; //$NON-NLS-1$
 
+    // ------------------------------------------------------------------------
+    // Attributes
+    // ------------------------------------------------------------------------
+
     // The shared instance
     private static ApplicationActivator fPlugin;
     private static CliParser fCli;
-    
-	public static BundleContext getContext() {
-		return context;
-	}
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
-	@Override
-	public void start(BundleContext bundleContext) throws Exception {
-		
-		super.start(bundleContext);
-		
-		ApplicationActivator.context = bundleContext;
-		
-		fPlugin = this;
-		
-        String args[] = Platform.getCommandLineArgs();
-        
-        try {
-            fCli = new CliParser(args);
-        } catch (CliException e) {
-            logError(e.getMessage());
-        }
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
-		
-		fPlugin = null;
-		
-        super.stop(context);
-        
-        ApplicationActivator.context = null;
-	}
 
-	public static ApplicationActivator getDefault() {
-		return fPlugin;
-	}
+    // ------------------------------------------------------------------------
+    // Constructor(s)
+    // ------------------------------------------------------------------------
+    /**
+     * The default constructor
+     */
+    public ApplicationActivator() {
+    }
 
-	/**
+    // ------------------------------------------------------------------------
+    // Accessors
+    // ------------------------------------------------------------------------
+    /**
+     * Returns the shared instance
+     *
+     * @return the shared instance
+     */
+    public static ApplicationActivator getDefault() {
+        return fPlugin;
+    }
+
+    /**
      * Gets the tracing workspace root directory. By default it uses the user's
      * home directory. This value can be overwritten by using the global
      * TRACING_RCP_ROOT environment variable.
@@ -88,7 +68,38 @@ public class ApplicationActivator extends AbstractUIPlugin {
         }
         return workspaceRoot;
     }
-    
+
+    // ------------------------------------------------------------------------
+    // Operation
+    // ------------------------------------------------------------------------
+    @Override
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        fPlugin = this;
+        String args[] = Platform.getCommandLineArgs();
+        fCli = null;
+        try {
+            fCli = new CliParser(args);
+        } catch (CliException e) {
+            logError(e.getMessage());
+        }
+    }
+
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        fPlugin = null;
+        super.stop(context);
+    }
+
+    /**
+     * Gets the command line parser
+     *
+     * @return the command line parser
+     */
+    public CliParser getCli() {
+        return fCli;
+    }
+
     /**
      * Returns an image descriptor for the image file at the given plug-in
      * relative path
@@ -134,25 +145,4 @@ public class ApplicationActivator extends AbstractUIPlugin {
         getDefault().getLog().log(
                 new Status(IStatus.WARNING, PLUGIN_ID, message));
     }
-    
-    /**
-     * Log a warning
-     *
-     * @param message
-     *            the warning message to log
-     */
-    public void logInfo(String message) {
-        getDefault().getLog().log(
-                new Status(IStatus.INFO, PLUGIN_ID, message));
-    }
-
-    /**
-     * Gets the command line parser
-     *
-     * @return the command line parser
-     */
-    public CliParser getCli() {
-        return fCli;
-    }
-
 }
