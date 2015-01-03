@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Ftrace Core
-Bundle-SymbolicName: net.sf.etrakr.ftrace.core
+Bundle-SymbolicName: net.sf.etrakr.ftrace.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.sf.etrakr.ftrace.core.FtraceActivator
 Bundle-Vendor: net.sf.etrakr
@@ -13,3 +13,9 @@ Require-Bundle: org.eclipse.core.runtime,
  net.sf.commonstringutil,
  org.tukaani.xz,
  org.eclipse.linuxtools.tmf.core
+Export-Package: net.sf.etrakr.ftrace.core,
+ net.sf.etrakr.ftrace.core.cache,
+ net.sf.etrakr.ftrace.core.event,
+ net.sf.etrakr.ftrace.core.event.impl,
+ net.sf.etrakr.ftrace.core.service,
+ net.sf.etrakr.ftrace.core.service.impl

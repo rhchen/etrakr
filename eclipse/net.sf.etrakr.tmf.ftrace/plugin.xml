@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.linuxtools.tmf.core.tracetype">
+      <type
+            event_type="org.eclipse.linuxtools.tmf.core.event.TmfEvent"
+            id="net.sf.notrace.ftrace.trace.FtraceTrace"
+            isDirectory="false"
+            name="FtraceTrace"
+            trace_type="net.sf.etrakr.tmf.ftrace.trace.FtraceTrace">
+      </type>
+   </extension>
+   <extension
+         point="org.eclipse.linuxtools.tmf.core.analysis">
+      <module
+            analysis_module="net.sf.etrakr.tmf.ftrace.analysis.FtraceAnalysisModule"
+            id="net.sf.etrakr.tmf.ftrace.analysis.FtraceAnalysisModule"
+            name="FtraceAnalysisModule">
+         <tracetype
+               applies="true"
+               class="net.sf.etrakr.tmf.ftrace.trace.FtraceTrace">
+         </tracetype>
+      </module>
+   </extension>
+
+</plugin>

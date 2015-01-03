@@ -39,6 +39,7 @@
       <import plugin="org.eclipse.text" version="3.2.0" match="compatible"/>
       <import plugin="com.ibm.icu" version="4.4.2" match="greaterOrEqual"/>
       <import plugin="org.eclipse.swt"/>
+      <import plugin="net.sf.etrakr.ftrace.core" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -128,6 +129,20 @@
 
    <plugin
          id="org.swtchart"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.etrakr.ftrace.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.etrakr.tmf.ftrace"
          download-size="0"
          install-size="0"
          version="0.0.0"

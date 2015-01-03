@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: TMF Ftrace
+Bundle-SymbolicName: net.sf.etrakr.tmf.ftrace;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.sf.etrakr.tmf.ftrace.TmfFtraceActivator
+Bundle-Vendor: net.sf.etrakr
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ com.google.guava;bundle-version="15.0.0",
+ org.eclipse.linuxtools.tmf.core,
+ net.sf.etrakr.ftrace.core;bundle-version="1.0.0"
