@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ftrace Test
+Bundle-SymbolicName: net.sf.etrakr.ftrace.core.test
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: net.sf.etrakr
+Fragment-Host: net.sf.etrakr.ftrace.core;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit;bundle-version="4.11.0"
