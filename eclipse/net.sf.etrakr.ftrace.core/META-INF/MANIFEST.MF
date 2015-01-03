@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ftrace Core
+Bundle-SymbolicName: net.sf.etrakr.ftrace.core
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.sf.etrakr.ftrace.core.FtraceActivator
+Bundle-Vendor: net.sf.etrakr
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ com.google.guava,
+ net.sf.commonstringutil,
+ org.tukaani.xz,
+ org.eclipse.linuxtools.tmf.core

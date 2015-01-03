@@ -22,5 +22,6 @@
   	<module>../net.sf.etrakr.feature</module>
   	<module>../net.sf.etrakr.application</module>
   	<module>../net.sf.etrakr.repository</module>
+  	<module>../net.sf.etrakr.ftrace.core</module>
   </modules>
 </project>
