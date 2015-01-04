@@ -28,5 +28,6 @@
   	<module>../net.sf.etrakr.ftrace.ui</module>
   	<module>../net.sf.etrakr.trans.ftrace</module>
   	<module>../net.sf.etrakr.trans.ftrace.test</module>
+  	<module>../../lib/org.jsoup</module>
   </modules>
 </project>
