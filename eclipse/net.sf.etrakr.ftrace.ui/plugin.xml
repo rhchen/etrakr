@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="net.sf.etrakr.ftrace.ui.category"
+            class="net.sf.etrakr.ftrace.ui.views.ControlFlowView"
+            icon="icons/eview16/control_flow_view.gif"
+            id="net.sf.etrakr.ftrace.ui.views.ControlFlowView"
+            name="Control Flow"
+            restorable="true">
+      </view>
+      <category
+            id="net.sf.etrakr.ftrace.ui.category"
+            name="Ftrace">
+      </category>
+   </extension>
+   
+
+</plugin>

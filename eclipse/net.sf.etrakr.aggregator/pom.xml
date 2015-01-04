@@ -25,5 +25,6 @@
   	<module>../net.sf.etrakr.ftrace.core</module>
   	<module>../net.sf.etrakr.ftrace.core.test</module>
   	<module>../net.sf.etrakr.tmf.ftrace</module>
+  	<module>../net.sf.etrakr.ftrace.ui</module>
   </modules>
 </project>

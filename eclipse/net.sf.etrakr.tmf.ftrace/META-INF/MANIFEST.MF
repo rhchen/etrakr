@@ -9,6 +9,10 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- com.google.guava;bundle-version="15.0.0",
+ com.google.guava,
  org.eclipse.linuxtools.tmf.core,
- net.sf.etrakr.ftrace.core;bundle-version="1.0.0"
+ net.sf.etrakr.ftrace.core
+Export-Package: net.sf.etrakr.tmf.ftrace,
+ net.sf.etrakr.tmf.ftrace.analysis,
+ net.sf.etrakr.tmf.ftrace.state,
+ net.sf.etrakr.tmf.ftrace.trace
