@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ftrace Transform
+Bundle-SymbolicName: net.sf.etrakr.trans.ftrace;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.sf.etrakr.trans.ftrace.FtraceTransActivator
+Bundle-Vendor: net.sf.etrakr
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.runtime,
+ com.fasterxml.jackson,
+ org.eclipse.linuxtools.tmf.core,
+ com.google.guava,
+ net.sf.etrakr.ftrace.core
