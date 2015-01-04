@@ -37,7 +37,7 @@ public class FtraceAnalysisModule extends TmfStateSystemAnalysisModule {
     public static final String HISTORY_TREE_FILE_NAME = "stateHistory.ht"; //$NON-NLS-1$
 
     /** The ID of this analysis module */
-    public static final String ID = "net.sf.notrace.ftrace.analysis.FtraceAnalysisModule"; //$NON-NLS-1$
+    public static final String ID = "net.sf.etrakr.tmf.ftrace.analysis.ftrace"; //$NON-NLS-1$
 
     /*
      * TODO: Decide which events should be mandatory for the analysis, once the

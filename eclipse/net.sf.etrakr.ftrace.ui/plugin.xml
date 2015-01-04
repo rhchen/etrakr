@@ -8,7 +8,7 @@
             category="net.sf.etrakr.ftrace.ui.category"
             class="net.sf.etrakr.ftrace.ui.views.ControlFlowView"
             icon="icons/eview16/control_flow_view.gif"
-            id="net.sf.etrakr.ftrace.ui.views.ControlFlowView"
+            id="net.sf.etrakr.ftrace.ui.views.controlflow"
             name="Control Flow"
             restorable="true">
       </view>
@@ -17,6 +17,15 @@
             name="Ftrace">
       </category>
    </extension>
-   
+   <extension
+         point="org.eclipse.linuxtools.tmf.core.analysis">
+      <output
+            class="net.sf.etrakr.ftrace.ui.analysis.TmfAnalysisViewOutput"
+            id="net.sf.etrakr.ftrace.ui.views.controlflow">
+         <analysisId
+               id="net.sf.etrakr.tmf.ftrace.analysis.ftrace">
+         </analysisId>
+      </output>
+   </extension>
 
 </plugin>

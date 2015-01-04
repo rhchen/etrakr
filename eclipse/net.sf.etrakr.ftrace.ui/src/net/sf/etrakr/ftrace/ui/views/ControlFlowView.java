@@ -66,7 +66,7 @@ public class ControlFlowView extends AbstractTimeGraphView {
     /**
      * View ID.
      */
-    public static final String ID = "net.sf.notrace.ftrace.ui.views.controlflow"; //$NON-NLS-1$
+    public static final String ID = "net.sf.etrakr.ftrace.ui.views.controlflow"; //$NON-NLS-1$
 
     private static final String PROCESS_COLUMN = Messages.ControlFlowView_processColumn;
     private static final String TID_COLUMN = Messages.ControlFlowView_tidColumn;

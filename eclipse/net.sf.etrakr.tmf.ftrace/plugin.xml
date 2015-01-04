@@ -15,7 +15,7 @@
          point="org.eclipse.linuxtools.tmf.core.analysis">
       <module
             analysis_module="net.sf.etrakr.tmf.ftrace.analysis.FtraceAnalysisModule"
-            id="net.sf.etrakr.tmf.ftrace.analysis.FtraceAnalysisModule"
+            id="net.sf.etrakr.tmf.ftrace.analysis.ftrace"
             name="FtraceAnalysisModule">
          <tracetype
                applies="true"
