@@ -27,5 +27,6 @@
   	<module>../net.sf.etrakr.tmf.ftrace</module>
   	<module>../net.sf.etrakr.ftrace.ui</module>
   	<module>../net.sf.etrakr.trans.ftrace</module>
+  	<module>../net.sf.etrakr.trans.ftrace.test</module>
   </modules>
 </project>

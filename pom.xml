@@ -83,8 +83,8 @@
             <application>org.eclipse.e4.ui.workbench.swt.E4Application</application>
             -->
             
-            <product>net.sf.notrace.application.product</product>
-            <application>net.sf.notrace.application.notrace</application>
+            <product>net.sf.etrakr.application.product</product>
+            <application>net.sf.etrakr.application.etrakr</application>
             <appArgLine>-consolelog -clearPersistedState</appArgLine>
             <!-- Start level setting, not sure should be disable -->
             <bundleStartLevel>
