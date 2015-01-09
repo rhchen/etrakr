@@ -29,5 +29,8 @@
   	<module>../net.sf.etrakr.trans.ftrace</module>
   	<module>../net.sf.etrakr.trans.ftrace.test</module>
   	<module>../../lib/org.jsoup</module>
+  	<module>../net.sf.etrakr.chrome.core</module>
+  	<module>../net.sf.etrakr.chrome.core.test</module>
+  	<module>../../lib/com.jayway.jsonpath</module>
   </modules>
 </project>
