@@ -3,8 +3,6 @@
  */
 package net.sf.etrakr.chrome.core.test;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -86,19 +84,26 @@ public class DummyTest {
 	@Test
 	public void test_0() {
 		
-		String path = "data/perf_sampling_trace_with_trace_events.json";
+		String path = "data/flow.json";
 		test(path);
 	}
 	
 	@Test
 	public void test_1() {
 		
-		String path = "data/thread_time_visualisation.json";
+		String path = "data/perf_sampling_trace_with_trace_events.json";
 		test(path);
 	}
 	
 	@Test
 	public void test_2() {
+		
+		String path = "data/thread_time_visualisation.json";
+		test(path);
+	}
+	
+	@Test
+	public void test_3() {
 		
 		String path = "data/huge_trace.json";
 		test(path);
@@ -129,6 +134,7 @@ public class DummyTest {
 	    	    public MappingProvider mappingProvider() {
 	    	    	ObjectMapper mapper = new ObjectMapper();
 	    	    	mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	    	    	mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
 	    	        return new JacksonMappingProvider(mapper);
 	    	    }
 

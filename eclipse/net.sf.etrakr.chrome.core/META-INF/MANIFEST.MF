@@ -12,6 +12,10 @@ Require-Bundle: org.eclipse.core.runtime,
  com.fasterxml.jackson,
  org.eclipse.linuxtools.tmf.core,
  com.google.guava,
- com.jayway.jsonpath
+ com.jayway.jsonpath,
+ net.sf.commonstringutil
 Export-Package: net.sf.etrakr.chrome.core,
- net.sf.etrakr.chrome.core.event
+ net.sf.etrakr.chrome.core.cache,
+ net.sf.etrakr.chrome.core.event,
+ net.sf.etrakr.chrome.core.service,
+ net.sf.etrakr.chrome.core.service.impl
