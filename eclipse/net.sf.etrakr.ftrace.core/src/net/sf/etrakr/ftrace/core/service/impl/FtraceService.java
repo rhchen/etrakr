@@ -70,8 +70,7 @@ public class FtraceService implements IFtraceService {
 	}
 	
 	
-    
-	public TreeBasedTable<Integer, Long, Long> getPageTable(URI fileUri){
+    public TreeBasedTable<Integer, Long, Long> getPageTable(URI fileUri){
 		
 		return pageTables.get(fileUri);
 		

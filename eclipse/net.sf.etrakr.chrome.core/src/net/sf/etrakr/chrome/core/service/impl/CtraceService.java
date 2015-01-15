@@ -7,6 +7,7 @@ import java.net.URI;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.List;
+import java.util.SortedMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 
@@ -67,14 +68,16 @@ public class CtraceService implements ICtraceService {
 
 	@Override
 	public TreeBasedTable<Integer, Long, Long> getPageTable(URI fileUri) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return pageTables.get(fileUri);
+	
 	}
 
 	@Override
 	public BiMap<Long, Integer> getRankTable(URI fileUri) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return rankTables.get(fileUri);
+	
 	}
 
 	@Override
@@ -98,6 +101,7 @@ public class CtraceService implements ICtraceService {
 		
 		TreeBasedTable<Integer, Long, Long> pageTable = TreeBasedTable.<Integer, Long, Long>create();
 		BiMap<Long, Integer> rankTable = HashBiMap.<Long, Integer>create();
+		TreeBasedTable<Integer, Long, Long> tmpTable = TreeBasedTable.<Integer, Long, Long>create();
 		
 		int recordsOfPage = 1000;
 		int records = 0;
@@ -107,7 +111,7 @@ public class CtraceService implements ICtraceService {
 		mm.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mm.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
 		
-    	JsonParser jp = mm.getFactory().createParser(fileUri.getPath());
+    	JsonParser jp = mm.getFactory().createParser(fileUri.toURL());
     	jp.configure(JsonParser.Feature.ALLOW_COMMENTS,true);
     	jp.configure(JsonParser.Feature.ALLOW_YAML_COMMENTS,true);
     	jp.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES,true);
@@ -151,23 +155,31 @@ public class CtraceService implements ICtraceService {
 						if(eventDepth == 0){
 							
 							endPos = jp.getCurrentLocation().getByteOffset();
-
+							
+							tmpTable.put(page, startPos - 1, endPos);
+							
 							records++;
 							
 							if(records == recordsOfPage){
 								
-								long startPosLoad = startPos - 1;
+								SortedMap<Long, Long> map = tmpTable.row(page);
 								
-								pageTable.put(page, startPosLoad, endPos);
+								long firstKey = map.firstKey();
 								
+								long lastKey = map.lastKey();
+								
+								long lastValue = map.get(lastKey);
+								
+								pageTable.put(page, firstKey, lastValue);
+
 								long rank = page * recordsOfPage;
 								
 								rankTable.put(rank, page);
 								
 								/* Reset counters */
 								page++;
-								startPosLoad = endPos;
 								records = 0;
+								tmpTable = TreeBasedTable.<Integer, Long, Long>create();
 								
 							}//if
 							
