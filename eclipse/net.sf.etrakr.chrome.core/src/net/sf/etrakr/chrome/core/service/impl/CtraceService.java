@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -20,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.TreeBasedTable;
@@ -83,8 +87,38 @@ public class CtraceService implements ICtraceService {
 	@Override
 	public ITmfEvent getTmfEvent(URI fileUri, long rank)
 			throws ExecutionException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		BiMap<Long, Integer> bMap = rankTables.get(fileUri);
+		
+		TreeMap<Long, Integer> tMap = Maps.<Long, Integer>newTreeMap();
+		
+		tMap.putAll(bMap);
+		
+		long prevK = tMap.firstKey();
+		
+		if(rank >= prevK) {
+			
+			Iterator<Long> it = tMap.keySet().iterator();
+			
+			while(it.hasNext()){
+				
+				long k = it.next();
+				
+				prevK = k;
+				
+				if(rank <= k) break;
+				
+			}
+			
+		}
+		
+		int pageNumber = rankTables.get(fileUri).get(prevK);
+		
+		ImmutableMap<Long, ITmfEvent> data = cacheTables.get(fileUri).get(pageNumber);
+		
+		Assert.isNotNull(data);
+		
+		return data.get(rank);
 	}
 
 	private void createCacheTable(URI fileUri) throws FileNotFoundException{
@@ -103,7 +137,7 @@ public class CtraceService implements ICtraceService {
 		BiMap<Long, Integer> rankTable = HashBiMap.<Long, Integer>create();
 		TreeBasedTable<Integer, Long, Long> tmpTable = TreeBasedTable.<Integer, Long, Long>create();
 		
-		int recordsOfPage = 1000;
+		int recordsOfPage = 100;
 		int records = 0;
 		int page = 0;
 				
@@ -156,6 +190,7 @@ public class CtraceService implements ICtraceService {
 							
 							endPos = jp.getCurrentLocation().getByteOffset();
 							
+							/* Fix me, should validate data */
 							tmpTable.put(page, startPos - 1, endPos);
 							
 							records++;
@@ -199,5 +234,24 @@ public class CtraceService implements ICtraceService {
 		pageTables.put(fileUri, pageTable);
 		
 		rankTables.put(fileUri, rankTable);
+	}
+	
+	public static byte[] getByteArray(URI fileUri, long positionStart, long bufferSize) throws IOException{
+		
+		byte[] buffer = new byte[(int) bufferSize];
+		
+		FileInputStream fis = new FileInputStream(fileUri.getPath());
+
+		FileChannel fileChannel = fis.getChannel();
+		
+		MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, positionStart, bufferSize);
+
+		mmb.get(buffer);
+		
+		fis.close();
+		
+		fileChannel.close();
+		
+		return buffer;
 	}
 }

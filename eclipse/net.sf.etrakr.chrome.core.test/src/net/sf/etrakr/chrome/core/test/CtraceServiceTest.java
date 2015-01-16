@@ -10,15 +10,18 @@ import java.nio.channels.FileChannel;
 import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.concurrent.ExecutionException;
 
 import net.sf.etrakr.chrome.core.service.ICtraceService;
 import net.sf.etrakr.chrome.core.service.impl.CtraceService;
 
+import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.TreeBasedTable;
@@ -44,7 +47,30 @@ public class CtraceServiceTest {
 	}
 
 	@Test
-	public void test() {
+	public void test_0() {
+		
+		try {
+			
+			ICtraceService service = new CtraceService();
+			
+			service.addTrace(_file.toURI());
+			
+			ITmfEvent event = service.getTmfEvent(_file.toURI(), 0);
+			
+			Assert.assertNotNull(event);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		
+		String str = "";
+		Assert.assertNotNull(str);
+	}
+	
+	@Test
+	public void test_1() {
 		
 		try {
 			
@@ -72,7 +98,7 @@ public class CtraceServiceTest {
 				
 				long posEnd = map.get(posStart);
 				
-				System.out.println("row : "+ page +" : "+ posStart +" : "+ posEnd);
+				//System.out.println("row : "+ page +" : "+ posStart +" : "+ posEnd);
 				
 				long bufferSize = posEnd - posStart;
 				
@@ -84,7 +110,7 @@ public class CtraceServiceTest {
 
 				String tmp = new String(buffer);
 				
-				System.out.println("tmp : "+ tmp);
+				//System.out.println("tmp : "+ tmp);
 				
 			}//while
 			
@@ -95,7 +121,7 @@ public class CtraceServiceTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		String str = "";
 		Assert.assertNotNull(str);
 		
