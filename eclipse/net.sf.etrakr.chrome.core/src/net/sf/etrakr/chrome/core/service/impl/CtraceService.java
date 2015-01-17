@@ -137,10 +137,11 @@ public class CtraceService implements ICtraceService {
 		BiMap<Long, Integer> rankTable = HashBiMap.<Long, Integer>create();
 		TreeBasedTable<Integer, Long, Long> tmpTable = TreeBasedTable.<Integer, Long, Long>create();
 		
-		int recordsOfPage = 100;
+		int recordsOfPage = 1000;
 		int records = 0;
 		int page = 0;
-				
+		long currentRank = 0;
+		
 		ObjectMapper mm = new ObjectMapper();
 		mm.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mm.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
@@ -164,9 +165,10 @@ public class CtraceService implements ICtraceService {
 			long startPos = 0;
 			long endPos = 0;
 			
+			/* In depth to 0, that a end of a trace record */
 			int eventDepth = 0;
 			
-			while (token != JsonToken.END_ARRAY){
+			while (token != JsonToken.END_ARRAY){//move to the array which contains per record data
 				
 				token = jp.nextToken(); // move to value
 				
@@ -176,6 +178,7 @@ public class CtraceService implements ICtraceService {
 						
 						if(eventDepth == 0){
 							startPos = jp.getCurrentLocation().getByteOffset();
+							currentRank ++;
 						}
 						
 						eventDepth ++;
@@ -186,7 +189,7 @@ public class CtraceService implements ICtraceService {
 						
 						eventDepth --;
 						
-						if(eventDepth == 0){
+						if(eventDepth == 0){ 
 							
 							endPos = jp.getCurrentLocation().getByteOffset();
 							
@@ -207,9 +210,7 @@ public class CtraceService implements ICtraceService {
 								
 								pageTable.put(page, firstKey, lastValue);
 
-								long rank = page * recordsOfPage;
-								
-								rankTable.put(rank, page);
+								rankTable.put(currentRank, page);
 								
 								/* Reset counters */
 								page++;
@@ -230,6 +231,18 @@ public class CtraceService implements ICtraceService {
 			}//while
 			
 		}//while
+		
+		SortedMap<Long, Long> map = tmpTable.row(page);
+		
+		long firstKey = map.firstKey();
+		
+		long lastKey = map.lastKey();
+		
+		long lastValue = map.get(lastKey);
+		
+		pageTable.put(page, firstKey, lastValue);
+
+		rankTable.put(currentRank, page);
 		
 		pageTables.put(fileUri, pageTable);
 		

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -24,6 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.google.common.collect.BiMap;
 import com.google.common.collect.TreeBasedTable;
 
 public class CtraceServiceTest {
@@ -58,6 +60,21 @@ public class CtraceServiceTest {
 			ITmfEvent event = service.getTmfEvent(_file.toURI(), 0);
 			
 			Assert.assertNotNull(event);
+			
+			TreeBasedTable<Integer, Long, Long> pageTable = service.getPageTable(_file.toURI());
+			
+			BiMap<Long, Integer> ranks = service.getRankTable(_file.toURI());
+			
+			Long[] lAr = ranks.keySet().toArray(new Long[ranks.size()]);
+			
+			for(int i=0; i<lAr.length; i++){
+				
+				long rank = lAr[i];
+				
+				System.out.println("rank "+ rank);
+			}
+			
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
