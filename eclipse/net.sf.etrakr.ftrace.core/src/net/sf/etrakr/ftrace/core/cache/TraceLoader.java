@@ -293,7 +293,11 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);		
 		final TmfEventField  content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 		
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		/* Fix me
+		 * The source and sourceCPU is the same, should fix
+		 */
+		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -340,7 +344,11 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 		
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		/* Fix me
+		 * The source and sourceCPU is the same, should fix
+		 */
+		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -378,7 +386,11 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 		
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		/* Fix me
+		 * The source and sourceCPU is the same, should fix
+		 */
+		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -417,7 +429,11 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 		
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		/* Fix me
+		 * The source and sourceCPU is the same, should fix
+		 */
+		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -439,7 +455,11 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 		
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, line, head.cpuId, head.title);
+		/* Fix me
+		 * The source and sourceCPU is the same, should fix
+		 */
+		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, line, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, line, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -475,7 +495,11 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 		
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		/* Fix me
+		 * The source and sourceCPU is the same, should fix
+		 */
+		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -523,8 +547,12 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
-		
+		/* Fix me
+		 * The source and sourceCPU is the same, should fix
+		 */
+		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+				
 		return event;
 	}
 

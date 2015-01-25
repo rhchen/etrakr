@@ -67,7 +67,7 @@ public class FtraceCpuUsageAnalysis extends TmfStateSystemAnalysisModule {
          * This analysis depends on the LTTng kernel analysis, so we'll start
          * that build at the same time
          */
-    	FtraceCpuUsageAnalysis module = getTrace().getAnalysisModuleOfClass(FtraceCpuUsageAnalysis.class, FtraceCpuUsageAnalysis.ID);
+    	FtraceAnalysisModule module = getTrace().getAnalysisModuleOfClass(FtraceAnalysisModule.class, FtraceAnalysisModule.ID);
         if (module != null) {
             module.schedule();
         }
@@ -92,7 +92,7 @@ public class FtraceCpuUsageAnalysis extends TmfStateSystemAnalysisModule {
         if (trace == null || cpuSs == null) {
             return map;
         }
-        ITmfStateSystem kernelSs = TmfStateSystemAnalysisModule.getStateSystem(trace, FtraceCpuUsageAnalysis.ID);
+        ITmfStateSystem kernelSs = TmfStateSystemAnalysisModule.getStateSystem(trace, FtraceAnalysisModule.ID);
         if (kernelSs == null) {
             return map;
         }

@@ -58,7 +58,7 @@ public class FtraceCpuStateProvider extends AbstractTmfStateProvider {
      *            The trace from which to get the CPU usage
      */
     public FtraceCpuStateProvider(ITmfTrace trace) {
-        super(trace, ITmfEvent.class, "LTTng Kernel CPU usage"); //$NON-NLS-1$
+        super(trace, ITmfEvent.class, "Ftrace CPU usage"); //$NON-NLS-1$
         fTraceStart = trace.getStartTime().getValue();
     }
 
