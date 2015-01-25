@@ -16,6 +16,15 @@
             id="net.sf.etrakr.ftrace.ui.category"
             name="Ftrace">
       </category>
+      <view
+            allowMultiple="false"
+            category="net.sf.etrakr.ftrace.ui.category"
+            class="net.sf.etrakr.ftrace.ui.views.cpu.CpuUsageView"
+            icon="icons/eview16/resources_view.gif"
+            id="net.sf.etrakr.ftrace.ui.views.cpu.CpuUsageView"
+            name="CPU Usage"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.linuxtools.tmf.core.analysis">
@@ -24,6 +33,13 @@
             id="net.sf.etrakr.ftrace.ui.views.controlflow">
          <analysisId
                id="net.sf.etrakr.tmf.ftrace.analysis.ftrace">
+         </analysisId>
+      </output>
+      <output
+            class="net.sf.etrakr.ftrace.ui.analysis.TmfAnalysisViewOutput"
+            id="net.sf.etrakr.ftrace.ui.views.cpu.CpuUsageView">
+         <analysisId
+               id="net.sf.etrakr.tmf.ftrace.analysis.ftrace.cpuusage">
          </analysisId>
       </output>
    </extension>

@@ -22,6 +22,15 @@
                class="net.sf.etrakr.tmf.ftrace.trace.FtraceTrace">
          </tracetype>
       </module>
+      <module
+            analysis_module="net.sf.etrakr.tmf.ftrace.analysis.FtraceCpuUsageAnalysis"
+            id="net.sf.etrakr.tmf.ftrace.analysis.ftrace.cpuusage"
+            name="cpu usage">
+         <tracetype
+               applies="true"
+               class="net.sf.etrakr.tmf.ftrace.trace.FtraceTrace">
+         </tracetype>
+      </module>
    </extension>
 
 </plugin>

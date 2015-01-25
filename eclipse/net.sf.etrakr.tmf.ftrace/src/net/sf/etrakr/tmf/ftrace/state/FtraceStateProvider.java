@@ -17,6 +17,7 @@ import java.util.HashMap;
 import net.sf.etrakr.ftrace.core.FtraceStrings;
 import net.sf.etrakr.ftrace.core.event.IFtraceEvent;
 import net.sf.etrakr.ftrace.core.event.impl.FtraceEvent;
+import net.sf.etrakr.tmf.ftrace.TmfFtraceActivator;
 
 import org.eclipse.linuxtools.statesystem.core.ITmfStateSystemBuilder;
 import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
@@ -466,11 +467,17 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
             } // End of big switch
 
         } catch (AttributeNotFoundException ae) {
+        	
             /*
              * This would indicate a problem with the logic of the manager here,
              * so it shouldn't happen.
              */
             ae.printStackTrace();
+            
+            /* Fix me
+             * Should disable print StacksTrace after stable
+             */
+            TmfFtraceActivator.getDefault().logError(ae.getMessage(), ae); //$NON-NLS-1$
 
         } catch (TimeRangeException tre) {
             /*
@@ -480,13 +487,24 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
             System.err.println("TimeRangeExcpetion caught in the state system's event manager."); //$NON-NLS-1$
             System.err.println("Are the events in the trace correctly ordered?"); //$NON-NLS-1$
             tre.printStackTrace();
+            
+            /* Fix me
+             * Should disable print StacksTrace after stable
+             */
+            TmfFtraceActivator.getDefault().logError(tre.getMessage(), tre); //$NON-NLS-1$
 
         } catch (StateValueTypeException sve) {
+        	
             /*
              * This would happen if we were trying to push/pop attributes not of
              * type integer. Which, once again, should never happen.
              */
             sve.printStackTrace();
+            
+            /* Fix me
+             * Should disable print StacksTrace after stable
+             */
+            TmfFtraceActivator.getDefault().logError(sve.getMessage(), sve); //$NON-NLS-1$
         }
     }
 
