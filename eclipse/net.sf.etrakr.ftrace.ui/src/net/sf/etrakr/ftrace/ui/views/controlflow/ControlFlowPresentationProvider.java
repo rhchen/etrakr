@@ -11,7 +11,7 @@
  *   Geneviève Bastien - Move code to provide base classes for time graph view
  *******************************************************************************/
 
-package net.sf.etrakr.ftrace.ui.views;
+package net.sf.etrakr.ftrace.ui.views.controlflow;
 
 import java.util.LinkedHashMap;
 import java.util.List;
