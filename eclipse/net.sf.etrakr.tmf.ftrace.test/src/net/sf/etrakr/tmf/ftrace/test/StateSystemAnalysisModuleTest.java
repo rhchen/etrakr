@@ -45,8 +45,8 @@ import org.junit.rules.Timeout;
 public class StateSystemAnalysisModuleTest {
 
     /** Time-out tests after 20 seconds */
-    @Rule
-    public TestRule globalTimeout= new Timeout(60000);
+//    @Rule
+//    public TestRule globalTimeout= new Timeout(60000);
 
     /** ID of the test state system analysis module */
     public static final String MODULE_SS = FtraceAnalysisModule.ID;

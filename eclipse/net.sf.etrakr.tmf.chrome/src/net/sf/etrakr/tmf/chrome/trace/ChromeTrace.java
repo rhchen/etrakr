@@ -1,13 +1,13 @@
-package net.sf.etrakr.tmf.ftrace.trace;
+package net.sf.etrakr.tmf.chrome.trace;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import net.sf.etrakr.ftrace.core.event.IFtraceEvent;
-import net.sf.etrakr.ftrace.core.service.IFtraceService;
-import net.sf.etrakr.ftrace.core.service.impl.FtraceService;
-import net.sf.etrakr.tmf.ftrace.TmfFtraceActivator;
+import net.sf.etrakr.chrome.core.event.ICtraceEvent;
+import net.sf.etrakr.chrome.core.service.ICtraceService;
+import net.sf.etrakr.chrome.core.service.impl.CtraceService;
+import net.sf.etrakr.tmf.chrome.TmfChromeActivator;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -22,13 +22,13 @@ import org.eclipse.linuxtools.tmf.core.trace.TmfTrace;
 import org.eclipse.linuxtools.tmf.core.trace.location.ITmfLocation;
 import org.eclipse.linuxtools.tmf.core.trace.location.TmfLongLocation;
 
-public class FtraceTrace extends TmfTrace implements ITmfEventParser {
+public class ChromeTrace extends TmfTrace implements ITmfEventParser{
 
 	private static final TmfLongLocation NULLLOCATION = new TmfLongLocation((Long) null);
 	
 	private static final TmfContext NULLCONTEXT = new TmfContext(NULLLOCATION,-1L);
 	
-	private IFtraceService service = new FtraceService();
+	private ICtraceService service = new CtraceService();
 	
 	private File fFile;
 	
@@ -39,10 +39,10 @@ public class FtraceTrace extends TmfTrace implements ITmfEventParser {
 		
 		File f = new File(path);
 		if (!f.exists()) {
-			return new Status(IStatus.ERROR, TmfFtraceActivator.PLUGIN_ID, "File does not exist"); //$NON-NLS-1$
+			return new Status(IStatus.ERROR, TmfChromeActivator.PLUGIN_ID, "File does not exist"); //$NON-NLS-1$
 		}
 		if (!f.isFile()) {
-			return new Status(IStatus.ERROR, TmfFtraceActivator.PLUGIN_ID, path + " is not a file"); //$NON-NLS-1$
+			return new Status(IStatus.ERROR, TmfChromeActivator.PLUGIN_ID, path + " is not a file"); //$NON-NLS-1$
 		}
 		
 		return Status.OK_STATUS;
@@ -58,7 +58,7 @@ public class FtraceTrace extends TmfTrace implements ITmfEventParser {
 		
 		try {
 			
-			long fSize = FtraceService.getFileSize(fFile.toURI());
+			long fSize = CtraceService.getFileSize(fFile.toURI());
 			
 			if (fSize == 0) throw new TmfTraceException("file is empty"); //$NON-NLS-1$
 			
@@ -85,7 +85,7 @@ public class FtraceTrace extends TmfTrace implements ITmfEventParser {
 	
 		
 	}
-
+	
 	@Override
 	public ITmfLocation getCurrentLocation() {
 		return fCurrentLocation;
@@ -148,7 +148,7 @@ public class FtraceTrace extends TmfTrace implements ITmfEventParser {
 
 			if(event == null) return null;
 			
-			event = ((IFtraceEvent) event).newEvent(this);
+			event = ((ICtraceEvent) event).newEvent(this);
 			
 			return event;
 			
@@ -164,4 +164,5 @@ public class FtraceTrace extends TmfTrace implements ITmfEventParser {
 		service.getTmfEvent(fFile.toURI(), rank);
 		
 	}
+
 }

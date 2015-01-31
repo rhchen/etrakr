@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.linuxtools.tmf.core,
  com.google.guava,
  com.jayway.jsonpath,
- net.sf.commonstringutil
+ net.sf.commonstringutil,
+ org.tukaani.xz
 Export-Package: net.sf.etrakr.chrome.core,
  net.sf.etrakr.chrome.core.cache,
  net.sf.etrakr.chrome.core.event,

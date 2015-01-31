@@ -3,6 +3,7 @@ package net.sf.etrakr.chrome.core.service.impl;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -15,6 +16,10 @@ import java.util.concurrent.ExecutionException;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.tukaani.xz.SeekableFileInputStream;
+import org.tukaani.xz.SeekableXZInputStream;
+import org.tukaani.xz.XZFormatException;
+import org.tukaani.xz.XZInputStream;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -266,5 +271,67 @@ public class CtraceService implements ICtraceService {
 		fileChannel.close();
 		
 		return buffer;
+	}
+	
+	private static boolean isXZ(URI fileUri){
+	
+		boolean isXZ = false;
+		
+		try{
+			
+			InputStream fis = new XZInputStream(new FileInputStream(fileUri.getPath()));
+			
+			fis.close();
+			
+			isXZ = true;
+			
+		}catch(XZFormatException e){
+			
+			//e.printStackTrace();
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		return isXZ;
+		
+	}
+	
+	public static long getFileSize(URI fileUri) throws IOException{
+		
+		/* Fix Me, should be merged to abstract class*/
+		
+		long size;
+		
+		boolean isXz = isXZ(fileUri);
+		
+		if(isXz){
+			
+			SeekableFileInputStream fis = new SeekableFileInputStream(fileUri.getPath());
+	        
+			SeekableXZInputStream in = new SeekableXZInputStream(fis);
+			
+			size = in.length();
+			
+			fis.close();
+			
+			in.close();
+			
+		}else{
+			
+			FileInputStream fis = new FileInputStream(fileUri.getPath());
+			
+			FileChannel fileChannel = fis.getChannel();
+			
+			size = fileChannel.size();
+			
+			fis.close();
+			
+			fileChannel.close();
+		}
+		
+		return size;
 	}
 }
