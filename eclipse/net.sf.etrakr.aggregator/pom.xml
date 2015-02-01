@@ -34,5 +34,6 @@
   	<module>../../lib/com.jayway.jsonpath</module>
   	<module>../net.sf.etrakr.tmf.ftrace.test</module>
   	<module>../net.sf.etrakr.tmf.chrome</module>
+  	<module>../net.sf.etrakr.tmf.chrome.test</module>
   </modules>
 </project>
