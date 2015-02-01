@@ -5,4 +5,4 @@ Bundle-SymbolicName: net.sf.etrakr.tmf.chrome.test
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: net.sf.etrakr.tmf.chrome;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.junit
+Require-Bundle: org.junit;bundle-version="4.11.0"
