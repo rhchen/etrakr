@@ -595,7 +595,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
 
     private static HashMap<String, Integer> fillEventNames() {
         /*
-         * TODO Replace with straight strings in the switch/case once we move to
+         * Fix Me, Replace with straight strings in the switch/case once we move to
          * Java 7
          */
         HashMap<String, Integer> map = new HashMap<String, Integer>();

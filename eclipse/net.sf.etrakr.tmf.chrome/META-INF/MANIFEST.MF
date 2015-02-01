@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Chrome
-Bundle-SymbolicName: net.sf.etrakr.tmf.chrome
+Bundle-SymbolicName: net.sf.etrakr.tmf.chrome;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.sf.etrakr.tmf.chrome.TmfChromeActivator
 Bundle-Vendor: net.sf.etrakr
@@ -12,3 +12,6 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.guava,
  org.eclipse.linuxtools.tmf.core,
  net.sf.etrakr.chrome.core
+Export-Package: net.sf.etrakr.tmf.chrome,
+ net.sf.etrakr.tmf.chrome.state,
+ net.sf.etrakr.tmf.chrome.trace

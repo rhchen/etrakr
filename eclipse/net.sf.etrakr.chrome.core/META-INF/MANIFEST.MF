@@ -18,5 +18,6 @@ Require-Bundle: org.eclipse.core.runtime,
 Export-Package: net.sf.etrakr.chrome.core,
  net.sf.etrakr.chrome.core.cache,
  net.sf.etrakr.chrome.core.event,
+ net.sf.etrakr.chrome.core.event.impl,
  net.sf.etrakr.chrome.core.service,
  net.sf.etrakr.chrome.core.service.impl

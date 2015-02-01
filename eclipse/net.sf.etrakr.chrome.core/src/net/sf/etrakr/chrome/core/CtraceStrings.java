@@ -25,7 +25,27 @@ package net.sf.etrakr.chrome.core;
 @SuppressWarnings({"javadoc", "nls"})
 public interface CtraceStrings {
 
-    /* Field names */
+	/* 
+	 * Event Types 
+	 * Available events are B, E, I, C, S, T, F, s, t, f, M, P, O, N, D
+	 */
+	static final String PH_UPPER_B     = "B";
+	static final String PH_UPPER_E     = "E";
+	static final String PH_UPPER_I     = "I";
+	static final String PH_UPPER_C     = "C";
+	static final String PH_UPPER_S     = "S";
+	static final String PH_UPPER_T     = "T";
+	static final String PH_UPPER_F     = "F";
+	static final String PH_LOWER_S     = "s";
+	static final String PH_LOWER_T     = "t";
+	static final String PH_LOWER_F     = "f";
+	static final String PH_UPPER_M     = "m";
+	static final String PH_UPPER_P     = "P";
+	static final String PH_UPPER_O     = "O";
+	static final String PH_UPPER_N     = "N";
+	static final String PH_UPPER_D     = "D";
+	
+    /* Field Names */
     static final String COMM     = "comm";
     static final String NAME     = "name";
     static final String PID      = "pid";
