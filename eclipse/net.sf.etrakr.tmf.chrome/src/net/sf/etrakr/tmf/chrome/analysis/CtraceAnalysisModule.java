@@ -102,4 +102,5 @@ public class CtraceAnalysisModule extends TmfStateSystemAnalysisModule {
     public Iterable<TmfAnalysisRequirement> getAnalysisRequirements() {
         return REQUIREMENTS;
     }
+
 }

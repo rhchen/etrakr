@@ -144,4 +144,25 @@ public class CtraceServiceTest {
 		
 	}
 
+	@Test
+	public void test_2() {
+		
+		ICtraceService service = new CtraceService();
+		
+		try {
+			
+			service.addTrace(_file.toURI());
+			
+			ITmfEvent event = service.getTmfEvent(_file.toURI(), 0);
+			
+			Assert.assertNotNull(event);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 }

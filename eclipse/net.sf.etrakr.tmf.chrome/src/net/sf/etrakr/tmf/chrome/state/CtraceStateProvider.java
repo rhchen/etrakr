@@ -9,6 +9,7 @@ import net.sf.etrakr.chrome.core.event.impl.CtraceEvent;
 import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.linuxtools.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
 import org.eclipse.linuxtools.tmf.core.statesystem.AbstractTmfStateProvider;
 import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateProvider;
 import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
@@ -26,7 +27,7 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
     private final HashMap<String, Integer> knownEventNames;
     
     public CtraceStateProvider(ITmfTrace trace) {
-        super(trace, ITmfEvent.class, "Ftrace"); //$NON-NLS-1$
+        super(trace, ITmfEvent.class, "Ctrace"); //$NON-NLS-1$
         knownEventNames = fillEventNames();
     }
 
@@ -69,16 +70,32 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
 			int thread = value.isNull() ? -1 : value.unboxInt();
 	        final Integer currentThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), String.valueOf(thread));
 
+	        ITmfEventField content = event.getContent();
+	        String _name = content.getField(CtraceStrings.NAME).getFormattedValue();
+	        String _pid = content.getField(CtraceStrings.PID).getFormattedValue();
+	        String _tid = content.getField(CtraceStrings.TID).getFormattedValue();
+	        
 	        /*
 	         * Feed event to the history system if it's known to cause a state
 	         * transition.
 	         */
 	        switch (getEventIndex(eventName)) {
 	        
+		        case 1 :
+		        	System.out.println("eventName : "+ eventName);
+		        	break;
+		        	
+		        case 2 :
+		        	System.out.println("eventName : "+ eventName);
+		        	break;
+		        	
+	        	default :
+	        		System.out.println("eventName : "+ eventName);
+	        		break;
+	        	
 	        }
 	        
 		} catch (AttributeNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         

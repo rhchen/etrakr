@@ -145,8 +145,8 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 
 		CtraceEvent event = new CtraceEvent(null, _currentRank, ts, 
 				String.valueOf(this._currentRank),
-				new TmfEventType(evt.cat, evt.cat, null), 
-				content, evt.ph, 0, evt.cat);
+				new TmfEventType(evt.ph, evt.ph, null), 
+				content, evt.cat, 0, evt.cat);
 		
 		return event;
 		

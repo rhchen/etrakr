@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import net.sf.etrakr.tmf.ftrace.analysis.FtraceAnalysisModule;
@@ -56,6 +57,17 @@ public class StateSystemAnalysisModuleTest {
     
     private TmfStateSystemAnalysisModule module;
 
+    public static boolean deleteRecursive(File path) throws FileNotFoundException{
+        if (!path.exists()) throw new FileNotFoundException(path.getAbsolutePath());
+        boolean ret = true;
+        if (path.isDirectory()){
+            for (File f : path.listFiles()){
+                ret = ret && f.delete();
+            }
+        }
+        return ret && path.delete();
+    }
+    
     /**
      * Setup test trace
      */
@@ -69,11 +81,20 @@ public class StateSystemAnalysisModuleTest {
 
 			trace.initTrace(null, _file.getAbsolutePath(), null);
 
+			/* 
+			 * Force delete the ht files in junit testcases 
+			 * default path is java.io.tmpdir
+			 */
+			String directory = TmfTraceManager.getSupplementaryFileDir(trace);
+			deleteRecursive(new File(directory));
+			
 			trace.traceOpened(new TmfTraceOpenedSignal(this, trace, null));
 
 			module = (TmfStateSystemAnalysisModule) trace.getAnalysisModule(MODULE_SS);
 
 		} catch (TmfTraceException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
        

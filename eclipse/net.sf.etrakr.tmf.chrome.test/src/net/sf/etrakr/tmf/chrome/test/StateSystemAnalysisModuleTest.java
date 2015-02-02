@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import net.sf.etrakr.tmf.chrome.analysis.CtraceAnalysisModule;
@@ -53,26 +54,49 @@ public class StateSystemAnalysisModuleTest {
 
     private static final File _file = new File("data/perf_sampling_trace_with_trace_events.json");
     
-    private TmfStateSystemAnalysisModule module;
+    private CtraceAnalysisModule module;
 
+    public static boolean deleteRecursive(File path) throws FileNotFoundException{
+        if (!path.exists()) throw new FileNotFoundException(path.getAbsolutePath());
+        boolean ret = true;
+        if (path.isDirectory()){
+            for (File f : path.listFiles()){
+                ret = ret && f.delete();
+            }
+        }
+        return ret && path.delete();
+    }
+    
     /**
      * Setup test trace
      */
     @Before
     public void setupTraces() {
     	
+    	
     	ChromeTrace trace = new ChromeTrace();
 		TmfSignalManager.deregister(trace);
 
 		try {
 
+			/* Init the trace first, ht files not yet locked */
 			trace.initTrace(null, _file.getAbsolutePath(), null);
-
+			
+			/* 
+			 * Force delete the ht files in junit testcases 
+			 * default path is java.io.tmpdir
+			 */
+			String directory = TmfTraceManager.getSupplementaryFileDir(trace);
+			deleteRecursive(new File(directory));
+			
+			/* trigger the state provider to handle event */
 			trace.traceOpened(new TmfTraceOpenedSignal(this, trace, null));
 
-			module = (TmfStateSystemAnalysisModule) trace.getAnalysisModule(MODULE_SS);
+			module = (CtraceAnalysisModule) trace.getAnalysisModule(MODULE_SS);
 
 		} catch (TmfTraceException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
        
