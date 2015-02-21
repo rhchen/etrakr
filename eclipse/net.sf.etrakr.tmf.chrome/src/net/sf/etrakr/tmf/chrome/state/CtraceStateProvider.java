@@ -8,6 +8,7 @@ import net.sf.etrakr.chrome.core.event.impl.CtraceEvent;
 
 import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.linuxtools.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.linuxtools.statesystem.core.statevalue.TmfStateValue;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
 import org.eclipse.linuxtools.tmf.core.statesystem.AbstractTmfStateProvider;
@@ -56,41 +57,67 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
         
         try {
 			
-			/* Shortcut for the "current CPU" attribute node */
-	        final Integer currentCPUNode = ss.getQuarkRelativeAndAdd(getNodeCPUs(), event.getSource());
-
-	        /*
-	         * Shortcut for the "current thread" attribute node. It requires
-	         * querying the current CPU's current thread.
-	         */
-	        int quark = ss.getQuarkRelativeAndAdd(currentCPUNode, Attributes.CURRENT_THREAD);
-	        
-			ITmfStateValue value = ss.queryOngoingState(quark);
-			
-			int thread = value.isNull() ? -1 : value.unboxInt();
-	        final Integer currentThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), String.valueOf(thread));
+//			/* Shortcut for the "current CPU" attribute node */
+//	        final Integer currentCPUNode = ss.getQuarkRelativeAndAdd(getNodeCPUs(), event.getSource());
+//
+//	       
+//	        /*
+//	         * Shortcut for the "current thread" attribute node. It requires
+//	         * querying the current CPU's current thread.
+//	         */
+//	        int quark = ss.getQuarkRelativeAndAdd(currentCPUNode, Attributes.CURRENT_THREAD);
+//	        
+//			ITmfStateValue value = ss.queryOngoingState(quark);
+//			
+//			int thread = value.isNull() ? -1 : value.unboxInt();
+//	        final Integer currentThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), String.valueOf(thread));
 
 	        ITmfEventField content = event.getContent();
 	        String _name = content.getField(CtraceStrings.NAME).getFormattedValue();
 	        String _pid = content.getField(CtraceStrings.PID).getFormattedValue();
 	        String _tid = content.getField(CtraceStrings.TID).getFormattedValue();
+	        System.out.println("_tid : "+ _tid);
+	        /* Shortcut for the "current Process" attribute node */
+	        final Integer currentProcessNode = ss.getQuarkRelativeAndAdd(getNodeProcesss(), _pid);
 	        
+	        int currentThreadQuark = ss.getQuarkRelativeAndAdd(currentProcessNode, Attributes.CURRENT_THREAD);
+	        ITmfStateValue value = TmfStateValue.newValueInt(Integer.parseInt(_tid));
+            ss.modifyAttribute(ts, value, currentThreadQuark);
+            
+            final Integer currentThreadsNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), _tid);
+        	
+        	int currentExecQuark = ss.getQuarkRelativeAndAdd(currentThreadsNode, Attributes.EXEC_NAME);
+        	TmfStateValue sv_name = TmfStateValue.newValueString(_name);
+            ss.modifyAttribute(ts, sv_name, currentExecQuark);
+
+            int currentPhQuark = ss.getQuarkRelativeAndAdd(currentThreadsNode, Attributes.PH);
+            TmfStateValue sv_ph = TmfStateValue.newValueString(eventName);
+            ss.modifyAttribute(ts, sv_ph, currentPhQuark);
+            
 	        /*
 	         * Feed event to the history system if it's known to cause a state
 	         * transition.
 	         */
 	        switch (getEventIndex(eventName)) {
 	        
-		        case 1 :
-		        	System.out.println("eventName : "+ eventName);
+		        case 0 : /* X event */
+		        	//System.out.println("eventName : "+ eventName);
+		            int currentDurQuark = ss.getQuarkRelativeAndAdd(currentThreadsNode, Attributes.DUR);
+		        	String _dur = content.getField(CtraceStrings.DUR).getFormattedValue();
+		            value = TmfStateValue.newValueInt(Integer.parseInt(_dur));
+		            ss.modifyAttribute(ts, value, currentDurQuark);
+		            break;
+	        	
+		        case 1 : /* B event */
+		        	
 		        	break;
 		        	
-		        case 2 :
-		        	System.out.println("eventName : "+ eventName);
+		        case 2 : /* E event */
+		        	//System.out.println("eventName : "+ eventName);
 		        	break;
 		        	
 	        	default :
-	        		System.out.println("eventName : "+ eventName);
+	        		//System.out.println("eventName : "+ eventName);
 	        		break;
 	        	
 	        }
@@ -117,6 +144,7 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
          */
         HashMap<String, Integer> map = new HashMap<String, Integer>();
 
+        map.put(CtraceStrings.PH_UPPER_X, 0);
         map.put(CtraceStrings.PH_UPPER_B, 1);
         map.put(CtraceStrings.PH_UPPER_E, 2);
         map.put(CtraceStrings.PH_UPPER_I, 3);
@@ -145,6 +173,14 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
     }
 
     private int getNodeThreads() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.THREADS);
+    	return ss.getQuarkAbsoluteAndAdd(Attributes.THREADS);
+    }
+    
+    private int getNodeProcesss() {
+        return ss.getQuarkAbsoluteAndAdd(Attributes.PROCESSS);
+    }
+    
+    private void _handleEvent(){
+    	
     }
 }

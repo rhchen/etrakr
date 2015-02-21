@@ -140,11 +140,20 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField tmfEventField_PID = new TmfEventField(CtraceStrings.PID, evt.pid, null); //$NON-NLS-1$
 		eventList.add(tmfEventField_PID);
 		
+		/* Duration is optional, appears when ph attr is X */
+		if(evt.dur != null){
+			
+			final TmfEventField tmfEventField_DUR = new TmfEventField(CtraceStrings.DUR, evt.dur, null); //$NON-NLS-1$
+			eventList.add(tmfEventField_DUR);
+			
+		}
+		
 		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 
+		/* Fix me, the cpu is always 0, due to no define to spec  */	
 		CtraceEvent event = new CtraceEvent(null, _currentRank, ts, 
-				String.valueOf(this._currentRank),
+				String.valueOf(0),
 				new TmfEventType(evt.ph, evt.ph, null), 
 				content, evt.cat, 0, evt.cat);
 		

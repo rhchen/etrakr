@@ -11,5 +11,6 @@ public class TraceEvent {
 	public long ts;
 	public String ph;
 	public String name;
+	public String dur; /* Duration */
 	
 }

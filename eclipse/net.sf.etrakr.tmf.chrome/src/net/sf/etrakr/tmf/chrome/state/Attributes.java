@@ -29,6 +29,7 @@ public interface Attributes {
 
     /* First-level attributes */
     static final String CPUS = "CPUs";
+    static final String PROCESSS = "Procress";
     static final String THREADS = "Threads";
     static final String RESOURCES = "Resources";
 
@@ -38,8 +39,9 @@ public interface Attributes {
 
     /* Sub-attributes of the Thread nodes */
     static final String PPID = "PPID";
-    //static final String STATUS = "Status"
     static final String EXEC_NAME = "Exec_name";
+    static final String DUR = "Duration";
+    static final String PH = "Phase";
     
     /* Misc stuff */
     static final String UNKNOWN = "Unknown";

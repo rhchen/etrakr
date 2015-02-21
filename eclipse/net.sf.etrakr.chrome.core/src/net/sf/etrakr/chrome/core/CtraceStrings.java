@@ -29,6 +29,7 @@ public interface CtraceStrings {
 	 * Event Types 
 	 * Available events are B, E, I, C, S, T, F, s, t, f, M, P, O, N, D
 	 */
+	static final String PH_UPPER_X     = "X"; /* Replace of B/E Event */
 	static final String PH_UPPER_B     = "B";
 	static final String PH_UPPER_E     = "E";
 	static final String PH_UPPER_I     = "I";
@@ -49,6 +50,7 @@ public interface CtraceStrings {
     static final String NAME     = "name";
     static final String PID      = "pid";
     static final String TID      = "tid";
+    static final String DUR      = "dur";
     //static final String PPID     = "ppid";
     //static final String STATUS   = "status";
     

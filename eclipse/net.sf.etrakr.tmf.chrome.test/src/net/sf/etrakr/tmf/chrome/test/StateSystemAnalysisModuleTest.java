@@ -157,6 +157,18 @@ public class StateSystemAnalysisModuleTest {
             
         }
         
+        List<Integer> processQuarks = ssq.getQuarks(Attributes.PROCESSS, "*"); //$NON-NLS-1$
+        for (Integer processQuark : processQuarks) {
+            int cpu = Integer.parseInt(ssq.getAttributeName(processQuark));
+            
+        }
+        
+        List<Integer> threadsQuarks = ssq.getQuarks(Attributes.THREADS, "*"); //$NON-NLS-1$
+        for (Integer threadsQuark : threadsQuarks) {
+            int cpu = Integer.parseInt(ssq.getAttributeName(threadsQuark));
+            
+        }
+        
         final long realStart = ssq.getStartTime();
         final long realEnd =ssq.getCurrentEndTime() + 1;
     }
