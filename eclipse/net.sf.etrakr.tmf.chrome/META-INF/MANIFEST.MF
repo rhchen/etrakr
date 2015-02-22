@@ -13,5 +13,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.linuxtools.tmf.core,
  net.sf.etrakr.chrome.core
 Export-Package: net.sf.etrakr.tmf.chrome,
+ net.sf.etrakr.tmf.chrome.analysis,
  net.sf.etrakr.tmf.chrome.state,
  net.sf.etrakr.tmf.chrome.trace
