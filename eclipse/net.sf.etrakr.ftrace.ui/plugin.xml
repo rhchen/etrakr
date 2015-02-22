@@ -8,7 +8,7 @@
             category="net.sf.etrakr.ftrace.ui.category"
             class="net.sf.etrakr.ftrace.ui.views.controlflow.ControlFlowView"
             icon="icons/eview16/control_flow_view.gif"
-            id="net.sf.etrakr.ftrace.ui.views.controlflow"
+            id="net.sf.etrakr.ftrace.ui.views.controlflow.ControlFlowView"
             name="Control Flow"
             restorable="true">
       </view>
@@ -39,7 +39,7 @@
          point="org.eclipse.linuxtools.tmf.core.analysis">
       <output
             class="net.sf.etrakr.ftrace.ui.analysis.TmfAnalysisViewOutput"
-            id="net.sf.etrakr.ftrace.ui.views.controlflow">
+            id="net.sf.etrakr.ftrace.ui.views.controlflow.ControlFlowView">
          <analysisId
                id="net.sf.etrakr.tmf.ftrace.analysis.ftrace">
          </analysisId>
