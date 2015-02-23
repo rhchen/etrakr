@@ -35,5 +35,6 @@
   	<module>../net.sf.etrakr.tmf.ftrace.test</module>
   	<module>../net.sf.etrakr.tmf.chrome</module>
   	<module>../net.sf.etrakr.tmf.chrome.test</module>
+  	<module>../net.sf.etrakr.chrome.ui</module>
   </modules>
 </project>
