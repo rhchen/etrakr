@@ -349,6 +349,15 @@ public class ControlFlowView extends AbstractTimeGraphView {
             boolean root = (entry.getParent() == null);
             if (root && entry.getParentThreadId() > 0) {
                 for (ControlFlowEntry parent : entryList) {
+                	
+                	/* Fix me, RH
+                	 * we see tid and pid are the same in trace event
+                	 * This would lead to recursive add
+                	 */
+                	if (entry.getThreadId() == entry.getParentThreadId()){
+                		break;
+                	}
+                	
                     if (parent.getThreadId() == entry.getParentThreadId() &&
                             entry.getStartTime() >= parent.getStartTime() &&
                             entry.getStartTime() <= parent.getEndTime()) {

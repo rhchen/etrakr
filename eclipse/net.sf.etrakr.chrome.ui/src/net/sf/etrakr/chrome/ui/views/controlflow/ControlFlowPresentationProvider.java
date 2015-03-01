@@ -141,18 +141,14 @@ public class ControlFlowPresentationProvider extends TimeGraphPresentationProvid
 
         try {
             // Find every CPU first, then get the current thread
-            int cpusQuark = ssq.getQuarkAbsolute(Attributes.CPUS);
-            List<Integer> cpuQuarks = ssq.getSubAttributes(cpusQuark, false);
-            for (Integer cpuQuark : cpuQuarks) {
-                int currentThreadQuark = ssq.getQuarkRelative(cpuQuark, Attributes.CURRENT_THREAD);
-                ITmfStateInterval interval = ssq.querySingleState(event.getTime(), currentThreadQuark);
-                if (!interval.getStateValue().isNull()) {
-                    ITmfStateValue state = interval.getStateValue();
-                    int currentThreadId = state.unboxInt();
-                    if (tid == currentThreadId) {
-                        retMap.put(Messages.ControlFlowView_attributeCpuName, ssq.getAttributeName(cpuQuark));
-                        break;
-                    }
+            int threadsQuark = ssq.getQuarkAbsolute(Attributes.THREADS);
+            int currentThreadQuark = ssq.getQuarkRelative(threadsQuark, String.valueOf(tid));
+            ITmfStateInterval interval = ssq.querySingleState(event.getTime(), currentThreadQuark);
+            if (!interval.getStateValue().isNull()) {
+                ITmfStateValue state = interval.getStateValue();
+                int currentThreadId = state.unboxInt();
+                if (tid == currentThreadId) {
+                    retMap.put(Messages.ControlFlowView_attributeCpuName, ssq.getAttributeName(currentThreadQuark));
                 }
             }
 

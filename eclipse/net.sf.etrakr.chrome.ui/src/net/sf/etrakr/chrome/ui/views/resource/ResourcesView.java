@@ -208,28 +208,29 @@ public class ResourcesView extends AbstractTimeGraphView {
 
         try {
             if (resourcesEntry.getType().equals(Type.PROCESSS)) {
-                int statusQuark = ssq.getQuarkRelative(quark, Attributes.STATUS);
-                List<ITmfStateInterval> statusIntervals = ssq.queryHistoryRange(statusQuark, realStart, realEnd - 1, resolution, monitor);
-                eventList = new ArrayList<ITimeEvent>(statusIntervals.size());
-                long lastEndTime = -1;
-                for (ITmfStateInterval statusInterval : statusIntervals) {
-                    if (monitor.isCanceled()) {
-                        return null;
-                    }
-                    int status = statusInterval.getStateValue().unboxInt();
-                    long time = statusInterval.getStartTime();
-                    long duration = statusInterval.getEndTime() - time + 1;
-                    if (!statusInterval.getStateValue().isNull()) {
-                        if (lastEndTime != time && lastEndTime != -1) {
-                            eventList.add(new TimeEvent(entry, lastEndTime, time - lastEndTime));
-                        }
-                        eventList.add(new TimeEvent(entry, time, duration, status));
-                    } else if (lastEndTime == -1 || time + duration >= endTime) {
-                        // add null event if it intersects the start or end time
-                        eventList.add(new NullTimeEvent(entry, time, duration));
-                    }
-                    lastEndTime = time + duration;
-                }
+            	/*Fix me, RH */
+//                int statusQuark = ssq.getQuarkRelative(quark, Attributes.STATUS);
+//                List<ITmfStateInterval> statusIntervals = ssq.queryHistoryRange(statusQuark, realStart, realEnd - 1, resolution, monitor);
+//                eventList = new ArrayList<ITimeEvent>(statusIntervals.size());
+//                long lastEndTime = -1;
+//                for (ITmfStateInterval statusInterval : statusIntervals) {
+//                    if (monitor.isCanceled()) {
+//                        return null;
+//                    }
+//                    int status = statusInterval.getStateValue().unboxInt();
+//                    long time = statusInterval.getStartTime();
+//                    long duration = statusInterval.getEndTime() - time + 1;
+//                    if (!statusInterval.getStateValue().isNull()) {
+//                        if (lastEndTime != time && lastEndTime != -1) {
+//                            eventList.add(new TimeEvent(entry, lastEndTime, time - lastEndTime));
+//                        }
+//                        eventList.add(new TimeEvent(entry, time, duration, status));
+//                    } else if (lastEndTime == -1 || time + duration >= endTime) {
+//                        // add null event if it intersects the start or end time
+//                        eventList.add(new NullTimeEvent(entry, time, duration));
+//                    }
+//                    lastEndTime = time + duration;
+//                }
             } else if (resourcesEntry.getType().equals(Type.THREADS)) {
                 List<ITmfStateInterval> irqIntervals = ssq.queryHistoryRange(quark, realStart, realEnd - 1, resolution, monitor);
                 eventList = new ArrayList<ITimeEvent>(irqIntervals.size());

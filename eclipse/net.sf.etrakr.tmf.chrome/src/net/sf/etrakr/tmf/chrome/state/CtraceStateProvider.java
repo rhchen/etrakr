@@ -76,7 +76,7 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
 	        String _name = content.getField(CtraceStrings.NAME).getFormattedValue();
 	        String _pid = content.getField(CtraceStrings.PID).getFormattedValue();
 	        String _tid = content.getField(CtraceStrings.TID).getFormattedValue();
-	        System.out.println("_tid : "+ _tid);
+	        
 	        /* Shortcut for the "current Process" attribute node */
 	        final Integer currentProcessNode = ss.getQuarkRelativeAndAdd(getNodeProcesss(), _pid);
 	        
@@ -84,6 +84,11 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
 	        ITmfStateValue value = TmfStateValue.newValueInt(Integer.parseInt(_tid));
             ss.modifyAttribute(ts, value, currentThreadQuark);
             
+            int currentStatusQuark = ss.getQuarkRelativeAndAdd(currentThreadQuark, Attributes.STATUS);
+            value = StateValues.CPU_STATUS_RUN_USERMODE_VALUE;
+            ss.modifyAttribute(ts, value, currentStatusQuark);
+            
+            /* Shortcut for the "current Thread" attribute node */
             final Integer currentThreadsNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), _tid);
         	
         	int currentExecQuark = ss.getQuarkRelativeAndAdd(currentThreadsNode, Attributes.EXEC_NAME);
@@ -93,6 +98,14 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
             int currentPhQuark = ss.getQuarkRelativeAndAdd(currentThreadsNode, Attributes.PH);
             TmfStateValue sv_ph = TmfStateValue.newValueString(eventName);
             ss.modifyAttribute(ts, sv_ph, currentPhQuark);
+            
+            int currentPpidQuark = ss.getQuarkRelativeAndAdd(currentThreadsNode, Attributes.PPID);
+            TmfStateValue sv_ppid = TmfStateValue.newValueInt(Integer.parseInt(_pid));
+            ss.modifyAttribute(ts, sv_ppid, currentPpidQuark);
+            
+            currentStatusQuark = ss.getQuarkRelativeAndAdd(currentThreadsNode, Attributes.STATUS);
+            value = StateValues.CPU_STATUS_RUN_USERMODE_VALUE;
+            ss.modifyAttribute(ts, value, currentStatusQuark);
             
 	        /*
 	         * Feed event to the history system if it's known to cause a state
