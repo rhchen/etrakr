@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.linuxtools.tmf.core.tracetype">
       <type
-            event_type="org.eclipse.linuxtools.tmf.core.event.TmfEvent"
+            event_type="org.eclipse.tracecompass.tmf.core.event.TmfEvent"
             id="net.sf.notrace.ftrace.trace.FtraceTrace"
             isDirectory="false"
             name="FtraceTrace"
