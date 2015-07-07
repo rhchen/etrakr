@@ -10,17 +10,18 @@ import java.util.Scanner;
 import java.util.SortedMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
+import org.eclipse.tracecompass.tmf.core.event.TmfEventField;
+import org.eclipse.tracecompass.tmf.core.event.TmfEventType;
+import org.eclipse.tracecompass.tmf.core.timestamp.ITmfTimestamp;
+import org.eclipse.tracecompass.tmf.core.timestamp.TmfTimestamp;
+
 import net.sf.commonstringutil.StringUtil;
 import net.sf.etrakr.ftrace.core.FtraceStrings;
 import net.sf.etrakr.ftrace.core.event.impl.FtraceEvent;
 import net.sf.etrakr.ftrace.core.service.impl.FtraceService;
 
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.event.TmfEventField;
-import org.eclipse.linuxtools.tmf.core.event.TmfEventType;
-import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
-import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimestamp;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.BiMap;
@@ -297,7 +298,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The source and sourceCPU is the same, should fix
 		 */
 		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -348,7 +349,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The source and sourceCPU is the same, should fix
 		 */
 		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -390,7 +391,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The source and sourceCPU is the same, should fix
 		 */
 		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -433,7 +434,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The source and sourceCPU is the same, should fix
 		 */
 		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -459,7 +460,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The source and sourceCPU is the same, should fix
 		 */
 		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, line, head.cpuId, head.title);
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, line, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, null), content, line, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -499,7 +500,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The source and sourceCPU is the same, should fix
 		 */
 		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
@@ -551,7 +552,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The source and sourceCPU is the same, should fix
 		 */
 		//FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
-		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		FtraceEvent event = new FtraceEvent(null, _currentRank, ts, String.valueOf(head.cpuId),new TmfEventType(head.title, null), content, suffStr, head.cpuId, head.title);
 				
 		return event;
 	}

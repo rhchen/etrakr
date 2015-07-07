@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 École Polytechnique de Montréal
+ * Copyright (c) 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,12 +7,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Geneviève Bastien - Initial API and implementation
+ *   Bastien - Initial API and implementation
  *******************************************************************************/
 
 package net.sf.etrakr.chrome.ui.views.cpu;
 
-import org.eclipse.linuxtools.tmf.ui.viewers.tree.TmfTreeViewerEntry;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeViewerEntry;
 
 /**
  * Represents an entry in the tree viewer of the CPU usage view. An entry is a

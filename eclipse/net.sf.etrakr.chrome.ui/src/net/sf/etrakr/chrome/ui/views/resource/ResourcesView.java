@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Ericsson, École Polytechnique de Montréal
+ * Copyright (c) 2012, 2014 Ericsson,
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -8,7 +8,7 @@
  *
  * Contributors:
  *   Patrick Tasse - Initial API and implementation
- *   Geneviève Bastien - Move code to provide base classes for time graph views
+ *   Bastien - Move code to provide base classes for time graph views
  *******************************************************************************/
 
 package net.sf.etrakr.chrome.ui.views.resource;
@@ -26,20 +26,21 @@ import net.sf.etrakr.tmf.chrome.analysis.CtraceAnalysisModule;
 import net.sf.etrakr.tmf.chrome.state.Attributes;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.linuxtools.statesystem.core.ITmfStateSystem;
-import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateSystemDisposedException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateValueTypeException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.TimeRangeException;
-import org.eclipse.linuxtools.statesystem.core.interval.ITmfStateInterval;
-import org.eclipse.linuxtools.tmf.core.statesystem.TmfStateSystemAnalysisModule;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
-import org.eclipse.linuxtools.tmf.ui.views.timegraph.AbstractTimeGraphView;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ITimeEvent;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.NullTimeEvent;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.TimeEvent;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.TimeGraphEntry;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
+import org.eclipse.tracecompass.statesystem.core.StateSystemUtils;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
+import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
+import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.tmf.ui.views.timegraph.AbstractTimeGraphView;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeEvent;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.NullTimeEvent;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.TimeEvent;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.TimeGraphEntry;
 
 /**
  * Main implementation for the LTTng 2.0 kernel Resource view
@@ -232,7 +233,7 @@ public class ResourcesView extends AbstractTimeGraphView {
 //                    lastEndTime = time + duration;
 //                }
             } else if (resourcesEntry.getType().equals(Type.THREADS)) {
-                List<ITmfStateInterval> irqIntervals = ssq.queryHistoryRange(quark, realStart, realEnd - 1, resolution, monitor);
+                List<ITmfStateInterval> irqIntervals = StateSystemUtils.queryHistoryRange(ssq, quark, realStart, realEnd - 1, resolution, monitor);
                 eventList = new ArrayList<ITimeEvent>(irqIntervals.size());
                 long lastEndTime = -1;
                 boolean lastIsNull = true;

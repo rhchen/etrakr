@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Ericsson, École Polytechnique de Montréal
+ * Copyright (c) 2012, 2014 Ericsson, 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -8,7 +8,7 @@
  *
  * Contributors:
  *   Patrick Tasse - Initial API and implementation
- *   Geneviève Bastien - Move code to provide base classes for time graph view
+ *   Bastien - Move code to provide base classes for time graph view
  *******************************************************************************/
 
 package net.sf.etrakr.ftrace.ui.views.controlflow;
@@ -29,26 +29,27 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.linuxtools.statesystem.core.ITmfStateSystem;
-import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateSystemDisposedException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateValueTypeException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.TimeRangeException;
-import org.eclipse.linuxtools.statesystem.core.interval.ITmfStateInterval;
-import org.eclipse.linuxtools.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.linuxtools.tmf.core.statesystem.TmfStateSystemAnalysisModule;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
-import org.eclipse.linuxtools.tmf.core.trace.TmfTraceManager;
-import org.eclipse.linuxtools.tmf.ui.views.timegraph.AbstractTimeGraphView;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ILinkEvent;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ITimeEvent;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.TimeEvent;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.TimeGraphEntry;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.TimeLinkEvent;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.widgets.Utils;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.widgets.Utils.Resolution;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.widgets.Utils.TimeFormat;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
+import org.eclipse.tracecompass.statesystem.core.StateSystemUtils;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
+import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
+import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
+import org.eclipse.tracecompass.tmf.ui.views.timegraph.AbstractTimeGraphView;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ILinkEvent;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeEvent;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.TimeEvent;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.TimeGraphEntry;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.TimeLinkEvent;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.widgets.Utils;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.widgets.Utils.Resolution;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.widgets.Utils.TimeFormat;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -274,7 +275,7 @@ public class ControlFlowView extends AbstractTimeGraphView {
                 List<ITmfStateInterval> execNameIntervals;
                 try {
                     execNameQuark = ssq.getQuarkRelative(threadQuark, Attributes.EXEC_NAME);
-                    execNameIntervals = ssq.queryHistoryRange(execNameQuark, start, end);
+                    execNameIntervals = StateSystemUtils.queryHistoryRange(ssq, execNameQuark, start, end);
                 } catch (AttributeNotFoundException e) {
                     /* No information on this thread (yet?), skip it for now */
                     continue;
@@ -417,7 +418,8 @@ public class ControlFlowView extends AbstractTimeGraphView {
         }
         try {
             int statusQuark = ssq.getQuarkRelative(entry.getThreadQuark(), Attributes.STATUS);
-            List<ITmfStateInterval> statusIntervals = ssq.queryHistoryRange(statusQuark, realStart, realEnd - 1, resolution, monitor);
+            //List<ITmfStateInterval> statusIntervals = ssq.queryHistoryRange(statusQuark, realStart, realEnd - 1, resolution, monitor);
+            List<ITmfStateInterval> statusIntervals = StateSystemUtils.queryHistoryRange(ssq, statusQuark, realStart, realEnd - 1, resolution, monitor);
             //eventList = new ArrayList<>(statusIntervals.size());
             eventList = Lists.<ITimeEvent>newArrayList();
             long lastEndTime = -1;
@@ -463,12 +465,8 @@ public class ControlFlowView extends AbstractTimeGraphView {
      * @return a value identifying the entry
      */
     private int getSelectionValue(long time) {
-        int thread = -1;
-        ITmfTrace[] traces = TmfTraceManager.getTraceSet(getTrace());
-        if (traces == null) {
-            return thread;
-        }
-        for (ITmfTrace trace : traces) {
+    	int thread = -1;
+        for (ITmfTrace trace : TmfTraceManager.getTraceSet(getTrace())) {
             if (thread > 0) {
                 break;
             }
@@ -527,12 +525,11 @@ public class ControlFlowView extends AbstractTimeGraphView {
     @Override
     protected List<ILinkEvent> getLinkList(long startTime, long endTime, long resolution, IProgressMonitor monitor) {
         List<ILinkEvent> list = Lists.<ILinkEvent>newArrayList();
-        ITmfTrace[] traces = TmfTraceManager.getTraceSet(getTrace());
         List<TimeGraphEntry> entryList = getEntryList(getTrace());
-        if (traces == null || entryList == null) {
+        if (entryList == null) {
             return list;
         }
-        for (ITmfTrace trace : traces) {
+        for (ITmfTrace trace : TmfTraceManager.getTraceSet(getTrace())) {
             if (trace == null) {
                 continue;
             }
@@ -551,7 +548,7 @@ public class ControlFlowView extends AbstractTimeGraphView {
                     // adjust the query range to include the previous and following intervals
                     long qstart = Math.max(ssq.querySingleState(start, currentThreadQuark).getStartTime() - 1, ssq.getStartTime());
                     long qend = Math.min(ssq.querySingleState(end, currentThreadQuark).getEndTime() + 1, ssq.getCurrentEndTime());
-                    List<ITmfStateInterval> currentThreadIntervals = ssq.queryHistoryRange(currentThreadQuark, qstart, qend, resolution, monitor);
+                    List<ITmfStateInterval> currentThreadIntervals = StateSystemUtils.queryHistoryRange(ssq, currentThreadQuark, qstart, qend, resolution, monitor);
                     int prevThread = 0;
                     long prevEnd = 0;
                     long lastEnd = 0;

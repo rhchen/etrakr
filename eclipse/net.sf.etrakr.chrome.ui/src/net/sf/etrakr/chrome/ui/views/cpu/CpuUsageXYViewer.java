@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 École Polytechnique de Montréal
+ * Copyright (c) 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Geneviève Bastien - Initial API and implementation
+ *   Bastien - Initial API and implementation
  *******************************************************************************/
 
 package net.sf.etrakr.chrome.ui.views.cpu;
@@ -19,19 +19,21 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sf.etrakr.chrome.ui.CtracePlugin;
+import net.sf.etrakr.tmf.chrome.analysis.CtraceAnalysisModule;
 import net.sf.etrakr.tmf.chrome.analysis.CtraceCpuUsageAnalysis;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.linuxtools.statesystem.core.ITmfStateSystem;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateValueTypeException;
-import org.eclipse.linuxtools.tmf.ui.viewers.xycharts.linecharts.TmfCommonXLineChartViewer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
+import org.eclipse.tracecompass.tmf.ui.viewers.xycharts.linecharts.TmfCommonXLineChartViewer;
 
 /**
  * CPU usage viewer with XY line chart. It displays the total CPU usage and that
  * of the threads selected in the CPU usage tree viewer.
  *
- * @author Geneviève Bastien
+ * @author Bastien
  */
 public class CpuUsageXYViewer extends TmfCommonXLineChartViewer {
 
@@ -64,7 +66,7 @@ public class CpuUsageXYViewer extends TmfCommonXLineChartViewer {
     @Override
     protected void initializeDataSource() {
         if (getTrace() != null) {
-            fModule = getTrace().getAnalysisModuleOfClass(CtraceCpuUsageAnalysis.class, CtraceCpuUsageAnalysis.ID);
+            fModule = TmfTraceUtils.getAnalysisModuleOfClass(getTrace(), CtraceCpuUsageAnalysis.class, CtraceCpuUsageAnalysis.ID);
             if (fModule == null) {
                 return;
             }

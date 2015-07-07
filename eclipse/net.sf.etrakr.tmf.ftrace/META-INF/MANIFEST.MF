@@ -10,8 +10,9 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  com.google.guava,
- org.eclipse.linuxtools.tmf.core,
- net.sf.etrakr.ftrace.core
+ net.sf.etrakr.ftrace.core,
+ org.eclipse.tracecompass.tmf.core;bundle-version="1.1.0",
+ org.eclipse.tracecompass.common.core;bundle-version="1.0.0"
 Export-Package: net.sf.etrakr.tmf.ftrace,
  net.sf.etrakr.tmf.ftrace.analysis,
  net.sf.etrakr.tmf.ftrace.state,

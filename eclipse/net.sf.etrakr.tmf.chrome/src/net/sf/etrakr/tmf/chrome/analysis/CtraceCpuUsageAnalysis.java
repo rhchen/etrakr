@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 École Polytechnique de Montréal
+ * Copyright (c) 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Geneviève Bastien - Initial API and implementation
+ *   Bastien - Initial API and implementation
  *******************************************************************************/
 
 package net.sf.etrakr.tmf.chrome.analysis;
@@ -22,15 +22,16 @@ import net.sf.etrakr.tmf.chrome.state.Attributes;
 import net.sf.etrakr.tmf.chrome.state.CtraceCpuStateProvider;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.linuxtools.statesystem.core.ITmfStateSystem;
-import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateSystemDisposedException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateValueTypeException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.TimeRangeException;
-import org.eclipse.linuxtools.statesystem.core.interval.ITmfStateInterval;
-import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateProvider;
-import org.eclipse.linuxtools.tmf.core.statesystem.TmfStateSystemAnalysisModule;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
+import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
+import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
+import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 
 /**
  * This analysis module computes the CPU usage of a system from a kernel trace.
@@ -67,7 +68,7 @@ public class CtraceCpuUsageAnalysis extends TmfStateSystemAnalysisModule {
          * This analysis depends on the LTTng kernel analysis, so we'll start
          * that build at the same time
          */
-    	CtraceAnalysisModule module = getTrace().getAnalysisModuleOfClass(CtraceAnalysisModule.class, CtraceAnalysisModule.ID);
+    	CtraceAnalysisModule module = TmfTraceUtils.getAnalysisModuleOfClass(getTrace(), CtraceAnalysisModule.class, CtraceAnalysisModule.ID);
         if (module != null) {
             module.schedule();
         }

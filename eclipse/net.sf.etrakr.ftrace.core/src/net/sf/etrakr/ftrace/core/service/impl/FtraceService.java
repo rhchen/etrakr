@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.tukaani.xz.SeekableFileInputStream;
 import org.tukaani.xz.SeekableXZInputStream;
 import org.tukaani.xz.XZFormatException;

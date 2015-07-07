@@ -3,11 +3,12 @@ package net.sf.etrakr.trans.ftrace.test;
 import java.io.File;
 import java.io.IOException;
 
+import net.sf.etrakr.ftrace.core.event.IFtraceEvent;
 import net.sf.etrakr.trans.ftrace.deser.FtraceDeserializer;
 import net.sf.etrakr.trans.ftrace.module.FtraceMapper;
 import net.sf.etrakr.trans.ftrace.module.FtraceModule;
 
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -63,9 +64,9 @@ public class DummyTest {
 			@SuppressWarnings("unused")
 			T row = it.nextValue();
 
-			if(row instanceof ITmfEvent){
+			if(row instanceof IFtraceEvent){
 				
-				ITmfEvent ev = (ITmfEvent) row;
+				IFtraceEvent ev = (IFtraceEvent) row;
 				
 				String source = ev.getSource();
 				String ref = ev.getReference();

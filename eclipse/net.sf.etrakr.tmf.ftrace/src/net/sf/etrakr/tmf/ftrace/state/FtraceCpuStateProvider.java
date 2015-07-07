@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 École Polytechnique de Montréal
+ * Copyright (c) 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -8,10 +8,12 @@
  *
  * Contributors:
  *   François Rajotte - Initial API and implementation
- *   Geneviève Bastien - Revision of the initial implementation
+ *   Bastien - Revision of the initial implementation
  *******************************************************************************/
 
 package net.sf.etrakr.tmf.ftrace.state;
+
+import static org.eclipse.tracecompass.common.core.NonNullUtils.checkNotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,13 +23,14 @@ import net.sf.etrakr.ftrace.core.event.IFtraceEvent;
 import net.sf.etrakr.ftrace.core.event.impl.FtraceEvent;
 import net.sf.etrakr.tmf.ftrace.TmfFtraceActivator;
 
-import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.linuxtools.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.linuxtools.statesystem.core.statevalue.TmfStateValue;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.statesystem.AbstractTmfStateProvider;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
+import org.eclipse.tracecompass.tmf.core.statesystem.AbstractTmfStateProvider;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 
 /**
  * Creates a state system with the total time spent on CPU for each thread and
@@ -58,7 +61,7 @@ public class FtraceCpuStateProvider extends AbstractTmfStateProvider {
      *            The trace from which to get the CPU usage
      */
     public FtraceCpuStateProvider(ITmfTrace trace) {
-        super(trace, ITmfEvent.class, "Ftrace CPU usage"); //$NON-NLS-1$
+        super(trace, "Ftrace CPU usage"); //$NON-NLS-1$
         fTraceStart = trace.getStartTime().getValue();
     }
 
@@ -88,12 +91,15 @@ public class FtraceCpuStateProvider extends AbstractTmfStateProvider {
 
             ITmfEventField content = event.getContent();
             long ts = event.getTimestamp().getValue();
-            String cpu = event.getSource();
+            String cpu = ((IFtraceEvent) event).getSource();
 
             Long prevTid = (Long) content.getField(FtraceStrings.PREV_TID).getValue();
 
             try {
-                Integer currentCPUNode = ss.getQuarkRelativeAndAdd(getNodeCPUs(), cpu);
+            	
+            	final ITmfStateSystemBuilder ss = checkNotNull(getStateSystemBuilder());
+            	
+                Integer currentCPUNode = ss.getQuarkRelativeAndAdd(getNodeCPUs(ss), cpu);
 
                 /*
                  * This quark contains the value of the cumulative time spent on
@@ -136,8 +142,8 @@ public class FtraceCpuStateProvider extends AbstractTmfStateProvider {
     }
 
     /* Shortcut for the "current CPU" attribute node */
-    private int getNodeCPUs() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.CPUS);
+    private int getNodeCPUs(ITmfStateSystemBuilder ssb) {
+        return ssb.getQuarkAbsoluteAndAdd(Attributes.CPUS);
     }
 
 }

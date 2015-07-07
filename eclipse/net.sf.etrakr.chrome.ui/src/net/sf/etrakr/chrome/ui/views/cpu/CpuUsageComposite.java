@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 École Polytechnique de Montréal
+ * Copyright (c) 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,10 +7,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Geneviève Bastien - Initial API and implementation
+ *   Bastien - Initial API and implementation
  *******************************************************************************/
 
 package net.sf.etrakr.chrome.ui.views.cpu;
+
+import static org.eclipse.tracecompass.common.core.NonNullUtils.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,19 +26,21 @@ import net.sf.etrakr.tmf.chrome.state.Attributes;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.linuxtools.statesystem.core.ITmfStateSystem;
-import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateSystemDisposedException;
-import org.eclipse.linuxtools.statesystem.core.interval.ITmfStateInterval;
-import org.eclipse.linuxtools.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.linuxtools.tmf.core.statesystem.TmfStateSystemAnalysisModule;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
-import org.eclipse.linuxtools.tmf.ui.viewers.tree.AbstractTmfTreeViewer;
-import org.eclipse.linuxtools.tmf.ui.viewers.tree.ITmfTreeColumnDataProvider;
-import org.eclipse.linuxtools.tmf.ui.viewers.tree.ITmfTreeViewerEntry;
-import org.eclipse.linuxtools.tmf.ui.viewers.tree.TmfTreeColumnData;
-import org.eclipse.linuxtools.tmf.ui.viewers.tree.TmfTreeColumnData.ITmfColumnPercentageProvider;
-import org.eclipse.linuxtools.tmf.ui.viewers.tree.TmfTreeViewerEntry;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
+import org.eclipse.tracecompass.statesystem.core.StateSystemUtils;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
+import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
+import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.AbstractTmfTreeViewer;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeColumnDataProvider;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeViewerEntry;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeColumnData;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeColumnData.ITmfColumnPercentageProvider;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeViewerEntry;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 
@@ -195,7 +199,10 @@ public class CpuUsageComposite extends AbstractTmfTreeViewer {
 
     @Override
     public void initializeDataSource() {
-        fModule = getTrace().getAnalysisModuleOfClass(CtraceCpuUsageAnalysis.class, CtraceCpuUsageAnalysis.ID);
+        /* Should not be called while trace is still null */
+        ITmfTrace trace = checkNotNull(getTrace());
+
+        fModule = TmfTraceUtils.getAnalysisModuleOfClass(trace, CtraceCpuUsageAnalysis.class, CtraceCpuUsageAnalysis.ID);
         if (fModule == null) {
             return;
         }
@@ -203,7 +210,7 @@ public class CpuUsageComposite extends AbstractTmfTreeViewer {
         fModule.waitForInitialization();
         fProcessNameMap.clear();
     }
-
+    
     @Override
     protected ITmfTreeViewerEntry updateElements(long start, long end, boolean isSelection) {
         if (isSelection || (start == end)) {
@@ -284,7 +291,7 @@ public class CpuUsageComposite extends AbstractTmfTreeViewer {
                     List<ITmfStateInterval> execNameIntervals;
                     try {
                         execNameQuark = kernelSs.getQuarkRelative(tidQuark, Attributes.EXEC_NAME);
-                        execNameIntervals = kernelSs.queryHistoryRange(execNameQuark, getStartTime(), getEndTime());
+                        execNameIntervals = StateSystemUtils.queryHistoryRange(kernelSs, execNameQuark, getStartTime(), getEndTime());
                     } catch (AttributeNotFoundException e) {
                         /* No information on this thread (yet?), skip it for now */
                         continue;

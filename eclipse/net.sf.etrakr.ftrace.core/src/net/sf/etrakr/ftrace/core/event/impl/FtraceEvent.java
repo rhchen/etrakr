@@ -1,13 +1,14 @@
 package net.sf.etrakr.ftrace.core.event.impl;
 
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventType;
+import org.eclipse.tracecompass.tmf.core.event.TmfEvent;
+import org.eclipse.tracecompass.tmf.core.timestamp.ITmfTimestamp;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
+
 import net.sf.etrakr.ftrace.core.event.IFtraceEvent;
 
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventType;
-import org.eclipse.linuxtools.tmf.core.event.TmfEvent;
-import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 
 public class FtraceEvent extends TmfEvent implements IFtraceEvent, ITmfEvent {
 
@@ -16,6 +17,18 @@ public class FtraceEvent extends TmfEvent implements IFtraceEvent, ITmfEvent {
 	/* eventName is ftrace event type. ex sched_switch */
     private final String eventName;
     
+    private String source;
+    private String reference;
+    
+    
+    public String getSource() {
+		return source;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+	
     /**
      * 
      * @param trace The trace implements ITmfTrace
@@ -40,10 +53,11 @@ public class FtraceEvent extends TmfEvent implements IFtraceEvent, ITmfEvent {
 	public FtraceEvent(ITmfTrace trace, long rank, ITmfTimestamp timestamp,
 			String source, ITmfEventType type, ITmfEventField content,
 			String reference, int sourceCPU, String eventName) {
-		super(trace, rank, timestamp, source, type, content, reference);
-		
+		super(trace, rank, timestamp, type, content);
 		this.sourceCPU = sourceCPU;
         this.eventName = eventName;
+        this.source = source;
+        this.reference = reference;
 	}
 
 	public int getCPU() {

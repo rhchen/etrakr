@@ -10,9 +10,10 @@ import java.net.URL;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+
 import net.sf.etrakr.ftrace.core.service.IFtraceService;
 
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 
 import com.fasterxml.jackson.core.Base64Variant;
 import com.fasterxml.jackson.core.JsonLocation;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2014 École Polytechnique de Montréal
+ * Copyright (c) 2013, 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Geneviève Bastien - Initial API and implementation
+ *   Bastien - Initial API and implementation
  *   Mathieu Rail - Provide the requirements of the analysis
  *******************************************************************************/
 
@@ -16,10 +16,10 @@ package net.sf.etrakr.tmf.chrome.analysis;
 import net.sf.etrakr.chrome.core.CtraceStrings;
 import net.sf.etrakr.tmf.chrome.state.CtraceStateProvider;
 
-import org.eclipse.linuxtools.tmf.core.analysis.TmfAnalysisRequirement;
-import org.eclipse.linuxtools.tmf.core.analysis.TmfAnalysisRequirement.ValuePriorityLevel;
-import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateProvider;
-import org.eclipse.linuxtools.tmf.core.statesystem.TmfStateSystemAnalysisModule;
+import org.eclipse.tracecompass.tmf.core.analysis.TmfAnalysisRequirement;
+import org.eclipse.tracecompass.tmf.core.analysis.TmfAnalysisRequirement.ValuePriorityLevel;
+import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
+import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
 
 import com.google.common.collect.ImmutableSet;
 

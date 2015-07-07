@@ -156,10 +156,6 @@
                   name="cssTheme"
                   value="org.eclipse.e4.ui.css.theme.e4_default">
             </property>
-            <property
-                  name="preferenceCustomization"
-                  value="plugin_customization.ini">
-            </property>
       </product>
    </extension>
 

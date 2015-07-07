@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.ExecutionException;
 
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.TreeBasedTable;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 École Polytechnique de Montréal
+ * Copyright (c) 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Geneviève Bastien - Initial API and implementation
+ *   Bastien - Initial API and implementation
  *******************************************************************************/
 
 package net.sf.etrakr.ftrace.ui.views.cpu;
@@ -16,13 +16,14 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.linuxtools.tmf.core.signal.TmfTraceSelectedSignal;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
-import org.eclipse.linuxtools.tmf.ui.views.TmfView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.tracecompass.tmf.core.signal.TmfTraceSelectedSignal;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
+import org.eclipse.tracecompass.tmf.ui.views.TmfView;
 
 /**
  * CPU usage view. It contains 2 viewers: one tree viewer showing all the
@@ -76,7 +77,7 @@ public class CpuUsageView extends TmfView {
         sash.setLayout(new FillLayout());
 
         /* Initialize the viewers with the currently selected trace */
-        ITmfTrace trace = getActiveTrace();
+        ITmfTrace trace = TmfTraceManager.getInstance().getActiveTrace();
         if (trace != null) {
             TmfTraceSelectedSignal signal = new TmfTraceSelectedSignal(this, trace);
             fTreeViewer.traceSelected(signal);

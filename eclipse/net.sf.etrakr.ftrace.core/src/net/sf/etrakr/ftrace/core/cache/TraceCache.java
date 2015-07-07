@@ -5,7 +5,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;

@@ -47,11 +47,11 @@
       <feature id="org.eclipse.platform"/>
       <feature id="org.eclipse.equinox.p2.rcp.feature"/>
       <feature id="org.eclipse.equinox.p2.user.ui"/>
-      <feature id="org.eclipse.linuxtools.tmf"/>
       <feature id="org.eclipse.equinox.p2.extras.feature"/>
       <feature id="org.eclipse.ecf.core.feature"/>
       <feature id="org.eclipse.ecf.filetransfer.feature"/>
       <feature id="net.sf.etrakr.feature"/>
+      <feature id="org.eclipse.tracecompass.tmf"/>
    </features>
 
    <configurations>

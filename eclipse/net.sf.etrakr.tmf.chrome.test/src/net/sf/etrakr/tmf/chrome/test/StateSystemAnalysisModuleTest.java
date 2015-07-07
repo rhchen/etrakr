@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2014 École Polytechnique de Montréal
+ * Copyright (c) 2013, 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Geneviève Bastien - Initial API and implementation
+ *   Bastien - Initial API and implementation
  *******************************************************************************/
 
 package net.sf.etrakr.tmf.chrome.test;
@@ -24,13 +24,13 @@ import net.sf.etrakr.tmf.chrome.analysis.CtraceAnalysisModule;
 import net.sf.etrakr.tmf.chrome.state.Attributes;
 import net.sf.etrakr.tmf.chrome.trace.ChromeTrace;
 
-import org.eclipse.linuxtools.statesystem.core.ITmfStateSystem;
-import org.eclipse.linuxtools.tmf.core.analysis.TmfAnalysisManager;
-import org.eclipse.linuxtools.tmf.core.exceptions.TmfTraceException;
-import org.eclipse.linuxtools.tmf.core.signal.TmfSignalManager;
-import org.eclipse.linuxtools.tmf.core.signal.TmfTraceOpenedSignal;
-import org.eclipse.linuxtools.tmf.core.statesystem.TmfStateSystemAnalysisModule;
-import org.eclipse.linuxtools.tmf.core.trace.TmfTraceManager;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
+import org.eclipse.tracecompass.tmf.core.analysis.TmfAnalysisManager;
+import org.eclipse.tracecompass.tmf.core.exceptions.TmfTraceException;
+import org.eclipse.tracecompass.tmf.core.signal.TmfSignalManager;
+import org.eclipse.tracecompass.tmf.core.signal.TmfTraceOpenedSignal;
+import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -126,7 +126,7 @@ public class StateSystemAnalysisModuleTest {
     }
 
     /**
-     * Make sure that the state system is initialized after calling 
+     * Make sure that the state system is initialized after calling
      * {@link TmfStateSystemAnalysisModule#waitForInitialization()}.
      */
     @Test

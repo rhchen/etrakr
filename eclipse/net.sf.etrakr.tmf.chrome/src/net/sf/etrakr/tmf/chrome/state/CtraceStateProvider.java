@@ -1,19 +1,22 @@
 package net.sf.etrakr.tmf.chrome.state;
 
+import static org.eclipse.tracecompass.common.core.NonNullUtils.checkNotNull;
+
 import java.util.HashMap;
 
 import net.sf.etrakr.chrome.core.CtraceStrings;
 import net.sf.etrakr.chrome.core.event.ICtraceEvent;
 import net.sf.etrakr.chrome.core.event.impl.CtraceEvent;
 
-import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.linuxtools.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.linuxtools.statesystem.core.statevalue.TmfStateValue;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.statesystem.AbstractTmfStateProvider;
-import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateProvider;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
+import org.eclipse.tracecompass.tmf.core.statesystem.AbstractTmfStateProvider;
+import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 
 public class CtraceStateProvider extends AbstractTmfStateProvider {
 
@@ -28,7 +31,7 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
     private final HashMap<String, Integer> knownEventNames;
     
     public CtraceStateProvider(ITmfTrace trace) {
-        super(trace, ITmfEvent.class, "Ctrace"); //$NON-NLS-1$
+        super(trace, "Ctrace"); //$NON-NLS-1$
         knownEventNames = fillEventNames();
     }
 
@@ -77,8 +80,10 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
 	        String _pid = content.getField(CtraceStrings.PID).getFormattedValue();
 	        String _tid = content.getField(CtraceStrings.TID).getFormattedValue();
 	        
+	        final ITmfStateSystemBuilder ss = checkNotNull(getStateSystemBuilder());
+	        
 	        /* Shortcut for the "current Process" attribute node */
-	        final Integer currentProcessNode = ss.getQuarkRelativeAndAdd(getNodeProcesss(), _pid);
+	        final Integer currentProcessNode = ss.getQuarkRelativeAndAdd(getNodeProcesss(ss), _pid);
 	        
 	        int currentThreadQuark = ss.getQuarkRelativeAndAdd(currentProcessNode, Attributes.CURRENT_THREAD);
 	        ITmfStateValue value = TmfStateValue.newValueInt(Integer.parseInt(_tid));
@@ -89,7 +94,7 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
             ss.modifyAttribute(ts, value, currentStatusQuark);
             
             /* Shortcut for the "current Thread" attribute node */
-            final Integer currentThreadsNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), _tid);
+            final Integer currentThreadsNode = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), _tid);
         	
         	int currentExecQuark = ss.getQuarkRelativeAndAdd(currentThreadsNode, Attributes.EXEC_NAME);
         	TmfStateValue sv_name = TmfStateValue.newValueString(_name);
@@ -181,19 +186,19 @@ public class CtraceStateProvider extends AbstractTmfStateProvider {
     // Convenience methods for commonly-used attribute tree locations
     // ------------------------------------------------------------------------
 
-    private int getNodeCPUs() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.CPUS);
+    private int getNodeCPUs(ITmfStateSystemBuilder ssb) {
+        return ssb.getQuarkAbsoluteAndAdd(Attributes.CPUS);
     }
 
-    private int getNodeThreads() {
-    	return ss.getQuarkAbsoluteAndAdd(Attributes.THREADS);
+    private int getNodeThreads(ITmfStateSystemBuilder ssb) {
+    	return ssb.getQuarkAbsoluteAndAdd(Attributes.THREADS);
     }
     
-    private int getNodeProcesss() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.PROCESSS);
+    private int getNodeProcesss(ITmfStateSystemBuilder ssb) {
+        return ssb.getQuarkAbsoluteAndAdd(Attributes.PROCESSS);
     }
     
-    private void _handleEvent(){
+    private void _handleEvent(ITmfStateSystemBuilder ssb){
     	
     }
 }

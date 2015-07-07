@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 École Polytechnique de Montréal
+ * Copyright (c) 2014 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,8 +7,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   François Rajotte - Initial API and implementation
- *   Geneviève Bastien - Revision of the initial implementation
+ *   Rajotte - Initial API and implementation
+ *   Bastien - Revision of the initial implementation
  *******************************************************************************/
 
 package net.sf.etrakr.tmf.chrome.state;
@@ -16,13 +16,14 @@ package net.sf.etrakr.tmf.chrome.state;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.linuxtools.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.linuxtools.statesystem.core.statevalue.TmfStateValue;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.statesystem.AbstractTmfStateProvider;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
+import org.eclipse.tracecompass.tmf.core.statesystem.AbstractTmfStateProvider;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 
 /**
  * Creates a state system with the total time spent on CPU for each thread and
@@ -53,7 +54,7 @@ public class CtraceCpuStateProvider extends AbstractTmfStateProvider {
      *            The trace from which to get the CPU usage
      */
     public CtraceCpuStateProvider(ITmfTrace trace) {
-        super(trace, ITmfEvent.class, "Ftrace CPU usage"); //$NON-NLS-1$
+        super(trace, "Ftrace CPU usage"); //$NON-NLS-1$
         fTraceStart = trace.getStartTime().getValue();
     }
 
@@ -79,8 +80,8 @@ public class CtraceCpuStateProvider extends AbstractTmfStateProvider {
     }
 
     /* Shortcut for the "current CPU" attribute node */
-    private int getNodeCPUs() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.CPUS);
+    private static int getNodeCPUs(ITmfStateSystemBuilder ssb) {
+        return ssb.getQuarkAbsoluteAndAdd(Attributes.CPUS);
     }
 
 }

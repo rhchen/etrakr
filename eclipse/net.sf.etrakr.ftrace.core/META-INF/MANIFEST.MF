@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.guava,
  net.sf.commonstringutil,
  org.tukaani.xz,
- org.eclipse.linuxtools.tmf.core
+ org.eclipse.tracecompass.tmf.core
 Export-Package: net.sf.etrakr.ftrace.core,
  net.sf.etrakr.ftrace.core.cache,
  net.sf.etrakr.ftrace.core.event,

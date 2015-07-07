@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 import net.sf.etrakr.chrome.core.service.ICtraceService;
 import net.sf.etrakr.chrome.core.service.impl.CtraceService;
 
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;

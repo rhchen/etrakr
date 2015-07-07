@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012, 2014 Ericsson
- * Copyright (c) 2010, 2011 École Polytechnique de Montréal
+ * Copyright (c) 2010, 2011 Polytechnique
  * Copyright (c) 2010, 2011 Alexandre Montplaisir <alexandre.montplaisir@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials are
@@ -12,6 +12,8 @@
 
 package net.sf.etrakr.tmf.ftrace.state;
 
+import static org.eclipse.tracecompass.common.core.NonNullUtils.checkNotNull;
+
 import java.util.HashMap;
 
 import net.sf.etrakr.ftrace.core.FtraceStrings;
@@ -19,16 +21,16 @@ import net.sf.etrakr.ftrace.core.event.IFtraceEvent;
 import net.sf.etrakr.ftrace.core.event.impl.FtraceEvent;
 import net.sf.etrakr.tmf.ftrace.TmfFtraceActivator;
 
-import org.eclipse.linuxtools.statesystem.core.ITmfStateSystemBuilder;
-import org.eclipse.linuxtools.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.StateValueTypeException;
-import org.eclipse.linuxtools.statesystem.core.exceptions.TimeRangeException;
-import org.eclipse.linuxtools.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.linuxtools.statesystem.core.statevalue.TmfStateValue;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.statesystem.AbstractTmfStateProvider;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
+import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
+import org.eclipse.tracecompass.tmf.core.statesystem.AbstractTmfStateProvider;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 
 /**
  * This is the state change input plugin for TMF's state system which handles
@@ -62,7 +64,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
      *            The LTTng 2.0 kernel trace directory
      */
     public FtraceStateProvider(ITmfTrace trace) {
-        super(trace, ITmfEvent.class, "Ftrace"); //$NON-NLS-1$
+        super(trace, "Ftrace"); //$NON-NLS-1$
         knownEventNames = fillEventNames();
     }
 
@@ -99,8 +101,11 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
         final long ts = event.getTimestamp().getValue();
 
         try {
+        	
+        	final ITmfStateSystemBuilder ss = checkNotNull(getStateSystemBuilder());
+        	
             /* Shortcut for the "current CPU" attribute node */
-            final Integer currentCPUNode = ss.getQuarkRelativeAndAdd(getNodeCPUs(), event.getSource());
+            final Integer currentCPUNode = ss.getQuarkRelativeAndAdd(getNodeCPUs(ss), event.getSource());
 
             /*
              * Shortcut for the "current thread" attribute node. It requires
@@ -109,7 +114,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
             int quark = ss.getQuarkRelativeAndAdd(currentCPUNode, Attributes.CURRENT_THREAD);
             ITmfStateValue value = ss.queryOngoingState(quark);
             int thread = value.isNull() ? -1 : value.unboxInt();
-            final Integer currentThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), String.valueOf(thread));
+            final Integer currentThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), String.valueOf(thread));
 
             /*
              * Feed event to the history system if it's known to cause a state
@@ -144,7 +149,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
 
                 /* Mark this IRQ as active in the resource tree.
                  * The state value = the CPU on which this IRQ is sitting */
-                quark = ss.getQuarkRelativeAndAdd(getNodeIRQs(), irqId.toString());
+                quark = ss.getQuarkRelativeAndAdd(getNodeIRQs(ss), irqId.toString());
                 value = TmfStateValue.newValueInt(Integer.parseInt(event.getSource()));
                 ss.modifyAttribute(ts, value, quark);
 
@@ -166,15 +171,15 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
                 Integer irqId = ((Long) event.getContent().getField(FtraceStrings.IRQ).getValue()).intValue();
 
                 /* Put this IRQ back to inactive in the resource tree */
-                quark = ss.getQuarkRelativeAndAdd(getNodeIRQs(), irqId.toString());
+                quark = ss.getQuarkRelativeAndAdd(getNodeIRQs(ss), irqId.toString());
                 value = TmfStateValue.nullValue();
                 ss.modifyAttribute(ts, value, quark);
 
                 /* Set the previous process back to running */
-                setProcessToRunning(ts, currentThreadNode);
+                setProcessToRunning(ss, ts, currentThreadNode);
 
                 /* Set the CPU status back to running or "idle" */
-                cpuExitInterrupt(ts, currentCPUNode, currentThreadNode);
+                cpuExitInterrupt(ss, ts, currentCPUNode, currentThreadNode);
             }
                 break;
 
@@ -185,7 +190,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
 
                 /* Mark this SoftIRQ as active in the resource tree.
                  * The state value = the CPU on which this SoftIRQ is processed */
-                quark = ss.getQuarkRelativeAndAdd(getNodeSoftIRQs(), softIrqId.toString());
+                quark = ss.getQuarkRelativeAndAdd(getNodeSoftIRQs(ss), softIrqId.toString());
                 value = TmfStateValue.newValueInt(Integer.parseInt(event.getSource()));
                 ss.modifyAttribute(ts, value, quark);
 
@@ -207,15 +212,15 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
                 Integer softIrqId = ((Long) event.getContent().getField(FtraceStrings.VEC).getValue()).intValue();
 
                 /* Put this SoftIRQ back to inactive (= -1) in the resource tree */
-                quark = ss.getQuarkRelativeAndAdd(getNodeSoftIRQs(), softIrqId.toString());
+                quark = ss.getQuarkRelativeAndAdd(getNodeSoftIRQs(ss), softIrqId.toString());
                 value = TmfStateValue.nullValue();
                 ss.modifyAttribute(ts, value, quark);
 
                 /* Set the previous process back to running */
-                setProcessToRunning(ts, currentThreadNode);
+                setProcessToRunning(ss, ts, currentThreadNode);
 
                 /* Set the CPU status back to "busy" or "idle" */
-                cpuExitInterrupt(ts, currentCPUNode, currentThreadNode);
+                cpuExitInterrupt(ss, ts, currentCPUNode, currentThreadNode);
             }
                 break;
 
@@ -226,7 +231,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
 
                 /* Mark this SoftIRQ as *raised* in the resource tree.
                  * State value = -2 */
-                quark = ss.getQuarkRelativeAndAdd(getNodeSoftIRQs(), softIrqId.toString());
+                quark = ss.getQuarkRelativeAndAdd(getNodeSoftIRQs(ss), softIrqId.toString());
                 value = StateValues.SOFT_IRQ_RAISED_VALUE;
                 ss.modifyAttribute(ts, value, quark);
             }
@@ -244,8 +249,8 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
                 String nextProcessName = (String) content.getField(FtraceStrings.NEXT_COMM).getValue();
                 Integer nextTid = ((Long) content.getField(FtraceStrings.NEXT_TID).getValue()).intValue();
 
-                Integer formerThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), prevTid.toString());
-                Integer newCurrentThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), nextTid.toString());
+                Integer formerThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), prevTid.toString());
+                Integer newCurrentThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), nextTid.toString());
 
                 /* Set the status of the process that got scheduled out. */
                 quark = ss.getQuarkRelativeAndAdd(formerThreadNode, Attributes.STATUS);
@@ -257,7 +262,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
                 ss.modifyAttribute(ts, value, quark);
 
                 /* Set the status of the new scheduled process */
-                setProcessToRunning(ts, newCurrentThreadNode);
+                setProcessToRunning(ss, ts, newCurrentThreadNode);
 
                 /* Set the exec name of the new process */
                 quark = ss.getQuarkRelativeAndAdd(newCurrentThreadNode, Attributes.EXEC_NAME);
@@ -302,8 +307,8 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
                 Integer parentTid = ((Long) content.getField(FtraceStrings.PARENT_TID).getValue()).intValue();
                 Integer childTid = ((Long) content.getField(FtraceStrings.CHILD_TID).getValue()).intValue();
 
-                Integer parentTidNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), parentTid.toString());
-                Integer childTidNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), childTid.toString());
+                Integer parentTidNode = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), parentTid.toString());
+                Integer childTidNode = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), childTid.toString());
 
                 /* Assign the PPID to the new process */
                 quark = ss.getQuarkRelativeAndAdd(childTidNode, Attributes.PPID);
@@ -352,7 +357,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
                  * Remove the process and all its sub-attributes from the
                  * current state
                  */
-                quark = ss.getQuarkRelativeAndAdd(getNodeThreads(), tid.toString());
+                quark = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), tid.toString());
                 ss.removeAttribute(ts, quark);
             }
                 break;
@@ -373,7 +378,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
                  * populated with anything relevant for now.
                  */
 
-                int curThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), String.valueOf(tid));
+                int curThreadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), String.valueOf(tid));
 
                 /* Set the process' name */
                 quark = ss.getQuarkRelativeAndAdd(curThreadNode, Attributes.EXEC_NAME);
@@ -419,7 +424,7 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
              * int32 target_cpu */
             {
                 final int tid = ((Long) event.getContent().getField(FtraceStrings.TID).getValue()).intValue();
-                final int threadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(), String.valueOf(tid));
+                final int threadNode = ss.getQuarkRelativeAndAdd(getNodeThreads(ss), String.valueOf(tid));
 
                 /*
                  * The process indicated in the event's payload is now ready to
@@ -512,20 +517,20 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
     // Convenience methods for commonly-used attribute tree locations
     // ------------------------------------------------------------------------
 
-    private int getNodeCPUs() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.CPUS);
+    private int getNodeCPUs(ITmfStateSystemBuilder ssb) {
+        return ssb.getQuarkAbsoluteAndAdd(Attributes.CPUS);
     }
 
-    private int getNodeThreads() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.THREADS);
+    private int getNodeThreads(ITmfStateSystemBuilder ssb) {
+        return ssb.getQuarkAbsoluteAndAdd(Attributes.THREADS);
     }
 
-    private int getNodeIRQs() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.RESOURCES, Attributes.IRQS);
+    private int getNodeIRQs(ITmfStateSystemBuilder ssb) {
+        return ssb.getQuarkAbsoluteAndAdd(Attributes.RESOURCES, Attributes.IRQS);
     }
 
-    private int getNodeSoftIRQs() {
-        return ss.getQuarkAbsoluteAndAdd(Attributes.RESOURCES, Attributes.SOFT_IRQS);
+    private int getNodeSoftIRQs(ITmfStateSystemBuilder ssb) {
+        return ssb.getQuarkAbsoluteAndAdd(Attributes.RESOURCES, Attributes.SOFT_IRQS);
     }
 
     // ------------------------------------------------------------------------
@@ -538,39 +543,39 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
      * put the process back in the syscall state. If not, we put it back in
      * user mode state.
      */
-    private void setProcessToRunning(long ts, int currentThreadNode)
+    private void setProcessToRunning(ITmfStateSystemBuilder ssb, long ts, int currentThreadNode)
             throws AttributeNotFoundException, TimeRangeException,
             StateValueTypeException {
         int quark;
         ITmfStateValue value;
 
-        quark = ss.getQuarkRelativeAndAdd(currentThreadNode, Attributes.SYSTEM_CALL);
-        if (ss.queryOngoingState(quark).isNull()) {
+        quark = ssb.getQuarkRelativeAndAdd(currentThreadNode, Attributes.SYSTEM_CALL);
+        if (ssb.queryOngoingState(quark).isNull()) {
             /* We were in user mode before the interruption */
             value = StateValues.PROCESS_STATUS_RUN_USERMODE_VALUE;
         } else {
             /* We were previously in kernel mode */
             value = StateValues.PROCESS_STATUS_RUN_SYSCALL_VALUE;
         }
-        quark = ss.getQuarkRelativeAndAdd(currentThreadNode, Attributes.STATUS);
-        ss.modifyAttribute(ts, value, quark);
+        quark = ssb.getQuarkRelativeAndAdd(currentThreadNode, Attributes.STATUS);
+        ssb.modifyAttribute(ts, value, quark);
     }
 
     /**
      * Similar logic as above, but to set the CPU's status when it's coming out
      * of an interruption.
      */
-    private void cpuExitInterrupt(long ts, int currentCpuNode, int currentThreadNode)
+    private void cpuExitInterrupt(ITmfStateSystemBuilder ssb, long ts, int currentCpuNode, int currentThreadNode)
             throws StateValueTypeException, AttributeNotFoundException,
             TimeRangeException {
         int quark;
         ITmfStateValue value;
 
-        quark = ss.getQuarkRelativeAndAdd(currentCpuNode, Attributes.CURRENT_THREAD);
-        if (ss.queryOngoingState(quark).unboxInt() > 0) {
+        quark = ssb.getQuarkRelativeAndAdd(currentCpuNode, Attributes.CURRENT_THREAD);
+        if (ssb.queryOngoingState(quark).unboxInt() > 0) {
             /* There was a process on the CPU */
-            quark = ss.getQuarkRelative(currentThreadNode, Attributes.SYSTEM_CALL);
-            if (ss.queryOngoingState(quark).isNull()) {
+            quark = ssb.getQuarkRelative(currentThreadNode, Attributes.SYSTEM_CALL);
+            if (ssb.queryOngoingState(quark).isNull()) {
                 /* That process was in user mode */
                 value = StateValues.CPU_STATUS_RUN_USERMODE_VALUE;
             } else {
@@ -581,8 +586,8 @@ public class FtraceStateProvider extends AbstractTmfStateProvider {
             /* There was no real process scheduled, CPU was idle */
             value = StateValues.CPU_STATUS_IDLE_VALUE;
         }
-        quark = ss.getQuarkRelativeAndAdd(currentCpuNode, Attributes.STATUS);
-        ss.modifyAttribute(ts, value, quark);
+        quark = ssb.getQuarkRelativeAndAdd(currentCpuNode, Attributes.STATUS);
+        ssb.modifyAttribute(ts, value, quark);
     }
     
     // ------------------------------------------------------------------------

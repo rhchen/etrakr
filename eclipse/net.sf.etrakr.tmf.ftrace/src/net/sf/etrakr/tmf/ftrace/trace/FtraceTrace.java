@@ -13,14 +13,14 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.exceptions.TmfTraceException;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfContext;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfEventParser;
-import org.eclipse.linuxtools.tmf.core.trace.TmfContext;
-import org.eclipse.linuxtools.tmf.core.trace.TmfTrace;
-import org.eclipse.linuxtools.tmf.core.trace.location.ITmfLocation;
-import org.eclipse.linuxtools.tmf.core.trace.location.TmfLongLocation;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.exceptions.TmfTraceException;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfContext;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfEventParser;
+import org.eclipse.tracecompass.tmf.core.trace.TmfContext;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTrace;
+import org.eclipse.tracecompass.tmf.core.trace.location.ITmfLocation;
+import org.eclipse.tracecompass.tmf.core.trace.location.TmfLongLocation;
 
 public class FtraceTrace extends TmfTrace implements ITmfEventParser {
 

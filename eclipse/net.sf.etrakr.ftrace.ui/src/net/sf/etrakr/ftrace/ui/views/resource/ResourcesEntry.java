@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Ericsson, École Polytechnique de Montréal
+ * Copyright (c) 2012, 2014 Ericsson, 
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -8,14 +8,14 @@
  *
  * Contributors:
  *   Patrick Tasse - Initial API and implementation
- *   Geneviève Bastien - Move code to provide base classes for time graph view
+ *   Bastien - Move code to provide base classes for time graph view
  *******************************************************************************/
 
 package net.sf.etrakr.ftrace.ui.views.resource;
 
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
-import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.TimeGraphEntry;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.TimeGraphEntry;
 
 /**
  * An entry, or row, in the resource view

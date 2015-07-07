@@ -11,19 +11,19 @@ import java.util.Scanner;
 import java.util.SortedMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
+import org.eclipse.tracecompass.tmf.core.event.TmfEventField;
+import org.eclipse.tracecompass.tmf.core.event.TmfEventType;
+import org.eclipse.tracecompass.tmf.core.timestamp.ITmfTimestamp;
+import org.eclipse.tracecompass.tmf.core.timestamp.TmfTimestamp;
+
 import net.sf.commonstringutil.StringUtil;
 import net.sf.etrakr.chrome.core.CtraceStrings;
 import net.sf.etrakr.chrome.core.event.TraceEvent;
 import net.sf.etrakr.chrome.core.event.Zoo;
 import net.sf.etrakr.chrome.core.event.impl.CtraceEvent;
 import net.sf.etrakr.chrome.core.service.impl.CtraceService;
-
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.event.TmfEventField;
-import org.eclipse.linuxtools.tmf.core.event.TmfEventType;
-import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
-import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimestamp;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -154,7 +154,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		/* Fix me, the cpu is always 0, due to no define to spec  */	
 		CtraceEvent event = new CtraceEvent(null, _currentRank, ts, 
 				String.valueOf(0),
-				new TmfEventType(evt.ph, evt.ph, null), 
+				new TmfEventType(evt.ph, null), 
 				content, evt.cat, 0, evt.cat);
 		
 		return event;

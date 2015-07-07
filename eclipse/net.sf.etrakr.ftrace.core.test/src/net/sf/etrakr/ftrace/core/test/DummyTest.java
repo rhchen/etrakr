@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import net.sf.etrakr.ftrace.core.service.IFtraceService;
 import net.sf.etrakr.ftrace.core.service.impl.FtraceService;
 
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
