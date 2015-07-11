@@ -4,8 +4,7 @@
   <packaging>eclipse-plugin</packaging>
   <parent>
   	<groupId>net.sf.etrakr</groupId>
-  	<artifactId>net.sf.etrakr.aggregator</artifactId>
+  	<artifactId>net.sf.etrakr.lib-parent</artifactId>
   	<version>1.0.0-SNAPSHOT</version>
-  	<relativePath>../../eclipse/net.sf.etrakr.aggregator</relativePath>
   </parent>
 </project>
