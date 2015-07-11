@@ -30,6 +30,7 @@
   <name>etrakr chart parent</name>
 
   <modules>
+	<module>net.sf.etrakr.chart.feature</module>
     <module>net.tourbook.chart</module>
     <module>net.tourbook.common</module>
 	<module>net.tourbook.ext.jars</module>
