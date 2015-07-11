@@ -134,10 +134,23 @@
     <module>chart</module>
     <module>lib</module>
     <module>releng</module>
+	<module>ftrace</module>
   </modules>
 
     <build>
         <plugins>
+			<plugin>
+				<!-- incremental builds mvn plugin -->
+				<groupId>io.takari.maven.plugins</groupId>
+				<artifactId>takari-lifecycle-plugin</artifactId>
+				<version>1.11.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerId>jdt</compilerId>
+				</configuration>
+			</plugin>
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>target-platform-configuration</artifactId>
