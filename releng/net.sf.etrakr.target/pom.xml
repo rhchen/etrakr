@@ -24,14 +24,14 @@
               <configuration>
                 <artifacts>
                   <artifact>
-                    <file>etrackr-e4.5.target</file>
+                    <file>etrakr-e4.5.target</file>
                     <type>target</type>
-                    <classifier>etrackr-e4.5</classifier>
+                    <classifier>etrakr-e4.5</classifier>
                   </artifact>
                   <artifact>
-                    <file>etrackr-e4.4.target</file>
+                    <file>etrakr-e4.4.target</file>
                     <type>target</type>
-                    <classifier>etrackr-e4.4</classifier>
+                    <classifier>etrakr-e4.4</classifier>
                   </artifact>
                   <!-- More targets could be added here -->
                 </artifacts>

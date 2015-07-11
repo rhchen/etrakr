@@ -13,7 +13,7 @@
   <artifactId>net.sf.etrakr</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Etrackr Tracing Tool Parent</name>
+  <name>Etrakr Tracing Tool Parent</name>
 
   <licenses>
     <license>
@@ -33,7 +33,7 @@
   <base.test.vmargs>-Xms256m -Xmx1024m -XX:MaxPermSize=256m</base.test.vmargs>
   <tycho-version>0.23.0</tycho-version>
   <tycho-extras-version>0.23.0</tycho-extras-version>
-  <target-platform>etrackr-e4.5</target-platform>
+  <target-platform>etrakr-e4.5</target-platform>
   <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
   <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
   <sonar.jacoco.reportPath>${project.basedir}/../../target/jacoco.exec</sonar.jacoco.reportPath>

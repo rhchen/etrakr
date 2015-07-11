@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="net.sf.etrakr.feature"
-      label="Etrackr Feature"
+      label="Etrakr Feature"
       version="1.0.0.qualifier"
       provider-name="net.sf.etrakr">
 
