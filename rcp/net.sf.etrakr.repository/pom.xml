@@ -4,9 +4,8 @@
   <packaging>eclipse-repository</packaging>
   <parent>
   	<groupId>net.sf.etrakr</groupId>
-  	<artifactId>net.sf.etrakr.aggregator</artifactId>
+  	<artifactId>net.sf.etrakr.rcp-parent</artifactId>
   	<version>1.0.0-SNAPSHOT</version>
-  	<relativePath>../net.sf.etrakr.aggregator</relativePath>
   </parent>
   
   <build>

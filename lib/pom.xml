@@ -39,7 +39,11 @@
 	<module>com.jayway.jsonpath</module>
 	<module>net.sf.commonstringutil</module>
 	<module>org.jsoup</module>
+	<!-- 
+		downgrade to v1.3 due to 
+		Missing requirement: org.eclipse.equinox.p2.core.feature.feature.group 1.3.100.v20150527-1706 requires 'org.tukaani.xz [1.3.0.v201308270617]'
 	<module>org.tukaani.xz</module>
+	-->
   </modules>
 
 </project>

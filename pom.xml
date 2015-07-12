@@ -135,6 +135,7 @@
     <module>lib</module>
     <module>releng</module>
 	<module>ftrace</module>
+	<module>rcp</module>
   </modules>
 
     <build>

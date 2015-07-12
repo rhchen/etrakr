@@ -23,8 +23,8 @@
       <import plugin="org.eclipse.core.resources" version="3.9.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide" version="3.10.1" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="15.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.expressions"/>
-      <import plugin="net.tourbook.ext.jars" version="12.12.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.tracecompass.tmf.core" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.tracecompass.tmf.ui" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.cdt.core.native" version="5.7.0" match="compatible"/>
       <import plugin="org.eclipse.core.contenttype" version="3.3.0" match="compatible"/>
       <import plugin="org.eclipse.core.expressions" version="3.2.0" match="compatible"/>
@@ -36,50 +36,18 @@
       <import plugin="org.eclipse.ltk.core.refactoring" version="3.4.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.text" version="3.2.0" match="compatible"/>
       <import plugin="com.ibm.icu" version="4.4.2" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.swt"/>
-      <import plugin="net.sf.etrakr.tmf.ftrace" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.osgi"/>
-      <import plugin="com.fasterxml.jackson" version="2.4.3" match="greaterOrEqual"/>
-      <import plugin="net.sf.etrakr.tmf.chrome" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.tracecompass.tmf.core" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.tracecompass.tmf.ui" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.runtime" version="3.1.0" match="compatible"/>
+      <import plugin="net.sf.commonstringutil"/>
+      <import plugin="org.tukaani.xz"/>
+      <import plugin="net.sf.etrakr.tmf.ftrace" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.tracecompass.common.core" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="com.fasterxml.jackson"/>
+      <import plugin="org.eclipse.swt"/>
    </requires>
 
    <plugin
-         id="com.fasterxml.jackson"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="com.fasterxml.jackson.dataformat"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="com.fasterxml.jackson.datatype"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="com.fasterxml.jackson.module"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="com.google.guava"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.sf.commonstringutil"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -91,32 +59,6 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="net.tourbook.chart"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.tourbook.common"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.tourbook.ext.jars"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.tukaani.xz"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.cdt.core"
@@ -133,21 +75,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.swtchart"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="net.sf.etrakr.ftrace.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.sf.etrakr.tmf.ftrace"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -161,33 +89,14 @@
          unpack="false"/>
 
    <plugin
-         id="org.jsoup"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="net.sf.etrakr.chrome.core"
+         id="net.sf.etrakr.tmf.ftrace"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="net.sf.etrakr.tmf.chrome"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.jayway.jsonpath"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="net.sf.etrakr.chrome.ui"
+         id="net.sf.etrakr.trans.ftrace"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -195,6 +104,13 @@
 
    <plugin
          id="org.eclipse.tracecompass.common.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.swtchart"
          download-size="0"
          install-size="0"
          version="0.0.0"

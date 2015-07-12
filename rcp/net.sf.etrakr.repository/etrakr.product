@@ -52,14 +52,16 @@
       <feature id="org.eclipse.ecf.filetransfer.feature"/>
       <feature id="net.sf.etrakr.feature"/>
       <feature id="org.eclipse.tracecompass.tmf"/>
+      <feature id="net.sf.etrakr.chart.feature" version="1.0.0.qualifier"/>
+      <feature id="net.sf.etrakr.lib.feature" version="1.0.0.qualifier"/>
    </features>
 
    <configurations>
+      <plugin id="net.sf.etrakr.application" autoStart="false" startLevel="5" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
-      <plugin id="org.eclipse.linuxtools.tracing.rcp.ui" autoStart="false" startLevel="5" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="3" />
    </configurations>
