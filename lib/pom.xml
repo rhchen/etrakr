@@ -30,6 +30,7 @@
   <name>etrakr lib parent</name>
 
   <modules>
+	<module>net.sf.etrakr.lib.feature</module>
 	<module>com.fasterxml.jackson</module>
     <module>com.fasterxml.jackson.dataformat</module>
 	<module>com.fasterxml.jackson.datatype</module>
