@@ -1,5 +1,9 @@
 *.class
 
+bin/
+target/
+*/.settings/org.sonar.ide.eclipse.core.prefs
+
 # Package Files #
 *.war
 *.ear
