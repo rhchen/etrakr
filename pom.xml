@@ -136,6 +136,7 @@
     <module>releng</module>
 	<module>ftrace</module>
 	<module>rcp</module>
+	<module>tmf</module>
   </modules>
 
     <build>
