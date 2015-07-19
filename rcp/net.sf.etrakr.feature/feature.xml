@@ -44,6 +44,8 @@
       <import plugin="org.eclipse.osgi"/>
       <import plugin="com.fasterxml.jackson"/>
       <import plugin="org.eclipse.swt"/>
+      <import plugin="com.android.ddmlib"/>
+      <import plugin="org.kxml2"/>
    </requires>
 
    <plugin
@@ -111,6 +113,13 @@
 
    <plugin
          id="org.swtchart"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.etrakr.tmf.adb.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

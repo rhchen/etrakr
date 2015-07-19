@@ -11,3 +11,5 @@ Export-Package: com.android.ddmlib,
  com.android.ddmlib.testrunner,
  com.android.ddmlib.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.kxml2,
+ com.google.guava

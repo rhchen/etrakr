@@ -4,6 +4,8 @@ Bundle-Name: Adb Core
 Bundle-SymbolicName: net.sf.etrakr.tmf.adb.core
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.sf.etrakr.tmf.adb.core.AdbActivator
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ com.android.ddmlib,
+ org.kxml2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
