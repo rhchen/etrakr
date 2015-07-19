@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Kxml2
+Bundle-SymbolicName: org.kxml2
+Bundle-Version: 2.3.0.qualifier
+Bundle-ClassPath: kxml2-2.3.0.jar
+Bundle-Vendor: org.kxml2
+Export-Package: org.kxml2.io,
+ org.kxml2.kdom,
+ org.kxml2.wap,
+ org.kxml2.wap.syncml,
+ org.kxml2.wap.wml,
+ org.kxml2.wap.wv,
+ org.xmlpull.v1
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

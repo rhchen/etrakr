@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ddmlib
+Bundle-SymbolicName: com.android.ddmlib
+Bundle-Version: 24.2.3.qualifier
+Bundle-ClassPath: ddmlib-24.2.3.jar
+Bundle-Vendor: Google
+Export-Package: com.android.ddmlib,
+ com.android.ddmlib.log,
+ com.android.ddmlib.logcat,
+ com.android.ddmlib.testrunner,
+ com.android.ddmlib.utils
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

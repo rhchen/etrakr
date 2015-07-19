@@ -31,6 +31,8 @@
                 <plugin id="com.jayway.jsonpath"/>
                 <plugin id="org.jsoup"/>
                 <plugin id="org.tukaani.xz"/>
+                <plugin id="com.android.ddmlib"/>
+                <plugin id="org.kxml2"/>
               </excludes>
             </configuration>
           </execution>
