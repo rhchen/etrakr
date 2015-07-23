@@ -48,7 +48,7 @@ public class CommandShellTest {
 
     private static final boolean IS_NOT_UNIX = Platform.getOS().equals(Platform.OS_WIN32);
 
-    private static final @NonNull String[] CMD_INPUT_UNIX = { "dir", "/W" };
+    private static final @NonNull String[] CMD_INPUT_UNIX = { "cmd" , "/C", "dir", "/W" };
     private static final @NonNull String[] CMD_ERROR_INPUT_UNIX = { "dir", "/Z" };
     private static final @NonNull String[] CMD_UNKNOWN_COMMAND_UNIX = { "blablablabla" };
 
@@ -106,12 +106,14 @@ public class CommandShellTest {
 //        
 //		createResult(process.waitFor(), stdout.toString(), stderr.toString());		
 		
-//        ICommandShell shell = LOCAL_PROXY.createCommandShell();
-//
-//        ICommandInput command = shell.createCommand();
-//        command.addAll(checkNotNull(Arrays.asList(CMD_ERROR_INPUT_UNIX)));
-//        ICommandResult result = shell.executeCommand(command, new NullProgressMonitor());
-//        assertTrue(result.getResult() > 0);
+        ICommandShell shell = LOCAL_PROXY.createCommandShell();
+
+        ICommandInput command = shell.createCommand();
+        command.addAll(checkNotNull(Arrays.asList(CMD_INPUT_UNIX)));
+        
+        ICommandResult result = shell.executeCommand(command, new NullProgressMonitor());
+        System.out.println("result : "+ result.getOutput().toString());
+        assertTrue(result.getResult() == 0);
     }
 
     /**
