@@ -60,6 +60,11 @@ public class AdbActivator implements BundleActivator, IDebugBridgeChangeListener
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
+		
+		AndroidDebugBridge.removeDeviceChangeListener(this);
+
+        AndroidDebugBridge.terminate();
+        
 		AdbActivator.context = null;
 	}
 
