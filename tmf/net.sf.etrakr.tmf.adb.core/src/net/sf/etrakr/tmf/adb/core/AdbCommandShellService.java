@@ -16,10 +16,10 @@ import org.eclipse.remote.core.IRemoteCommandShellService;
 import org.eclipse.remote.core.IRemoteConnection;
 import org.eclipse.remote.core.IRemoteProcess;
 
-public class JSchCommandShellService implements IRemoteCommandShellService {
+public class AdbCommandShellService implements IRemoteCommandShellService {
 	private IRemoteConnection fRemoteConnection;
 
-	public JSchCommandShellService(IRemoteConnection remoteConnection) {
+	public AdbCommandShellService(IRemoteConnection remoteConnection) {
 		fRemoteConnection = remoteConnection;
 	}
 
@@ -30,7 +30,7 @@ public class JSchCommandShellService implements IRemoteCommandShellService {
 
 	@Override
 	public IRemoteProcess getCommandShell(int flags) throws IOException {
-		return new JSchProcessBuilder(getRemoteConnection()).start(flags);
+		return new AdbProcessBuilder(getRemoteConnection()).start(flags);
 	}
 
 	public static class Factory implements IRemoteConnection.Service.Factory {
@@ -44,7 +44,7 @@ public class JSchCommandShellService implements IRemoteCommandShellService {
 		@SuppressWarnings("unchecked")
 		public <T extends IRemoteConnection.Service> T getService(IRemoteConnection connection, Class<T> service) {
 			if (IRemoteCommandShellService.class.equals(service)) {
-				return (T) new JSchCommandShellService(connection);
+				return (T) new AdbCommandShellService(connection);
 			}
 			return null;
 		}

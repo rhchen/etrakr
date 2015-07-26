@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.remote.core.RemoteServicesUtils;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import net.sf.etrakr.tmf.adb.core.JSchConnection;
+import net.sf.etrakr.tmf.adb.core.AdbConnection;
 import net.sf.etrakr.tmf.adb.core.internal.AdbChannelExec;
 import net.sf.etrakr.tmf.adb.core.internal.AdbChannelSftp;
 import net.sf.etrakr.tmf.adb.core.internal.AdbException;
@@ -259,7 +259,7 @@ public abstract class AbstractRemoteCommand<T> {
 
 	private static ExecutorService fPool = Executors.newSingleThreadExecutor();
 
-	private final JSchConnection fConnection;
+	private final AdbConnection fConnection;
 
 	public static final int UNKNOWN = 0;
 
@@ -302,7 +302,7 @@ public abstract class AbstractRemoteCommand<T> {
 	public static final int SIGIO = 157;
 	public static final int SIGPWR = 158;
 
-	public AbstractRemoteCommand(JSchConnection connection) {
+	public AbstractRemoteCommand(AdbConnection connection) {
 		fConnection = connection;
 	}
 
@@ -348,7 +348,7 @@ public abstract class AbstractRemoteCommand<T> {
 		return fileInfo;
 	}
 
-	public JSchConnection getConnection() {
+	public AdbConnection getConnection() {
 		return fConnection;
 	}
 

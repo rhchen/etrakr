@@ -5,7 +5,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import net.sf.etrakr.tmf.adb.core.JSchConnection;
+import net.sf.etrakr.tmf.adb.core.AdbConnection;
 import net.sf.etrakr.tmf.adb.core.internal.AdbException;
 
 
@@ -13,7 +13,7 @@ public class MkdirCommand extends AbstractRemoteCommand<Void> {
 
 	private final IPath fRemotePath;
 
-	public MkdirCommand(JSchConnection connection, IPath path) {
+	public MkdirCommand(AdbConnection connection, IPath path) {
 		super(connection);
 		fRemotePath = path;
 	}

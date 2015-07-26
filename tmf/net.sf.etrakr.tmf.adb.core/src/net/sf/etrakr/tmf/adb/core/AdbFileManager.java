@@ -21,11 +21,11 @@ import org.eclipse.remote.core.IRemoteFileService;
 import org.eclipse.remote.core.IRemoteProcessService;
 import org.eclipse.remote.core.RemoteServicesUtils;
 
-public class JSchFileManager implements IRemoteFileService {
+public class AdbFileManager implements IRemoteFileService {
 
 	private final IRemoteConnection fConnection;
 
-	public JSchFileManager(IRemoteConnection connection) {
+	public AdbFileManager(IRemoteConnection connection) {
 		fConnection = connection;
 	}
 
@@ -34,7 +34,7 @@ public class JSchFileManager implements IRemoteFileService {
 		@Override
 		public <T extends Service> T getService(IRemoteConnection remoteConnection, Class<T> service) {
 			if (IRemoteFileService.class.equals(service)) {
-				return (T) new JSchFileManager(remoteConnection);
+				return (T) new AdbFileManager(remoteConnection);
 			}
 			return null;
 		}
@@ -56,7 +56,7 @@ public class JSchFileManager implements IRemoteFileService {
 		if (!path.isAbsolute()) {
 			path = RemoteServicesUtils.posixPath(getBaseDirectory()).append(path);
 		}
-		return JschFileStore.getInstance(JSchFileSystem.getURIFor(fConnection.getName(), path.toString()));
+		return AdbFileStore.getInstance(AdbFileSystem.getURIFor(fConnection.getName(), path.toString()));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class JSchFileManager implements IRemoteFileService {
 	@Override
 	public URI toURI(IPath path) {
 		try {
-			return JSchFileSystem.getURIFor(fConnection.getName(), path.toString());
+			return AdbFileSystem.getURIFor(fConnection.getName(), path.toString());
 		} catch (Exception e) {
 			return null;
 		}

@@ -42,15 +42,15 @@ import net.sf.etrakr.tmf.adb.core.messages.Messages;
  * @author rschulz
  *
  */
-public class JSchConnectionProxyFactory {
+public class AdbConnectionProxyFactory {
 	private static class CommandProxy implements Proxy {
 		private String command;
 		private IRemoteProcess process;
-		private JSchConnection connection;
+		private AdbConnection connection;
 		private final IProgressMonitor monitor;
 		private boolean connectCalled = false;
 
-		private CommandProxy(JSchConnection connection, String command, IProgressMonitor monitor) {
+		private CommandProxy(AdbConnection connection, String command, IProgressMonitor monitor) {
 			if (command == null || monitor == null) {
 				throw new IllegalArgumentException();
 			}
@@ -104,7 +104,7 @@ public class JSchConnectionProxyFactory {
 			List<String> cmd = new ArgumentParser(command).getTokenList();
 
 			if (connection != null) {
-				JSchProcessBuilder processBuilder = (JSchProcessBuilder) connection.getProcessBuilder(cmd);
+				AdbProcessBuilder processBuilder = (AdbProcessBuilder) connection.getProcessBuilder(cmd);
 				processBuilder.setPreamble(false);
 				process = processBuilder.start();
 			} else {
@@ -201,11 +201,11 @@ public class JSchConnectionProxyFactory {
 
 	private static class SSHForwardProxy implements Proxy {
 		private AdbChannel channel;
-		private final JSchConnection connection;
+		private final AdbConnection connection;
 		private final IProgressMonitor monitor;
 		private boolean connectCalled = false;
 
-		private SSHForwardProxy(JSchConnection proxyConnection, IProgressMonitor monitor) {
+		private SSHForwardProxy(AdbConnection proxyConnection, IProgressMonitor monitor) {
 			if (proxyConnection == null || monitor == null) {
 				throw new IllegalArgumentException();
 			}
@@ -297,7 +297,7 @@ public class JSchConnectionProxyFactory {
 	 *            A valid progress monitor. Cannot be null.
 	 * @return ssh proxy
 	 */
-	public static Proxy createCommandProxy(JSchConnection connection, String command, IProgressMonitor monitor) {
+	public static Proxy createCommandProxy(AdbConnection connection, String command, IProgressMonitor monitor) {
 		return new CommandProxy(connection, command, monitor);
 	}
 
@@ -310,7 +310,7 @@ public class JSchConnectionProxyFactory {
 	 *            A valid progress monitor. Cannot be null.
 	 * @return ssh proxy
 	 */
-	public static Proxy createForwardProxy(JSchConnection proxyConnection, IProgressMonitor monitor) {
+	public static Proxy createForwardProxy(AdbConnection proxyConnection, IProgressMonitor monitor) {
 		return new SSHForwardProxy(proxyConnection, monitor);
 	}
 }

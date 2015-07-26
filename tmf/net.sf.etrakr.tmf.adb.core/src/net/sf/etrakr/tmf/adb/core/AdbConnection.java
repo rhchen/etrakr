@@ -51,7 +51,7 @@ import net.sf.etrakr.tmf.adb.core.messages.Messages;
 /**
  * @since 5.0
  */
-public class JSchConnection implements IRemoteConnectionControlService, IRemoteConnectionPropertyService,
+public class AdbConnection implements IRemoteConnectionControlService, IRemoteConnectionPropertyService,
 		IRemotePortForwardingService, IRemoteProcessService, IRemoteConnectionHostService, IRemoteConnectionChangeListener {
 	// Connection Type ID
 	public static final String JSCH_ID = "org.eclipse.remote.JSch"; //$NON-NLS-1$
@@ -89,9 +89,9 @@ public class JSchConnection implements IRemoteConnectionControlService, IRemoteC
 	private AdbChannelSftp fSftpChannel;
 	private boolean isFullySetup; // including sftp channel and environment
 
-	private static final Map<IRemoteConnection, JSchConnection> connectionMap = new HashMap<>();
+	private static final Map<IRemoteConnection, AdbConnection> connectionMap = new HashMap<>();
 
-	public JSchConnection(IRemoteConnection connection) {
+	public AdbConnection(IRemoteConnection connection) {
 		fRemoteConnection = connection;
 		fJSchService = AdbActivator.getDefault().getService();
 		connection.addConnectionChangeListener(this);
@@ -131,11 +131,11 @@ public class JSchConnection implements IRemoteConnectionControlService, IRemoteC
 			// This works because the connection caches the service so only one gets created.
 			// As a side effect, it makes this class a service too which can be used
 			// by the this plug-in
-			if (JSchConnection.class.equals(service)) {
+			if (AdbConnection.class.equals(service)) {
 				synchronized (connectionMap) {
-					JSchConnection jschConnection = connectionMap.get(connection);
+					AdbConnection jschConnection = connectionMap.get(connection);
 					if (jschConnection == null) {
-						jschConnection = new JSchConnection(connection);
+						jschConnection = new AdbConnection(connection);
 						connectionMap.put(connection, jschConnection);
 					}
 					return (T) jschConnection;
@@ -143,7 +143,7 @@ public class JSchConnection implements IRemoteConnectionControlService, IRemoteC
 			} else if (IRemoteConnectionControlService.class.equals(service)
 					|| IRemoteConnectionPropertyService.class.equals(service) || IRemotePortForwardingService.class.equals(service)
 					|| IRemoteProcessService.class.equals(service) || IRemoteConnectionHostService.class.equals(service)) {
-				return (T) connection.getService(JSchConnection.class);
+				return (T) connection.getService(AdbConnection.class);
 			} else {
 				return null;
 			}
@@ -441,7 +441,7 @@ public class JSchConnection implements IRemoteConnectionControlService, IRemoteC
 	 */
 	@Override
 	public IRemoteProcessBuilder getProcessBuilder(List<String> command) {
-		return new JSchProcessBuilder(getRemoteConnection(), command);
+		return new AdbProcessBuilder(getRemoteConnection(), command);
 	}
 
 	/*
@@ -451,7 +451,7 @@ public class JSchConnection implements IRemoteConnectionControlService, IRemoteC
 	 */
 	@Override
 	public IRemoteProcessBuilder getProcessBuilder(String... command) {
-		return new JSchProcessBuilder(getRemoteConnection(), command);
+		return new AdbProcessBuilder(getRemoteConnection(), command);
 	}
 
 	/*
@@ -478,12 +478,12 @@ public class JSchConnection implements IRemoteConnectionControlService, IRemoteC
 	 *
 	 * @return proxy connection
 	 */
-	public JSchConnection getProxyConnection() {
+	public AdbConnection getProxyConnection() {
 		String proxyConnectionName = getProxyConnectionName();
 		if (proxyConnectionName.isEmpty()) {
 			return null;
 		}
-		return fRemoteConnection.getConnectionType().getConnection(proxyConnectionName).getService(JSchConnection.class);
+		return fRemoteConnection.getConnectionType().getConnection(proxyConnectionName).getService(AdbConnection.class);
 	}
 
 	/**
@@ -731,10 +731,10 @@ public class JSchConnection implements IRemoteConnectionControlService, IRemoteC
 				fJSchService.connect(session, getTimeout() * 1000, progress.newChild(10)); // connect without proxy
 			} else {
 				if (getProxyCommand().isEmpty()) {
-					session.setProxy(JSchConnectionProxyFactory.createForwardProxy(getProxyConnection(), progress.newChild(10)));
+					session.setProxy(AdbConnectionProxyFactory.createForwardProxy(getProxyConnection(), progress.newChild(10)));
 					fJSchService.connect(session, getTimeout() * 1000, progress.newChild(10));
 				} else {
-					session.setProxy(JSchConnectionProxyFactory.createCommandProxy(getProxyConnection(), getProxyCommand(),
+					session.setProxy(AdbConnectionProxyFactory.createCommandProxy(getProxyConnection(), getProxyCommand(),
 							progress.newChild(10)));
 					session.connect(getTimeout() * 1000); // the fJSchService doesn't pass the timeout correctly
 				}

@@ -8,7 +8,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import net.sf.etrakr.tmf.adb.core.JSchConnection;
+import net.sf.etrakr.tmf.adb.core.AdbConnection;
 import net.sf.etrakr.tmf.adb.core.internal.AdbException;
 import net.sf.etrakr.tmf.adb.core.messages.Messages;
 
@@ -16,7 +16,7 @@ import net.sf.etrakr.tmf.adb.core.messages.Messages;
 public class GetInputStreamCommand extends AbstractRemoteCommand<InputStream> {
 	private final IPath fRemotePath;
 
-	public GetInputStreamCommand(JSchConnection connection, IPath path) {
+	public GetInputStreamCommand(AdbConnection connection, IPath path) {
 		super(connection);
 		fRemotePath = path;
 	}

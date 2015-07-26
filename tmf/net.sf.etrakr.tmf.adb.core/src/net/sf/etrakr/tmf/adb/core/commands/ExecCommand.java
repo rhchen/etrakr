@@ -6,7 +6,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import net.sf.etrakr.tmf.adb.core.JSchConnection;
+import net.sf.etrakr.tmf.adb.core.AdbConnection;
 import net.sf.etrakr.tmf.adb.core.internal.AdbException;
 import net.sf.etrakr.tmf.adb.core.messages.Messages;
 
@@ -15,7 +15,7 @@ public class ExecCommand extends AbstractRemoteCommand<String> {
 
 	private String fCommand;
 
-	public ExecCommand(JSchConnection connection) {
+	public ExecCommand(AdbConnection connection) {
 		super(connection);
 	}
 

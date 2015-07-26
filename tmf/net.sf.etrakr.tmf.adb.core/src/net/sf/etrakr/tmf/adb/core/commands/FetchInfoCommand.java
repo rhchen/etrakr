@@ -6,7 +6,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import net.sf.etrakr.tmf.adb.core.JSchConnection;
+import net.sf.etrakr.tmf.adb.core.AdbConnection;
 import net.sf.etrakr.tmf.adb.core.internal.AdbChannelSftp;
 import net.sf.etrakr.tmf.adb.core.internal.AdbException;
 import net.sf.etrakr.tmf.adb.core.internal.AdbSftpATTRS;
@@ -18,7 +18,7 @@ public class FetchInfoCommand extends AbstractRemoteCommand<IFileInfo> {
 
 	public static final int SSH_FX_NO_SUCH_FILE=                  2;
 	
-	public FetchInfoCommand(JSchConnection connection, IPath path) {
+	public FetchInfoCommand(AdbConnection connection, IPath path) {
 		super(connection);
 		fRemotePath = path;
 	}

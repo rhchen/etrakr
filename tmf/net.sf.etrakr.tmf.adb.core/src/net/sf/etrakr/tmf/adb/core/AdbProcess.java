@@ -26,7 +26,7 @@ import net.sf.etrakr.tmf.adb.core.internal.AdbChannel;
 import net.sf.etrakr.tmf.adb.core.internal.AdbChannelExec;
 import net.sf.etrakr.tmf.adb.core.internal.AdbChannelShell;
 
-public class JSchProcess implements IRemoteProcessControlService, IRemoteProcessSignalService, IRemoteProcessTerminalService {
+public class AdbProcess implements IRemoteProcessControlService, IRemoteProcessSignalService, IRemoteProcessTerminalService {
 	@SuppressWarnings("nls")
 	private final String signals[] = new String[] { "", "HUP", "INT", "QUIT", "ILL", "", "ABRT", "", "FPE", "KILL", "", "SEGV", "",
 			"PIPE", "ALRM", "TERM", "", "STOP", "TSTP", "CONT", "", "", "", "", "", "", "", "", "", "", "USR1", "USR2" };
@@ -57,12 +57,12 @@ public class JSchProcess implements IRemoteProcessControlService, IRemoteProcess
 			// This works because the connection caches the service so only one gets created.
 			// As a side effect, it makes this class a service too which can be used
 			// by the this plug-in
-			if (JSchProcess.class.equals(service)) {
-				return (T) new JSchProcess(remoteProcess);
+			if (AdbProcess.class.equals(service)) {
+				return (T) new AdbProcess(remoteProcess);
 			}
 			if (IRemoteProcessControlService.class.equals(service) || IRemoteProcessSignalService.class.equals(service)
 					|| IRemoteProcessTerminalService.class.equals(service)) {
-				return (T) remoteProcess.getService(JSchProcess.class);
+				return (T) remoteProcess.getService(AdbProcess.class);
 			}
 			return null;
 		}
@@ -118,9 +118,9 @@ public class JSchProcess implements IRemoteProcessControlService, IRemoteProcess
 		}
 	}
 
-	public JSchProcess(IRemoteProcess process) {
+	public AdbProcess(IRemoteProcess process) {
 		fProcess = process;
-		fChannel = ((JSchProcessBuilder) process.getProcessBuilder()).getChannel();
+		fChannel = ((AdbProcessBuilder) process.getProcessBuilder()).getChannel();
 
 		try {
 			if (process.getProcessBuilder().redirectErrorStream()) {

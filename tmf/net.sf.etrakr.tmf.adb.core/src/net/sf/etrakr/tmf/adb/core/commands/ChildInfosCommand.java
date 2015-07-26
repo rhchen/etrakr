@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import net.sf.etrakr.tmf.adb.core.JSchConnection;
+import net.sf.etrakr.tmf.adb.core.AdbConnection;
 import net.sf.etrakr.tmf.adb.core.internal.AdbChannelSftp.LsEntry;
 import net.sf.etrakr.tmf.adb.core.internal.AdbException;
 
@@ -20,7 +20,7 @@ public class ChildInfosCommand extends AbstractRemoteCommand<IFileInfo[]> {
 
 	private final IPath fRemotePath;
 
-	public ChildInfosCommand(JSchConnection connection, IPath path) {
+	public ChildInfosCommand(AdbConnection connection, IPath path) {
 		super(connection);
 		fRemotePath = path;
 	}

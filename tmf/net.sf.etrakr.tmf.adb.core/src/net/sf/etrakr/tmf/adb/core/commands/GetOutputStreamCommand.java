@@ -13,7 +13,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import net.sf.etrakr.tmf.adb.core.JSchConnection;
+import net.sf.etrakr.tmf.adb.core.AdbConnection;
 import net.sf.etrakr.tmf.adb.core.internal.AdbChannelSftp;
 import net.sf.etrakr.tmf.adb.core.internal.AdbException;
 import net.sf.etrakr.tmf.adb.core.messages.Messages;
@@ -24,7 +24,7 @@ public class GetOutputStreamCommand extends AbstractRemoteCommand<OutputStream> 
 	private final int fOptions;
 	private boolean fIsClosed;
 
-	public GetOutputStreamCommand(JSchConnection connection, int options, IPath path) {
+	public GetOutputStreamCommand(AdbConnection connection, int options, IPath path) {
 		super(connection);
 		fRemotePath = path;
 		fOptions = options;

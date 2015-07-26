@@ -31,7 +31,7 @@ import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileSystem;
 import org.eclipse.core.runtime.IPath;
 
-public class JSchFileSystem extends FileSystem {
+public class AdbFileSystem extends FileSystem {
 	/**
 	 * Return the connection name encoded in the URI.
 	 * 
@@ -64,7 +64,7 @@ public class JSchFileSystem extends FileSystem {
 	/**
 	 * Default constructor.
 	 */
-	public JSchFileSystem() {
+	public AdbFileSystem() {
 		super();
 	}
 
@@ -118,7 +118,7 @@ public class JSchFileSystem extends FileSystem {
 	@Override
 	public IFileStore getStore(URI uri) {
 		try {
-			return JschFileStore.getInstance(uri);
+			return AdbFileStore.getInstance(uri);
 		} catch (Exception e) {
 			// Could be an URI format exception
 			AdbActivator.log(e);

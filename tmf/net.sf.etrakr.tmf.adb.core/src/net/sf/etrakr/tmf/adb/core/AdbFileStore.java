@@ -43,36 +43,36 @@ import net.sf.etrakr.tmf.adb.core.commands.MkdirCommand;
 import net.sf.etrakr.tmf.adb.core.commands.PutInfoCommand;
 import net.sf.etrakr.tmf.adb.core.messages.Messages;
 
-public class JschFileStore extends FileStore {
+public class AdbFileStore extends FileStore {
 	/**
-	 * Public factory method for obtaining JschFileStore instances.
+	 * Public factory method for obtaining AdbFileStore instances.
 	 * 
 	 * @param uri
 	 *            URI to get a fileStore for
-	 * @return an JschFileStore instance for the URI.
+	 * @return an AdbFileStore instance for the URI.
 	 */
-	public static JschFileStore getInstance(URI uri) {
+	public static AdbFileStore getInstance(URI uri) {
 		synchronized (instanceMap) {
-			JschFileStore store = instanceMap.get(uri.toString());
+			AdbFileStore store = instanceMap.get(uri.toString());
 			if (store == null) {
-				store = new JschFileStore(uri);
+				store = new AdbFileStore(uri);
 				instanceMap.put(uri.toString(), store);
 			}
 			return store;
 		}
 	}
 
-	private static Map<String, JschFileStore> instanceMap = new HashMap<String, JschFileStore>();
+	private static Map<String, AdbFileStore> instanceMap = new HashMap<String, AdbFileStore>();
 
 	private final IPath fRemotePath;
 	private final URI fURI;
 
-	private JschFileStore(URI uri) {
+	private AdbFileStore(URI uri) {
 		fURI = uri;
 		fRemotePath = RemoteServicesUtils.posixPath(uri.getPath());
 	}
 
-	private JSchConnection checkConnection(IProgressMonitor monitor) throws RemoteConnectionException {
+	private AdbConnection checkConnection(IProgressMonitor monitor) throws RemoteConnectionException {
 		IRemoteServicesManager manager = AdbActivator.getService(IRemoteServicesManager.class);
 		IRemoteConnectionType connectionType = manager.getConnectionType(fURI);
 		if (connectionType == null) {
@@ -90,7 +90,7 @@ public class JschFileStore extends FileStore {
 					throw new RemoteConnectionException(Messages.JschFileStore_Connection_is_not_open);
 				}
 			}
-			return connection.getService(JSchConnection.class);
+			return connection.getService(AdbConnection.class);
 		} catch (CoreException e) {
 			throw new RemoteConnectionException(e);
 		}
@@ -105,7 +105,7 @@ public class JschFileStore extends FileStore {
 	@Override
 	public IFileInfo[] childInfos(int options, IProgressMonitor monitor) throws CoreException {
 		SubMonitor subMon = SubMonitor.convert(monitor, 10);
-		JSchConnection connection = checkConnection(subMon.newChild(1));
+		AdbConnection connection = checkConnection(subMon.newChild(1));
 		ChildInfosCommand command = new ChildInfosCommand(connection, fRemotePath);
 		return command.getResult(subMon.newChild(9));
 	}
@@ -136,7 +136,7 @@ public class JschFileStore extends FileStore {
 	@Override
 	public void delete(int options, IProgressMonitor monitor) throws CoreException {
 		SubMonitor subMon = SubMonitor.convert(monitor, 20);
-		JSchConnection connection = checkConnection(subMon.newChild(1));
+		AdbConnection connection = checkConnection(subMon.newChild(1));
 		IFileInfo info = fetchInfo(EFS.NONE, subMon.newChild(9));
 		if (!subMon.isCanceled() && info.exists()) {
 			DeleteCommand command = new DeleteCommand(connection, fRemotePath);
@@ -153,7 +153,7 @@ public class JschFileStore extends FileStore {
 	@Override
 	public IFileInfo fetchInfo(int options, IProgressMonitor monitor) throws CoreException {
 		SubMonitor subMon = SubMonitor.convert(monitor, 10);
-		JSchConnection connection = checkConnection(subMon.newChild(1));
+		AdbConnection connection = checkConnection(subMon.newChild(1));
 		FetchInfoCommand command = new FetchInfoCommand(connection, fRemotePath);
 		return command.getResult(subMon.newChild(9));
 	}
@@ -166,8 +166,8 @@ public class JschFileStore extends FileStore {
 	 */
 	@Override
 	public IFileStore getChild(String name) {
-		URI uri = JSchFileSystem.getURIFor(JSchFileSystem.getConnectionNameFor(fURI), fRemotePath.append(name).toString());
-		return JschFileStore.getInstance(uri);
+		URI uri = AdbFileSystem.getURIFor(AdbFileSystem.getConnectionNameFor(fURI), fRemotePath.append(name).toString());
+		return AdbFileStore.getInstance(uri);
 	}
 
 	/*
@@ -208,7 +208,7 @@ public class JschFileStore extends FileStore {
 		if (fRemotePath.segmentCount() > 0) {
 			parentPath = fRemotePath.removeLastSegments(1).toString();
 		}
-		return JschFileStore.getInstance(JSchFileSystem.getURIFor(JSchFileSystem.getConnectionNameFor(fURI), parentPath));
+		return AdbFileStore.getInstance(AdbFileSystem.getURIFor(AdbFileSystem.getConnectionNameFor(fURI), parentPath));
 	}
 
 	/*
@@ -220,7 +220,7 @@ public class JschFileStore extends FileStore {
 	@Override
 	public IFileStore mkdir(int options, IProgressMonitor monitor) throws CoreException {
 		SubMonitor subMon = SubMonitor.convert(monitor, 20);
-		JSchConnection connection = checkConnection(subMon.newChild(1));
+		AdbConnection connection = checkConnection(subMon.newChild(1));
 
 		if ((options & EFS.SHALLOW) == EFS.SHALLOW) {
 			IFileStore parent = getParent();
@@ -268,7 +268,7 @@ public class JschFileStore extends FileStore {
 	@Override
 	public InputStream openInputStream(int options, IProgressMonitor monitor) throws CoreException {
 		SubMonitor subMon = SubMonitor.convert(monitor, 30);
-		JSchConnection connection = checkConnection(subMon.newChild(1));
+		AdbConnection connection = checkConnection(subMon.newChild(1));
 		IFileInfo info = fetchInfo(EFS.NONE, subMon.newChild(9));
 		if (!subMon.isCanceled()) {
 			if (!info.exists()) {
@@ -294,7 +294,7 @@ public class JschFileStore extends FileStore {
 	@Override
 	public OutputStream openOutputStream(int options, IProgressMonitor monitor) throws CoreException {
 		SubMonitor subMon = SubMonitor.convert(monitor, 30);
-		JSchConnection connection = checkConnection(subMon.newChild(1));
+		AdbConnection connection = checkConnection(subMon.newChild(1));
 		IFileInfo info = fetchInfo(EFS.NONE, subMon.newChild(9));
 		if (!subMon.isCanceled()) {
 			if (info.isDirectory()) {
@@ -317,7 +317,7 @@ public class JschFileStore extends FileStore {
 	@Override
 	public void putInfo(IFileInfo info, int options, IProgressMonitor monitor) throws CoreException {
 		SubMonitor subMon = SubMonitor.convert(monitor, 10);
-		JSchConnection connection = checkConnection(subMon.newChild(1));
+		AdbConnection connection = checkConnection(subMon.newChild(1));
 		PutInfoCommand command = new PutInfoCommand(connection, info, options, fRemotePath);
 		command.getResult(subMon.newChild(9));
 	}

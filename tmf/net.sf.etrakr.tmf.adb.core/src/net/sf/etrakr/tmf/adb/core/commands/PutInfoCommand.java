@@ -6,7 +6,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import net.sf.etrakr.tmf.adb.core.JSchConnection;
+import net.sf.etrakr.tmf.adb.core.AdbConnection;
 import net.sf.etrakr.tmf.adb.core.internal.AdbException;
 
 public class PutInfoCommand extends AbstractRemoteCommand<Void> {
@@ -24,7 +24,7 @@ public class PutInfoCommand extends AbstractRemoteCommand<Void> {
 	private final IFileInfo fFileInfo;
 	private final int fOptions;
 
-	public PutInfoCommand(JSchConnection connection, IFileInfo info, int options, IPath path) {
+	public PutInfoCommand(AdbConnection connection, IFileInfo info, int options, IPath path) {
 		super(connection);
 		fFileInfo = info;
 		fOptions = options;

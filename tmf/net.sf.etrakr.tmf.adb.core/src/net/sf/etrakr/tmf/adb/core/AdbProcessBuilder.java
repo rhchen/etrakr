@@ -38,9 +38,9 @@ import net.sf.etrakr.tmf.adb.core.internal.AdbException;
 import net.sf.etrakr.tmf.adb.core.messages.Messages;
 
 
-public class JSchProcessBuilder extends AbstractRemoteProcessBuilder {
+public class AdbProcessBuilder extends AbstractRemoteProcessBuilder {
 
-	private final JSchConnection fConnection;
+	private final AdbConnection fConnection;
 	private final Map<String, String> fRemoteEnv = new HashMap<String, String>();
 	private final Set<Character> charSet = new HashSet<Character>();
 
@@ -49,9 +49,9 @@ public class JSchProcessBuilder extends AbstractRemoteProcessBuilder {
 	private boolean fPreamble = true;
 	private boolean fShell = false;
 
-	public JSchProcessBuilder(IRemoteConnection connection, List<String> command) {
+	public AdbProcessBuilder(IRemoteConnection connection, List<String> command) {
 		super(connection, command);
-		fConnection = connection.getService(JSchConnection.class);
+		fConnection = connection.getService(AdbConnection.class);
 		fRemoteEnv.putAll(fConnection.getEnv());
 
 		// Create set of characters not to escape
@@ -64,11 +64,11 @@ public class JSchProcessBuilder extends AbstractRemoteProcessBuilder {
 		}
 	}
 
-	public JSchProcessBuilder(IRemoteConnection connection, String... command) {
+	public AdbProcessBuilder(IRemoteConnection connection, String... command) {
 		this(connection, Arrays.asList(command));
 	}
 
-	public JSchProcessBuilder(IRemoteConnection connection) {
+	public AdbProcessBuilder(IRemoteConnection connection) {
 		this(connection, new ArrayList<String>());
 		fShell = true;
 	}
