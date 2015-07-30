@@ -2,6 +2,7 @@ package net.sf.etrakr.tmf.adb.core.internal;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Socket;
 
 public class AdbSession implements Runnable {
 
@@ -27,6 +28,10 @@ public class AdbSession implements Runnable {
 
 	Adb adb;
 
+	AdbSocketFactory socket_factory=null;
+	
+	private Socket socket;
+	
 	AdbSession(Adb adb, String username, String host, int port) throws AdbException {
 
 		super();
@@ -228,4 +233,31 @@ public class AdbSession implements Runnable {
 //	    channel.setPort(port);
 	    return channel;
 	  } 
+	
+	public void setSocketFactory(AdbSocketFactory sfactory){ 
+	    socket_factory=sfactory;
+	  }
+	
+	public String getHost(){return host;}
+	  public String getUserName(){return username;}
+	  public int getPort(){return port;}
+	  
+	  public void setTimeout(int timeout) throws AdbException {
+		    if(socket==null){
+		      if(timeout<0){
+		        throw new AdbException("invalid timeout value");
+		      }
+		      this.timeout=timeout;
+		      return;
+		    }
+		    try{
+		      socket.setSoTimeout(timeout);
+		      this.timeout=timeout;
+		    }
+		    catch(Exception e){
+		      if(e instanceof Throwable)
+		        throw new AdbException(e.toString(), (Throwable)e);
+		      throw new AdbException(e.toString());
+		    }
+		  }
 }

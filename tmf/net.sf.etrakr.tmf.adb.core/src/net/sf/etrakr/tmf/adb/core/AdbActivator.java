@@ -1,5 +1,8 @@
 package net.sf.etrakr.tmf.adb.core;
 
+import java.util.Hashtable;
+
+import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -9,6 +12,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
 
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.AndroidDebugBridge.IClientChangeListener;
@@ -17,19 +22,28 @@ import com.android.ddmlib.AndroidDebugBridge.IDeviceChangeListener;
 import com.android.ddmlib.Client;
 import com.android.ddmlib.IDevice;
 
+import net.sf.etrakr.tmf.adb.core.internal.Adb;
 import net.sf.etrakr.tmf.adb.core.internal.IJSchService;
+import net.sf.etrakr.tmf.adb.core.internal.JSchProvider;
 
-public class AdbActivator extends Plugin implements BundleActivator, IDebugBridgeChangeListener, IDeviceChangeListener, IClientChangeListener{
+public class AdbActivator extends Plugin
+		implements BundleActivator, IDebugBridgeChangeListener, IDeviceChangeListener, IClientChangeListener {
 
 	public static final String PLUGIN_ID = "net.sf.etrakr.tmf.adb.core"; //$NON-NLS-1$
-	
+
 	public static final String DdmsPlugin_DDMS_Post_Create_Init = "DDMS post-create init";
-	
+
 	// The shared instance
 	private static AdbActivator plugin;
 
 	private IJSchService fJSchService;
-	
+
+	private ServiceTracker tracker;
+
+	private ServiceRegistration jschService;
+
+	private Adb adb;
+
 	/**
 	 * Returns the shared instance
 	 * 
@@ -95,11 +109,12 @@ public class AdbActivator extends Plugin implements BundleActivator, IDebugBridg
 	public static void log(int severity, String message, Throwable e) {
 		log(new Status(severity, PLUGIN_ID, 0, message, e));
 	}
-	
+
 	/**
 	 * Return the OSGi service with the given service interface.
 	 * 
-	 * @param service service interface
+	 * @param service
+	 *            service interface
 	 * @return the specified service or null if it's not registered
 	 */
 	public static <T> T getService(Class<T> service) {
@@ -107,89 +122,115 @@ public class AdbActivator extends Plugin implements BundleActivator, IDebugBridg
 		ServiceReference<T> ref = context.getServiceReference(service);
 		return ref != null ? context.getService(ref) : null;
 	}
-	
+
 	public IJSchService getService() {
 		return fJSchService;
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		
-		super.start(bundleContext);
-		
-		plugin = this;
-		
-		ServiceReference<IJSchService> reference = bundleContext.getServiceReference(IJSchService.class);
-		fJSchService = bundleContext.getService(reference);
-		
-		System.out.println("AdbActivator.start : DDMS post-create init");
-		
-		AndroidDebugBridge.addDebugBridgeChangeListener(this);
-        AndroidDebugBridge.addDeviceChangeListener(this);
-        AndroidDebugBridge.addClientChangeListener(this);
-        
-        new Job(DdmsPlugin_DDMS_Post_Create_Init) {
-        	
-            @Override
-            protected IStatus run(IProgressMonitor monitor) {
-            	
-            	// init the lib
-                AndroidDebugBridge.init(false /* debugger support */);
 
-                AndroidDebugBridge.createBridge("adb", false /* forceNewBridge */);
-
-                return Status.OK_STATUS;
-            }
-            
-        }.schedule();
+	public synchronized Adb getJSch() {
+		if (adb == null) {
+			adb = new Adb();
+		}
+		return adb;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.
+	 * BundleContext)
+	 */
+	public void start(BundleContext bundleContext) throws Exception {
+
+		super.start(bundleContext);
+
+		plugin = this;
+
+		/* Regist service */
+		tracker = new ServiceTracker(getBundle().getBundleContext(), IProxyService.class.getName(), null);
+		tracker.open();
+		jschService = getBundle().getBundleContext().registerService(IJSchService.class.getName(),
+				JSchProvider.getInstance(), new Hashtable());
+
+		/* get service */
+		ServiceReference<IJSchService> reference = bundleContext.getServiceReference(IJSchService.class);
+		fJSchService = bundleContext.getService(reference);
+
+		System.out.println("AdbActivator.start : DDMS post-create init");
+
+		AndroidDebugBridge.addDebugBridgeChangeListener(this);
+		AndroidDebugBridge.addDeviceChangeListener(this);
+		AndroidDebugBridge.addClientChangeListener(this);
+
+		new Job(DdmsPlugin_DDMS_Post_Create_Init) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+
+				// init the lib
+				AndroidDebugBridge.init(false /* debugger support */);
+
+				AndroidDebugBridge.createBridge("adb", false /* forceNewBridge */);
+
+				return Status.OK_STATUS;
+			}
+
+		}.schedule();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		
+
 		AndroidDebugBridge.removeDeviceChangeListener(this);
 
-        AndroidDebugBridge.terminate();
-        
+		AndroidDebugBridge.terminate();
+
 		plugin = null;
-		
+
+		/* unregist service */
+		tracker.close();
+		jschService.unregister();
+
 		super.stop(bundleContext);
+	}
+
+	public IProxyService getProxyService() {
+		return (IProxyService) tracker.getService();
 	}
 
 	@Override
 	public void clientChanged(Client client, int changeMask) {
 		System.out.println("AdbActivator.clientChanged");
-		
+
 	}
 
 	@Override
 	public void deviceConnected(IDevice device) {
 		System.out.println("AdbActivator.deviceConnected");
-		
+
 	}
 
 	@Override
 	public void deviceDisconnected(IDevice device) {
 		System.out.println("AdbActivator.deviceDisconnected");
-		
+
 	}
 
 	@Override
 	public void deviceChanged(IDevice device, int changeMask) {
 		System.out.println("AdbActivator.deviceChanged");
-		
+
 	}
 
 	@Override
 	public void bridgeChanged(AndroidDebugBridge bridge) {
 		System.out.println("AdbActivator.bridgeChanged");
-		
+
 	}
 
 }
