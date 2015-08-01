@@ -31,8 +31,8 @@
   <name>etrakr tmf parent</name>
 
   <modules>
-	<module>net.sf.etrakr.tmf.adb.core</module>
-	<module>net.sf.etrakr.tmf.adb.core.test</module>
+	<module>net.sf.etrakr.tmf.remote.adb.core</module>
+	<module>net.sf.etrakr.tmf.remote.adb.core.test</module>
   </modules>
 
 </project>
