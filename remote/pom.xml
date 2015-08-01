@@ -23,5 +23,6 @@
   <name>etrakr remote parent</name>
   <modules>
     <module>net.sf.etrakr.remote.adb.core</module>
+	<module>net.sf.etrakr.remote.adb.core.test</module>
   </modules>
 </project>
