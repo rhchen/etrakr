@@ -64,7 +64,7 @@ public class AdbFileStore extends FileStore {
 	}
 
 	private AdbConnection checkConnection(IProgressMonitor monitor) throws RemoteConnectionException {
-		IRemoteServicesManager manager = AdbActivator.getService(IRemoteServicesManager.class);
+		IRemoteServicesManager manager = AdbPlugin.getService(IRemoteServicesManager.class);
 		IRemoteConnectionType connectionType = manager.getConnectionType(fURI);
 		if (connectionType == null) {
 			throw new RemoteConnectionException(NLS.bind(Messages.JschFileStore_No_remote_services_found_for_URI, fURI));
@@ -216,7 +216,7 @@ public class AdbFileStore extends FileStore {
 		if ((options & EFS.SHALLOW) == EFS.SHALLOW) {
 			IFileStore parent = getParent();
 			if (parent != null && !parent.fetchInfo(EFS.NONE, subMon.newChild(9)).exists()) {
-				throw new CoreException(new Status(IStatus.ERROR, AdbActivator.getUniqueIdentifier(), EFS.ERROR_WRITE,
+				throw new CoreException(new Status(IStatus.ERROR, AdbPlugin.getUniqueIdentifier(), EFS.ERROR_WRITE,
 						NLS.bind(Messages.JschFileStore_The_parent_of_directory_does_not_exist, fRemotePath.toString()), null));
 			}
 			if (subMon.isCanceled()) {
@@ -237,11 +237,11 @@ public class AdbFileStore extends FileStore {
 			IFileInfo info = fetchInfo(EFS.NONE, subMon.newChild(10));
 			if (!subMon.isCanceled()) {
 				if (!info.exists()) {
-					throw new CoreException(new Status(IStatus.ERROR, AdbActivator.getUniqueIdentifier(), EFS.ERROR_WRITE,
+					throw new CoreException(new Status(IStatus.ERROR, AdbPlugin.getUniqueIdentifier(), EFS.ERROR_WRITE,
 							NLS.bind(Messages.JschFileStore_The_directory_could_not_be_created, fRemotePath.toString()), null));
 				}
 				if (!info.isDirectory()) {
-					throw new CoreException(new Status(IStatus.ERROR, AdbActivator.getUniqueIdentifier(), EFS.ERROR_WRONG_TYPE,
+					throw new CoreException(new Status(IStatus.ERROR, AdbPlugin.getUniqueIdentifier(), EFS.ERROR_WRONG_TYPE,
 							NLS.bind(Messages.JschFileStore_A_file_of_name_already_exists, fRemotePath.toString()), null));
 				}
 			}
@@ -263,11 +263,11 @@ public class AdbFileStore extends FileStore {
 		IFileInfo info = fetchInfo(EFS.NONE, subMon.newChild(9));
 		if (!subMon.isCanceled()) {
 			if (!info.exists()) {
-				throw new CoreException(new Status(IStatus.ERROR, AdbActivator.getUniqueIdentifier(), EFS.ERROR_READ,
+				throw new CoreException(new Status(IStatus.ERROR, AdbPlugin.getUniqueIdentifier(), EFS.ERROR_READ,
 						NLS.bind(Messages.JschFileStore_File_doesnt_exist, fRemotePath.toString()), null));
 			}
 			if (info.isDirectory()) {
-				throw new CoreException(new Status(IStatus.ERROR, AdbActivator.getUniqueIdentifier(), EFS.ERROR_WRONG_TYPE,
+				throw new CoreException(new Status(IStatus.ERROR, AdbPlugin.getUniqueIdentifier(), EFS.ERROR_WRONG_TYPE,
 						NLS.bind(Messages.JschFileStore_Is_a_directory, fRemotePath.toString()), null));
 			}
 			GetInputStreamCommand command = new GetInputStreamCommand(connection, fRemotePath);
@@ -289,7 +289,7 @@ public class AdbFileStore extends FileStore {
 		IFileInfo info = fetchInfo(EFS.NONE, subMon.newChild(9));
 		if (!subMon.isCanceled()) {
 			if (info.isDirectory()) {
-				throw new CoreException(new Status(IStatus.ERROR, AdbActivator.getUniqueIdentifier(), EFS.ERROR_WRONG_TYPE,
+				throw new CoreException(new Status(IStatus.ERROR, AdbPlugin.getUniqueIdentifier(), EFS.ERROR_WRONG_TYPE,
 						NLS.bind(Messages.JschFileStore_Is_a_directory, fRemotePath.toString()), null));
 			}
 			GetOutputStreamCommand command = new GetOutputStreamCommand(connection, options, fRemotePath);

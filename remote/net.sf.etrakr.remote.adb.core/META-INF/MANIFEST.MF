@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Adb Core
 Bundle-SymbolicName: net.sf.etrakr.remote.adb.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: net.sf.etrakr.remote.adb.core.AdbActivator
+Bundle-Activator: net.sf.etrakr.remote.adb.core.AdbPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.filesystem,
  org.eclipse.remote.core;bundle-version="2.0.0"

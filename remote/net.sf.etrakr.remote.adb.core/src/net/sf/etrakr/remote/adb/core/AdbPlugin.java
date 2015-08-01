@@ -9,13 +9,13 @@ import org.osgi.framework.ServiceReference;
 
 import net.sf.etrakr.remote.adb.core.internal.IAdbService;
 
-public class AdbActivator extends Plugin implements BundleActivator {
+public class AdbPlugin extends Plugin implements BundleActivator {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "net.sf.etrakr.remote.adb.core"; //$NON-NLS-1$
 
 	// The shared instance
-	private static AdbActivator plugin;
+	private static AdbPlugin plugin;
 
 	private IAdbService fAdbService;
 	
@@ -24,7 +24,7 @@ public class AdbActivator extends Plugin implements BundleActivator {
 	 * 
 	 * @return the shared instance
 	 */
-	public static AdbActivator getDefault() {
+	public static AdbPlugin getDefault() {
 		return plugin;
 	}
 

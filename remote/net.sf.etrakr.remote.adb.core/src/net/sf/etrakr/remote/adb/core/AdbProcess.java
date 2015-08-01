@@ -140,7 +140,7 @@ public class AdbProcess implements IRemoteProcessControlService, IRemoteProcessS
 				fProcStderr = fChannel.getExtInputStream();
 			}
 		} catch (IOException e) {
-			AdbActivator.log(e);
+			AdbPlugin.log(e);
 			destroy();
 		}
 

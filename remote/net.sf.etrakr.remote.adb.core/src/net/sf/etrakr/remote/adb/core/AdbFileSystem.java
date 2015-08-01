@@ -100,7 +100,7 @@ public class AdbFileSystem extends FileSystem {
 			return AdbFileStore.getInstance(uri);
 		} catch (Exception e) {
 			// Could be an URI format exception
-			AdbActivator.log(e);
+			AdbPlugin.log(e);
 			return EFS.getNullFileSystem().getStore(uri);
 		}
 	}

@@ -35,7 +35,7 @@ IRemotePortForwardingService, IRemoteProcessService, IRemoteConnectionHostServic
 	
 	public AdbConnection(IRemoteConnection connection) {
 		fRemoteConnection = connection;
-		fJSchService = AdbActivator.getDefault().getService();
+		fJSchService = AdbPlugin.getDefault().getService();
 		connection.addConnectionChangeListener(this);
 	}
 	
