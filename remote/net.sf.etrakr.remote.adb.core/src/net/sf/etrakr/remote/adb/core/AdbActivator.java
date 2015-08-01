@@ -1,30 +1,118 @@
 package net.sf.etrakr.remote.adb.core;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
-public class AdbActivator implements BundleActivator {
+import net.sf.etrakr.remote.adb.core.internal.IAdbService;
 
-	private static BundleContext context;
+public class AdbActivator extends Plugin implements BundleActivator {
 
-	static BundleContext getContext() {
-		return context;
+	// The plug-in ID
+	public static final String PLUGIN_ID = "net.sf.etrakr.remote.adb.core"; //$NON-NLS-1$
+
+	// The shared instance
+	private static AdbActivator plugin;
+
+	private IAdbService fAdbService;
+	
+	/**
+	 * Returns the shared instance
+	 * 
+	 * @return the shared instance
+	 */
+	public static AdbActivator getDefault() {
+		return plugin;
+	}
+
+	/**
+	 * Get unique identifier
+	 * 
+	 * @return
+	 * @since 5.0
+	 */
+	public static String getUniqueIdentifier() {
+		if (getDefault() == null) {
+			return PLUGIN_ID;
+		}
+		return getDefault().getBundle().getSymbolicName();
+	}
+
+	/**
+	 * Logs the specified status with this plug-in's log.
+	 * 
+	 * @param status
+	 *            status to log
+	 */
+	public static void log(IStatus status) {
+		getDefault().getLog().log(status);
+	}
+
+	/**
+	 * Logs an internal error with the specified message.
+	 * 
+	 * @param message
+	 *            the error message to log
+	 */
+	public static void log(String message) {
+		log(new Status(IStatus.ERROR, getUniqueIdentifier(), IStatus.ERROR, message, null));
+	}
+
+	/**
+	 * Logs an internal error with the specified throwable
+	 * 
+	 * @param e
+	 *            the exception to be logged
+	 */
+	public static void log(Throwable e) {
+		log(new Status(IStatus.ERROR, getUniqueIdentifier(), IStatus.ERROR, e.getMessage(), e));
+	}
+
+	
+
+	/**
+	 * Return the OSGi service with the given service interface.
+	 * 
+	 * @param service
+	 *            service interface
+	 * @return the specified service or null if it's not registered
+	 */
+	public static <T> T getService(Class<T> service) {
+		BundleContext context = plugin.getBundle().getBundleContext();
+		ServiceReference<T> ref = context.getServiceReference(service);
+		return ref != null ? context.getService(ref) : null;
+	}
+
+	public IAdbService getService() {
+		return fAdbService;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.
+	 * BundleContext )
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		AdbActivator.context = bundleContext;
+	@Override
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
+		plugin = this;
+		ServiceReference<IAdbService> reference = context.getServiceReference(IAdbService.class);
+		fAdbService = context.getService(reference);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.
+	 * BundleContext )
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		AdbActivator.context = null;
+	@Override
+	public void stop(BundleContext context) throws Exception {
+		plugin = null;
+		super.stop(context);
 	}
-
 }
