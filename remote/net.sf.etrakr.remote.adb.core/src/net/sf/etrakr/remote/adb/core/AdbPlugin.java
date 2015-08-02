@@ -46,6 +46,7 @@ public class AdbPlugin extends Plugin
 
 	private Adb adb;
 
+	private Job adbBridgeJob;
 	/**
 	 * Returns the shared instance
 	 * 
@@ -144,7 +145,7 @@ public class AdbPlugin extends Plugin
 		AndroidDebugBridge.addDeviceChangeListener(this);
 		AndroidDebugBridge.addClientChangeListener(this);
 
-		new Job(DdmsPlugin_DDMS_Post_Create_Init) {
+		Job adbBridgeJob = new Job(DdmsPlugin_DDMS_Post_Create_Init) {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -157,7 +158,9 @@ public class AdbPlugin extends Plugin
 				return Status.OK_STATUS;
 			}
 
-		}.schedule();
+		};
+		
+		adbBridgeJob.schedule();
 	}
 
 	/*
@@ -168,6 +171,14 @@ public class AdbPlugin extends Plugin
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		
+		if(adbBridgeJob != null){
+			
+			AndroidDebugBridge.terminate();
+			adbBridgeJob.cancel();
+			
+		}//if
+		
 		plugin = null;
 		super.stop(context);
 	}
