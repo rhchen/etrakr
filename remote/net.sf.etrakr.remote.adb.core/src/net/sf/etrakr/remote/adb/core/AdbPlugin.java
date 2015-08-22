@@ -1,6 +1,8 @@
 package net.sf.etrakr.remote.adb.core;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -46,7 +48,20 @@ public class AdbPlugin extends Plugin
 
 	private Adb adb;
 
+	private AndroidDebugBridge androidDebugBridge;
+	
 	private Job adbBridgeJob;
+	
+	private List<IDevice> devices = new ArrayList<IDevice>();
+	
+	public List<IDevice> getDevices() {
+		return devices;
+	}
+
+	public AndroidDebugBridge getAndroidDebugBridge() {
+		return androidDebugBridge;
+	}
+
 	/**
 	 * Returns the shared instance
 	 * 
@@ -153,8 +168,10 @@ public class AdbPlugin extends Plugin
 				// init the lib
 				AndroidDebugBridge.init(false /* debugger support */);
 
-				AndroidDebugBridge.createBridge("adb", false /* forceNewBridge */);
+				androidDebugBridge = AndroidDebugBridge.createBridge("adb", false /* forceNewBridge */);
 
+				System.out.println("AdbActivator.start : DDMS post-create done");
+				
 				return Status.OK_STATUS;
 			}
 
@@ -174,7 +191,10 @@ public class AdbPlugin extends Plugin
 		
 		if(adbBridgeJob != null){
 			
+			AndroidDebugBridge.disconnectBridge();
+			
 			AndroidDebugBridge.terminate();
+			
 			adbBridgeJob.cancel();
 			
 		}//if
@@ -200,13 +220,13 @@ public class AdbPlugin extends Plugin
 	@Override
 	public void deviceConnected(IDevice device) {
 		System.out.println("AdbActivator.deviceConnected");
-
+		devices.add(device);
 	}
 
 	@Override
 	public void deviceDisconnected(IDevice device) {
 		System.out.println("AdbActivator.deviceDisconnected");
-
+		devices.remove(device);
 	}
 
 	@Override

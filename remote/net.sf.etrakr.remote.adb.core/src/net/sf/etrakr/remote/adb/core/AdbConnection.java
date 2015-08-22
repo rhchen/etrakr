@@ -1,12 +1,14 @@
 package net.sf.etrakr.remote.adb.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.remote.core.IRemoteConnection;
 import org.eclipse.remote.core.IRemoteConnectionChangeListener;
 import org.eclipse.remote.core.IRemoteConnectionControlService;
@@ -24,6 +26,7 @@ import net.sf.etrakr.remote.adb.core.adb.AdbChannelSftp;
 import net.sf.etrakr.remote.adb.core.adb.AdbChannelShell;
 import net.sf.etrakr.remote.adb.core.adb.AdbException;
 import net.sf.etrakr.remote.adb.core.adb.AdbSession;
+import net.sf.etrakr.remote.adb.core.commands.ExecCommand;
 import net.sf.etrakr.remote.adb.core.internal.IAdbService;
 import net.sf.etrakr.remote.adb.core.messages.Messages;
 
@@ -48,6 +51,11 @@ public class AdbConnection
 	private final IRemoteConnection fRemoteConnection;
 	private final IAdbService fJSchService;
 	private AdbChannelSftp fSftpChannel;
+	
+	private final Map<String, String> fEnv = new HashMap<String, String>();
+	private String fWorkingDir;
+	
+	private final Map<String, String> fProperties = new HashMap<String, String>();
 	private final List<AdbSession> fSessions = new ArrayList<AdbSession>();
 
 	public AdbConnection(IRemoteConnection connection) {
@@ -152,9 +160,42 @@ public class AdbConnection
 				throw new RemoteConnectionException(Messages.JSchConnection_Connection_was_cancelled);
 			}
 		}
+		
+		loadEnv(subMon.newChild(10));
+		
+		fWorkingDir = getCwd(subMon.newChild(10));
+		
 		fRemoteConnection.fireConnectionChangeEvent(RemoteConnectionChangeEvent.CONNECTION_OPENED);
 	}
 
+	private void loadEnv(IProgressMonitor monitor) throws RemoteConnectionException {
+		SubMonitor subMon = SubMonitor.convert(monitor, 10);
+		String env = executeCommand("printenv", subMon.newChild(10)); //$NON-NLS-1$
+		String[] vars = env.split("\n"); //$NON-NLS-1$
+		for (String var : vars) {
+			String[] kv = var.split("="); //$NON-NLS-1$
+			if (kv.length == 2) {
+				fEnv.put(kv[0], kv[1]);
+			}
+		}
+	}
+	
+	private String getCwd(IProgressMonitor monitor) {
+		SubMonitor subMon = SubMonitor.convert(monitor, 10);
+		try {
+			return executeCommand("pwd", subMon.newChild(10)); //$NON-NLS-1$
+		} catch (RemoteConnectionException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private String executeCommand(String cmd, IProgressMonitor monitor) throws RemoteConnectionException {
+		ExecCommand exec = new ExecCommand(this);
+		monitor.subTask(NLS.bind(Messages.JSchConnection_Executing_command, cmd));
+		return exec.setCommand(cmd).getResult(monitor).trim();
+	}
+	
 	/* IRemoteConnectionControlService */
 
 	@Override
@@ -230,14 +271,12 @@ public class AdbConnection
 
 	@Override
 	public Map<String, String> getEnv() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.unmodifiableMap(fEnv);
 	}
 
 	@Override
 	public String getEnv(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return getEnv().get(name);
 	}
 
 	@Override
@@ -252,14 +291,18 @@ public class AdbConnection
 
 	@Override
 	public String getWorkingDirectory() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!isOpen()) {
+			return "/"; //$NON-NLS-1$
+		}
+		if (fWorkingDir == null) {
+			return "/"; //$NON-NLS-1$
+		}
+		return fWorkingDir;
 	}
 
 	@Override
 	public void setWorkingDirectory(String path) {
-		// TODO Auto-generated method stub
-
+		fWorkingDir = path;
 	}
 
 	/* IRemoteConnectionHostService */

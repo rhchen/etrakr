@@ -1,7 +1,23 @@
 package net.sf.etrakr.remote.adb.core.adb;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import com.android.ddmlib.AdbCommandRejectedException;
+import com.android.ddmlib.CollectingOutputReceiver;
+import com.android.ddmlib.IDevice;
+import com.android.ddmlib.ShellCommandUnresponsiveException;
+import com.android.ddmlib.TimeoutException;
+
+import net.sf.etrakr.remote.adb.core.AdbPlugin;
+import net.sf.etrakr.remote.adb.core.adb.AdbChannel.PassiveOutputStream;
+import net.sf.etrakr.remote.adb.core.adb.AdbChannel._PipedInputStream;
 
 public class AdbSession implements Runnable {
 
@@ -50,6 +66,13 @@ public class AdbSession implements Runnable {
 	public void run() {
 
 		this.thread = this;
+
+		/* Fix me. RH */
+		while (isConnected && thread != null) {
+
+			
+
+		} // while
 
 	}
 
@@ -158,4 +181,5 @@ public class AdbSession implements Runnable {
 			}
 		}
 	}
+
 }

@@ -1,10 +1,16 @@
 package net.sf.etrakr.remote.adb.core.adb;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 
 public abstract class AdbChannel implements Runnable {
+
+	static int index = 0;
 
 	private static java.util.Vector pool = new java.util.Vector();
 
@@ -21,6 +27,13 @@ public abstract class AdbChannel implements Runnable {
 	}
 
 	public void start() throws AdbException {
+	}
+
+	AdbChannel() {
+		synchronized (pool) {
+			id = index++;
+			pool.addElement(this);
+		}
 	}
 
 	static AdbChannel getChannel(String type) {
@@ -97,12 +110,18 @@ public abstract class AdbChannel implements Runnable {
 	}
 
 	public void connect() throws AdbException {
+		
 		connect(0);
+		
+		
 	}
 
 	public void connect(int connectTimeout) throws AdbException {
 		this.connectTimeout = connectTimeout;
 		try {
+			
+			sendChannelOpen();
+			
 			start();
 		} catch (Exception e) {
 			connected = false;
@@ -124,6 +143,8 @@ public abstract class AdbChannel implements Runnable {
 				connected = false;
 			}
 
+			close();
+			
 			thread = null;
 
 			try {
@@ -139,6 +160,13 @@ public abstract class AdbChannel implements Runnable {
 		}
 	}
 
+	void close(){
+		
+	    if(close)return;
+	    close=true;
+	    
+	  }
+	
 	public boolean isClosed() {
 		return close;
 	}
@@ -159,22 +187,29 @@ public abstract class AdbChannel implements Runnable {
 		io.setExtOutputStream(out, dontclose);
 	}
 
-	public InputStream getExtInputStream() throws IOException {
-
-		/* RH. TBD */
-		return null;
+	public InputStream getInputStream() throws IOException {
+		int max_input_buffer_size = 32 * 1024;
+		PipedInputStream in = new _PipedInputStream(32 * 1024, max_input_buffer_size);
+		boolean resizable = 32 * 1024 < max_input_buffer_size;
+		io.setOutputStream(new PassiveOutputStream(in, resizable), false);
+		return in;
 	}
 
-	public InputStream getInputStream() throws IOException {
-
-		/* RH. TBD */
-		return null;
+	public InputStream getExtInputStream() throws IOException {
+		int max_input_buffer_size = 32 * 1024;
+		PipedInputStream in = new _PipedInputStream(32 * 1024, max_input_buffer_size);
+		boolean resizable = 32 * 1024 < max_input_buffer_size;
+		io.setExtOutputStream(new PassiveOutputStream(in, resizable), false);
+		return in;
 	}
 
 	public OutputStream getOutputStream() throws IOException {
 
-		/* RH. TBD */
-		return null;
+		/* RH. Fix me */
+		PipedOutputStream channelOutputStream = new PipedOutputStream();
+		PipedInputStream channelInputStream = new PipedInputStream(channelOutputStream);
+		io.setInputStream(channelInputStream);
+		return channelOutputStream;
 	}
 
 	public void sendSignal(String signal) throws Exception {
@@ -192,4 +227,138 @@ public abstract class AdbChannel implements Runnable {
 	public void setXForwarding(boolean foo) {
 
 	}
+
+	class PassiveOutputStream extends PipedOutputStream {
+		private _PipedInputStream _sink = null;
+
+		PassiveOutputStream(PipedInputStream in, boolean resizable_buffer) throws IOException {
+			super(in);
+			if (resizable_buffer && (in instanceof _PipedInputStream)) {
+				this._sink = (_PipedInputStream) in;
+			}
+		}
+
+		public void write(int b) throws IOException {
+			if (_sink != null) {
+				_sink.checkSpace(1);
+			}
+			super.write(b);
+		}
+
+		public void write(byte[] b, int off, int len) throws IOException {
+			if (_sink != null) {
+				_sink.checkSpace(len);
+			}
+			super.write(b, off, len);
+		}
+	}
+
+	class _PipedInputStream extends PipedInputStream {
+		private int BUFFER_SIZE = 1024;
+		private int max_buffer_size = BUFFER_SIZE;
+
+		_PipedInputStream() throws IOException {
+			super();
+		}
+
+		_PipedInputStream(int size) throws IOException {
+			super();
+			buffer = new byte[size];
+			BUFFER_SIZE = size;
+			max_buffer_size = size;
+		}
+
+		_PipedInputStream(int size, int max_buffer_size) throws IOException {
+			this(size);
+			this.max_buffer_size = max_buffer_size;
+		}
+
+		_PipedInputStream(PipedOutputStream out) throws IOException {
+			super(out);
+		}
+
+		_PipedInputStream(PipedOutputStream out, int size) throws IOException {
+			super(out);
+			buffer = new byte[size];
+			BUFFER_SIZE = size;
+		}
+
+		/*
+		 * TODO: We should have our own Piped[I/O]Stream implementation. Before
+		 * accepting data, JDK's PipedInputStream will check the existence of
+		 * reader thread, and if it is not alive, the stream will be closed.
+		 * That behavior may cause the problem if multiple threads make access
+		 * to it.
+		 */
+		public synchronized void updateReadSide() throws IOException {
+			if (available() != 0) { // not empty
+				return;
+			}
+			in = 0;
+			out = 0;
+			buffer[in++] = 0;
+			read();
+		}
+
+		private int freeSpace() {
+			int size = 0;
+			if (out < in) {
+				size = buffer.length - in;
+			} else if (in < out) {
+				if (in == -1)
+					size = buffer.length;
+				else
+					size = out - in;
+			}
+			return size;
+		}
+
+		synchronized void checkSpace(int len) throws IOException {
+			int size = freeSpace();
+			if (size < len) {
+				int datasize = buffer.length - size;
+				int foo = buffer.length;
+				while ((foo - datasize) < len) {
+					foo *= 2;
+				}
+
+				if (foo > max_buffer_size) {
+					foo = max_buffer_size;
+				}
+				if ((foo - datasize) < len)
+					return;
+
+				byte[] tmp = new byte[foo];
+				if (out < in) {
+					System.arraycopy(buffer, 0, tmp, 0, buffer.length);
+				} else if (in < out) {
+					if (in == -1) {
+					} else {
+						System.arraycopy(buffer, 0, tmp, 0, in);
+						System.arraycopy(buffer, out, tmp, tmp.length - (buffer.length - out), (buffer.length - out));
+						out = tmp.length - (buffer.length - out);
+					}
+				} else if (in == out) {
+					System.arraycopy(buffer, 0, tmp, 0, buffer.length);
+					in = buffer.length;
+				}
+				buffer = tmp;
+			} else if (buffer.length == size && size > BUFFER_SIZE) {
+				int i = size / 2;
+				if (i < BUFFER_SIZE)
+					i = BUFFER_SIZE;
+				byte[] tmp = new byte[i];
+				buffer = tmp;
+			}
+		}
+	}
+	
+	protected void sendChannelOpen() throws Exception {
+	    AdbSession _session = getSession();
+	    if(!_session.isConnected()){
+	      throw new AdbException("session is down");
+	    }
+
+	    connected = true;
+	  }
 }

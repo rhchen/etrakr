@@ -162,13 +162,17 @@ public abstract class AbstractRemoteCommand<T> {
 			boolean bInterrupted = Thread.interrupted();
 			while (!getProgressMonitor().isCanceled()) {
 				try {
-					return future.get(100, TimeUnit.MILLISECONDS);
+					
+					//return future.get(100, TimeUnit.MILLISECONDS);
+					/* Fix me. RH, */
+					return future.get(5000, TimeUnit.MILLISECONDS);
 				} catch (InterruptedException e) {
 					bInterrupted = true;
 				} catch (TimeoutException e) {
-					// ignore
+					e.printStackTrace();
 				} catch (ExecutionException e) {
 					getChannel().disconnect();
+					e.printStackTrace();
 					throw new RemoteConnectionException(e.getMessage());
 				}
 				getProgressMonitor().worked(1);

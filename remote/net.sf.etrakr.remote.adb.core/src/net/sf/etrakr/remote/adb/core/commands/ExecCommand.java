@@ -1,6 +1,9 @@
 package net.sf.etrakr.remote.adb.core.commands;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -30,11 +33,12 @@ public class ExecCommand extends AbstractRemoteCommand<String> {
 		ExecCallable<String> c = new ExecCallable<String>() {
 			@Override
 			public String call() throws AdbException, RemoteConnectionException {
-				getChannel().setCommand(fCommand);
+				getChannel().setCommand(fCommand);		
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 				ByteArrayOutputStream err = new ByteArrayOutputStream();
 				getChannel().setOutputStream(stream);
 				getChannel().setErrStream(err);
+				
 				getChannel().connect();
 				while (!getChannel().isClosed() && !getProgressMonitor().isCanceled()) {
 					synchronized (this) {
@@ -51,7 +55,12 @@ public class ExecCommand extends AbstractRemoteCommand<String> {
 				if (getChannel().getExitStatus()!=0) {
 					throw new RemoteConnectionException(err.toString());
 				}
-				return stream.toString();
+				
+				String s = stream.toString();
+				
+				System.out.println("ExecCommand.getResult s "+ s);
+				
+				return s;
 			}
 		};
 		subMon.subTask(NLS.bind(Messages.ExecCommand_Exec_command, fCommand));
