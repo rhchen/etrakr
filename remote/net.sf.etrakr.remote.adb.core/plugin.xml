@@ -75,8 +75,8 @@
       </processService>
       <processService
             connectionTypeId="net.sf.etrakr.remote.adb"
-            factory="net.sf.etrakr.remote.adb.core.RemoteProcess$Service$Factory4"
-            service="net.sf.etrakr.remote.adb.core.ProcessService4">
+            factory="net.sf.etrakr.remote.adb.core.AdbProcess$Factory"
+            service="net.sf.etrakr.remote.adb.core.AdbProcess">
       </processService>
    </extension>
    <extension

@@ -58,7 +58,7 @@ public class ExecCommand extends AbstractRemoteCommand<String> {
 				
 				String s = stream.toString();
 				
-				System.out.println("ExecCommand.getResult s "+ s);
+				//System.out.println("ExecCommand.getResult s "+ s);
 				
 				return s;
 			}

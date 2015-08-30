@@ -1,5 +1,6 @@
 package net.sf.etrakr.remote.adb.core;
 
+import java.io.ByteArrayOutputStream;
 /*******************************************************************************
  * Copyright (c) 2007, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
@@ -178,9 +179,11 @@ public class AdbProcessBuilder extends AbstractRemoteProcessBuilder {
 					((AdbChannelExec) fChannel).setPty(true);
 					((AdbChannelExec) fChannel).setPtyType((flags & FORWARD_X11) == FORWARD_X11 ? "xterm" : "vt100"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
+				
 				RemoteDebugOptions.trace(RemoteDebugOptions.DEBUG_REMOTE_COMMANDS, "executing command: " + command); //$NON-NLS-1$
 			}
 			fChannel.setXForwarding((flags & FORWARD_X11) == FORWARD_X11);
+			
 			fChannel.connect();
 			return new RemoteProcess(getRemoteConnection(), this);
 		} catch (RemoteConnectionException e) {

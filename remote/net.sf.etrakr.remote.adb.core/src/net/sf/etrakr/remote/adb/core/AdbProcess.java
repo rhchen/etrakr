@@ -136,6 +136,7 @@ public class AdbProcess implements IRemoteProcessControlService, IRemoteProcessS
 				fStderrReader.start();
 				fStdoutReader.start();
 			} else {
+				
 				fProcStdout = fChannel.getInputStream();
 				fProcStderr = fChannel.getExtInputStream();
 			}

@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.nio.charset.StandardCharsets;
+
+import com.google.common.io.ByteStreams;
 
 public abstract class AdbChannel implements Runnable {
 
@@ -192,6 +195,24 @@ public abstract class AdbChannel implements Runnable {
 		PipedInputStream in = new _PipedInputStream(32 * 1024, max_input_buffer_size);
 		boolean resizable = 32 * 1024 < max_input_buffer_size;
 		io.setOutputStream(new PassiveOutputStream(in, resizable), false);
+		
+		
+//		String str = io.out.toString();
+//		
+//		InputStream stream = new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8));
+		
+		//System.out.println("AdbChannel.getInputStream "+ str);
+		//ByteStreams.copy(in, io.out);
+		//System.out.println("AdbChannel.getInputStream");
+		//PipedInputStream in =  new  PipedInputStream(); 
+		//PipedOutputStream out =  new  PipedOutputStream();  
+		//in.connect(out);
+		//out.connect(in);
+		//out.write(str.getBytes());
+//		io.setOutputStream(out);
+		
+		//this.disconnect();
+		
 		return in;
 	}
 

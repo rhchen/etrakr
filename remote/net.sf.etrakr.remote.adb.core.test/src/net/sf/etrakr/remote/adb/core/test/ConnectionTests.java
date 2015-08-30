@@ -54,6 +54,9 @@ public class ConnectionTests extends TestCase {
 			BufferedReader stdout = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 			String line;
 			while ((line = stdout.readLine()) != null) {
+				
+				System.out.println("ConnectionTests.testEnv.line "+ line);
+				
 				String[] kv = line.trim().split("="); //$NON-NLS-1$
 				if (kv.length == 2) {
 					if (kv[0].equals("FOO")) {
@@ -65,6 +68,10 @@ public class ConnectionTests extends TestCase {
 				}
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
@@ -90,9 +97,16 @@ public class ConnectionTests extends TestCase {
 			IRemoteProcess proc = builder.start();
 			BufferedReader stdout = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 			String line = stdout.readLine();
+			
+			System.out.println("ConnectionTests.testWd.line "+ line);
+			
 			proc.destroy();
 			assertTrue(line != null && line.equals(newWd));
 		} catch (IOException e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 
@@ -103,14 +117,18 @@ public class ConnectionTests extends TestCase {
 		assertNotNull(fileManager);
 		builder = processService.getProcessBuilder("pwd"); //$NON-NLS-1$
 		assertNotNull(builder);
-		builder.directory(fileManager.getResource("/bin"));
+		builder.directory(fileManager.getResource("/system/bin"));
 		try {
 			IRemoteProcess proc = builder.start();
 			BufferedReader stdout = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 			String line = stdout.readLine();
 			proc.destroy();
-			assertTrue(line != null && line.equals("/bin"));
+			assertTrue(line != null && line.equals("/system/bin"));
 		} catch (IOException e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}

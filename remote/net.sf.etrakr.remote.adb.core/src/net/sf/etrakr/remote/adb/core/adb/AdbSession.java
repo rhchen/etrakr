@@ -1,5 +1,6 @@
 package net.sf.etrakr.remote.adb.core.adb;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +41,10 @@ public class AdbSession implements Runnable {
 	Adb adb;
 	private AdbIO io;
 
+	/* Fix me. RH */
+	private String shellOutput;
+	private AdbChannel channel;
+	
 	AdbSession(Adb adb, String username, String host, int port) throws AdbException {
 		super();
 		this.adb = adb;
@@ -61,16 +66,78 @@ public class AdbSession implements Runnable {
 		}
 	}
 
+	public void executeRequest(String strCmd, AdbChannel channel) throws AdbException{
+
+		try {
+			
+			this.channel = channel;
+			
+			/* Fix me. RH */
+			CountDownLatch setTagLatch = new CountDownLatch(1);
+			CollectingOutputReceiver receiver = new CollectingOutputReceiver(setTagLatch);
+			// String cmd = "atrace --list_categories";
+			IDevice mDevice = AdbPlugin.getDefault().getAndroidDebugBridge().getDevices()[0];
+			
+			mDevice.executeShellCommand(strCmd, receiver, 5000, TimeUnit.MILLISECONDS);
+		
+			setTagLatch.await(5, TimeUnit.SECONDS);
+
+			// String shellOutput = result.toString();
+
+			shellOutput = receiver.getOutput();
+
+			//System.out.println("shellOutput : " + shellOutput);
+
+			
+			
+		} catch (TimeoutException | AdbCommandRejectedException | ShellCommandUnresponsiveException | IOException | InterruptedException e) {
+			e.printStackTrace();
+			throw new AdbException(e.getMessage());
+		}
+
+		
+		
+	}
+	
 	/* Runnable */
 	@Override
 	public void run() {
 
 		this.thread = this;
 
-		/* Fix me. RH */
+		/* Fix me. RH 
+		 * 
+		 * Need to review
+		 * here we wait the io.out to be ready, since in exe proc mode
+		 * must wait inputstream to be created before return the command output
+		 * */
 		while (isConnected && thread != null) {
 
-			
+			if(channel != null && channel.io.out != null && shellOutput != null){
+				
+				try {
+					
+					channel.io.out.write(shellOutput.getBytes());
+					
+					channel.io.out.flush();
+					
+					channel.setExitStatus(0);
+
+					channel.disconnect();
+					
+					shellOutput = null;
+					
+					System.out.println("AdbSession.run isConnected : "+ isConnected + " thread : "+ thread);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}else{
+				
+				
+				
+			}
 
 		} // while
 

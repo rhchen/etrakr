@@ -169,7 +169,7 @@ public class AdbPlugin extends Plugin
 				AndroidDebugBridge.init(false /* debugger support */);
 
 				androidDebugBridge = AndroidDebugBridge.createBridge("adb", false /* forceNewBridge */);
-
+				
 				System.out.println("AdbActivator.start : DDMS post-create done");
 				
 				return Status.OK_STATUS;
