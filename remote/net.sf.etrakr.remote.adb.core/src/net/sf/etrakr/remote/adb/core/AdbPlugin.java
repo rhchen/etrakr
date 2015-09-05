@@ -54,6 +54,11 @@ public class AdbPlugin extends Plugin
 	
 	private List<IDevice> devices = new ArrayList<IDevice>();
 	
+	public boolean hasAvailableDevice(){
+		
+		return devices.size() > 0 ? true : false;
+	}
+	
 	public List<IDevice> getDevices() {
 		return devices;
 	}

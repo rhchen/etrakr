@@ -2,6 +2,7 @@ package net.sf.etrakr.tmf.remote.adb.core;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 public class TmfAdbActivator implements BundleActivator {
 
@@ -27,4 +28,8 @@ public class TmfAdbActivator implements BundleActivator {
 		TmfAdbActivator.context = null;
 	}
 
+	public static <T> T getService(Class<T> service) {
+		ServiceReference<T> ref = context.getServiceReference(service);
+		return ref != null ? context.getService(ref) : null;
+	}
 }
