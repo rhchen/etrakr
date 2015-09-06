@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ctrace Core
+Bundle-SymbolicName: net.sf.etrakr.ctrace.core;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.sf.etrakr.ctrace.core.CtraceActivator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ com.fasterxml.jackson,
+ com.google.guava,
+ net.sf.commonstringutil,
+ org.tukaani.xz,
+ com.jayway.jsonpath,
+ org.eclipse.tracecompass.tmf.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

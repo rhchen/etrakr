@@ -132,6 +132,7 @@
     <module>lib</module>
     <module>releng</module>
     <module>ftrace</module>
+	<module>ctrace</module>
     <module>rcp</module>
     <module>tmf</module>
 	<module>remote</module>
