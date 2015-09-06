@@ -33,13 +33,10 @@
   <modules>
 	<module>net.sf.etrakr.ctrace.core</module>	
 	<module>net.sf.etrakr.ctrace.core.test</module>
-	<!--
 	<module>net.sf.etrakr.ctrace.ui</module>
-	-->
 	<module>net.sf.etrakr.tmf.ctrace</module>
-	<!--
 	<module>net.sf.etrakr.tmf.ctrace.test</module>
-	-->
+	
   </modules>
 
 </project>

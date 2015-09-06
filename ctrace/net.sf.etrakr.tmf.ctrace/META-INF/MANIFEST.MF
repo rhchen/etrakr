@@ -12,3 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
  net.sf.etrakr.ctrace.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
+Export-Package: net.sf.etrakr.tmf.ctrace,
+ net.sf.etrakr.tmf.ctrace.analysis,
+ net.sf.etrakr.tmf.ctrace.state,
+ net.sf.etrakr.tmf.ctrace.trace
