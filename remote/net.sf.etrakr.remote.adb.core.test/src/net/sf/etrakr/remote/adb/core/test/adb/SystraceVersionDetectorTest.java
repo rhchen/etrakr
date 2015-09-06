@@ -19,7 +19,7 @@ import net.sf.etrakr.remote.adb.core.AdbPlugin;
 
 public class SystraceVersionDetectorTest {
 
-	private AndroidDebugBridge adbBridge;
+	private boolean hasDeviceToTest;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -32,24 +32,26 @@ public class SystraceVersionDetectorTest {
 	@Before
 	public void setUp() throws Exception {
 		
+		List<IDevice> devices = AdbPlugin.getDefault().getDevices();
+		
 		int count = 0;
 		
-		while(true){
+		while(count < 10){
 			
-			adbBridge = AdbPlugin.getDefault().getAndroidDebugBridge();
+			if(devices.size() > 0) {
+				
+				hasDeviceToTest = true;
+				
+				break;
+				
+			}
 			
-			if(adbBridge != null | count > 10) break;
+			count ++;
 			
-			System.out.println("SystraceVersionDetectorTest.setUp wait adb");
+			System.out.println("SystraceVersionDetectorTest.setUp wait count "+ count);
+			Thread.sleep(1000);
 			
-			Thread.sleep(500);
-			
-			count++;
 		}
-		
-		
-		
-		
 		
 	}
 
@@ -58,11 +60,11 @@ public class SystraceVersionDetectorTest {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws InterruptedException {
 		
-		if(adbBridge == null) return;
+		if(!hasDeviceToTest) return;
 		
-		IDevice[] devices = adbBridge.getDevices();
+		IDevice[] devices = AdbPlugin.getDefault().getAndroidDebugBridge().getDevices();
 		
 		for(IDevice device : devices){
 		
@@ -73,6 +75,16 @@ public class SystraceVersionDetectorTest {
 			detector.setSystem(true);
 			
 			detector.schedule();
+			
+			detector.join();
+			
+			List<SystraceTag> mSupportedTags = detector.getTags();
+			
+			for (SystraceTag tag : mSupportedTags) {
+				
+				String sTag = tag.info;
+				
+	        }
 			
 		}
 		
