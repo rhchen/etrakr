@@ -3,8 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Remote ADB UI
 Bundle-SymbolicName: net.sf.etrakr.tmf.remote.adb.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
 Bundle-Activator: net.sf.etrakr.tmf.remote.adb.ui.TmfAdbPlugin
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

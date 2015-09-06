@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Etrackr Application
 Bundle-SymbolicName: net.sf.etrakr.application;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
 Bundle-Activator: net.sf.etrakr.application.ApplicationActivator
 Bundle-Vendor: net.sf.etrakr
 Require-Bundle: org.eclipse.ui,
