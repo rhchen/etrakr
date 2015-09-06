@@ -53,6 +53,7 @@
       <import plugin="org.eclipse.osgi" version="3.6.0" match="compatible"/>
       <import plugin="org.eclipse.core.runtime" version="3.11.0" match="compatible"/>
       <import plugin="org.eclipse.ui" version="3.6.0" match="compatible"/>
+      <import plugin="com.jayway.jsonpath"/>
    </requires>
 
    <plugin
@@ -155,6 +156,27 @@
 
    <plugin
          id="net.sf.etrakr.tmf.remote.adb.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.etrakr.ctrace.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.etrakr.ctrace.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.etrakr.tmf.ctrace"
          download-size="0"
          install-size="0"
          version="0.0.0"
