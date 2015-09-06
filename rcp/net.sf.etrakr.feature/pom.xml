@@ -28,6 +28,8 @@
               	<plugin id="org.eclipse.cdt.core"/>
               	<plugin id="org.eclipse.cdt.core.native"/>
               	<plugin id="org.swtchart"/>
+				<plugin id="org.eclipse.ui.trace"/>
+				<plugin id="org.eclipse.jdt.annotation"/>
               </excludes>
             </configuration>
           </execution>

@@ -33,6 +33,7 @@
   <modules>
 	<module>net.sf.etrakr.tmf.remote.adb.core</module>
 	<module>net.sf.etrakr.tmf.remote.adb.core.test</module>
+	<module>net.sf.etrakr.tmf.remote.adb.ui</module>
   </modules>
 
 </project>

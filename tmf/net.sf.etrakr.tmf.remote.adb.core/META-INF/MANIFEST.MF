@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: adb Core
-Bundle-SymbolicName: net.sf.etrakr.tmf.remote.adb.core
+Bundle-SymbolicName: net.sf.etrakr.tmf.remote.adb.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.sf.etrakr.tmf.remote.adb.core.TmfAdbActivator
 Require-Bundle: org.eclipse.core.runtime,
@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.tracecompass.tmf.remote.core,
  org.eclipse.core.filesystem,
  org.eclipse.core.net,
- org.eclipse.jdt.annotation,
- net.sf.etrakr.remote.adb.core
+ net.sf.etrakr.remote.adb.core,
+ org.eclipse.jdt.annotation
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
