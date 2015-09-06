@@ -44,13 +44,15 @@
       <import plugin="org.eclipse.osgi"/>
       <import plugin="com.fasterxml.jackson"/>
       <import plugin="org.eclipse.swt"/>
+      <import plugin="com.android.ddmlib"/>
       <import plugin="org.kxml2"/>
       <import plugin="org.eclipse.remote.core" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.net"/>
       <import plugin="org.eclipse.core.commands"/>
       <import plugin="org.eclipse.tracecompass.tmf.remote.core"/>
-      <import plugin="org.eclipse.jdt.annotation"/>
-      <import plugin="com.android.ddmlib"/>
+      <import plugin="org.eclipse.osgi" version="3.6.0" match="compatible"/>
+      <import plugin="org.eclipse.core.runtime" version="3.11.0" match="compatible"/>
+      <import plugin="org.eclipse.ui" version="3.6.0" match="compatible"/>
    </requires>
 
    <plugin
@@ -132,6 +134,20 @@
 
    <plugin
          id="net.sf.etrakr.tmf.remote.adb.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.trace"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.annotation"
          download-size="0"
          install-size="0"
          version="0.0.0"

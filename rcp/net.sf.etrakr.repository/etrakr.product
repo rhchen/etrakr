@@ -52,8 +52,11 @@
       <feature id="org.eclipse.ecf.filetransfer.feature"/>
       <feature id="net.sf.etrakr.feature"/>
       <feature id="org.eclipse.tracecompass.tmf"/>
-      <feature id="net.sf.etrakr.chart.feature" version="1.0.0.qualifier"/>
-      <feature id="net.sf.etrakr.lib.feature" version="1.0.0.qualifier"/>
+      <feature id="net.sf.etrakr.chart.feature"/>
+      <feature id="net.sf.etrakr.lib.feature"/>
+      <feature id="org.eclipse.linuxtools.dataviewers.feature"/>
+      <feature id="org.eclipse.remote"/>
+      <feature id="org.eclipse.tracecompass.tmf.remote"/>
    </features>
 
    <configurations>
