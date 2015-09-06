@@ -14,3 +14,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.tracecompass.tmf.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
+Export-Package: net.sf.etrakr.ctrace.core,
+ net.sf.etrakr.ctrace.core.cache,
+ net.sf.etrakr.ctrace.core.event,
+ net.sf.etrakr.ctrace.core.event.impl,
+ net.sf.etrakr.ctrace.core.service,
+ net.sf.etrakr.ctrace.core.service.impl
