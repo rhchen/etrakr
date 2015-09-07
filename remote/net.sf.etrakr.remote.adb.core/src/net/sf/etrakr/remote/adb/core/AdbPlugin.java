@@ -224,19 +224,22 @@ public class AdbPlugin extends Plugin
 
 	@Override
 	public void deviceConnected(IDevice device) {
-		System.out.println("AdbActivator.deviceConnected");
+		System.out.println("AdbActivator.deviceConnected : "+ device.getSerialNumber());
 		devices.add(device);
+		
+		for(IDevice d : devices){ System.out.println("device : "+ d.getSerialNumber()); }
 	}
 
 	@Override
 	public void deviceDisconnected(IDevice device) {
-		System.out.println("AdbActivator.deviceDisconnected");
+		System.out.println("AdbActivator.deviceDisconnected : "+ device.getSerialNumber());
 		devices.remove(device);
+		for(IDevice d : devices){ System.out.println("device : "+ d.getSerialNumber()); }
 	}
 
 	@Override
 	public void deviceChanged(IDevice device, int changeMask) {
-		System.out.println("AdbActivator.deviceChanged");
+		System.out.println("AdbActivator.deviceChanged : "+ device.getSerialNumber());
 
 	}
 
@@ -245,4 +248,6 @@ public class AdbPlugin extends Plugin
 		System.out.println("AdbActivator.bridgeChanged");
 
 	}
+	
+	
 }

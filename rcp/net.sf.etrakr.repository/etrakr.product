@@ -21,6 +21,7 @@
       </vmArgsWin>
    </launcherArgs>
 
+
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -61,7 +62,7 @@
 
    <configurations>
       <plugin id="net.sf.etrakr.application" autoStart="false" startLevel="5" />
-      <plugin id="net.sf.etrakr.tmf.adb.core" autoStart="true" startLevel="0" />
+      <plugin id="net.sf.etrakr.remote.adb.core" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="1" />
@@ -69,5 +70,12 @@
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="3" />
    </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
 
 </product>
