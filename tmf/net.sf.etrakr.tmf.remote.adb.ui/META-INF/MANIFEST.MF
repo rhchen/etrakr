@@ -7,6 +7,8 @@ Bundle-Localization: plugin
 Bundle-Activator: net.sf.etrakr.tmf.remote.adb.ui.TmfAdbPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ net.sf.etrakr.tmf.remote.adb.core,
+ org.eclipse.remote.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
