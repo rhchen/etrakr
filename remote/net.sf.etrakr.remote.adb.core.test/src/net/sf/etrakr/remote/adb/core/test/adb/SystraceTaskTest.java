@@ -91,6 +91,8 @@ public class SystraceTaskTest {
 			
 			detector.join();
 			
+			int version = detector.getVersion();
+			
 			mSupportedTags = detector.getTags();
 
 			for (SystraceTag tag : mSupportedTags) {
@@ -140,8 +142,8 @@ public class SystraceTaskTest {
 			
 			byte[] b = task.getAtraceOutput();
 			
-//			String s = new String(b);
-//			System.out.println("SystraceTaskTest.test : "+ s);
+			String ss = new String(b);
+			System.out.println("SystraceTaskTest.test : "+ ss);
 			
 			handleData(b);
 			

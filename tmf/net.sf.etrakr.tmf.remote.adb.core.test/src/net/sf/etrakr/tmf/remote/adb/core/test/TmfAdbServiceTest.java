@@ -1,8 +1,9 @@
 package net.sf.etrakr.tmf.remote.adb.core.test;
 
-import static org.junit.Assert.*;
+import org.junit.Assert;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
@@ -14,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService;
+import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService.SystraceTag;
 
 public class TmfAdbServiceTest {
 
@@ -38,9 +40,23 @@ public class TmfAdbServiceTest {
 		
 		TmfAdbService adbService = new TmfAdbService();
 		
-		String r = adbService.getSystraceSupportTags();
+		List<SystraceTag> tags = adbService.getSystraceSupportTags();
 		
-		Assert.assertNotNull(r);
+		System.out.println("TmfAdbServiceTest.testGetSystraceSupportTags tags.size "+ tags.size());
+		
+		Assert.assertNotNull(tags);
+	}
+	
+	@Test
+	public void testGetSystraceOutput() throws ExecutionException, RemoteConnectionException, URISyntaxException {
+		
+		TmfAdbService adbService = new TmfAdbService();
+		
+		String atraceOutput = adbService.getSystraceOutput();
+		
+		System.out.println("TmfAdbServiceTest.testGetSystraceOutput "+ atraceOutput);
+		
+		Assert.assertNotNull(atraceOutput);
 	}
 
 }

@@ -62,7 +62,14 @@ public class AdbCommandShellTest {
     private static final @NonNull String[] CMD_INPUT_ADB = { "printenv"};
     
     @Test
-	public void testExecuteSuccess2()
+    public void _testPrintenv()
+			throws ExecutionException, IOException, URISyntaxException, RemoteConnectionException {
+    	
+    	_testExecute(CMD_INPUT_ADB);
+    }
+    
+    
+	public void _testExecute(String[] cmd)
 			throws ExecutionException, IOException, URISyntaxException, RemoteConnectionException {
 
 		final String remoteServicesId = "net.sf.etrakr.remote.adb";
@@ -82,7 +89,7 @@ public class AdbCommandShellTest {
 		ICommandShell shell = proxy.createCommandShell();
 
 		ICommandInput command = shell.createCommand();
-		command.addAll(checkNotNull(Arrays.asList(CMD_INPUT_ADB)));
+		command.addAll(checkNotNull(Arrays.asList(cmd)));
 		ICommandResult result = shell.executeCommand(command, new NullProgressMonitor());
 		
 		int r = result.getResult();
