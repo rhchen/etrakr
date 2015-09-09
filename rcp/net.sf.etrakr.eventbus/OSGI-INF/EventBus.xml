@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" enabled="true" immediate="true" name="net.sf.etrakr.eventbus">
+   <implementation class="net.sf.etrakr.eventbus.EventBus"/>
+   <reference bind="setEventBus" cardinality="1..1" interface="org.osgi.service.event.EventAdmin" name="EventBus" policy="static" unbind="unsetEventBus"/>
+</scr:component>

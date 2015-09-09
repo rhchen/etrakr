@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eventbus
+Bundle-SymbolicName: net.sf.etrakr.eventbus;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.sf.etrakr.eventbus.EventbusActivator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.osgi.services,
+ org.eclipse.e4.core.services
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGi-INF/EventBus.xml,
+ OSGi-INF/Subscriber.xml

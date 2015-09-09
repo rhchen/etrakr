@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" enabled="true" immediate="true" name="net.sf.etrakr.subscriber">
+   <implementation class="net.sf.etrakr.eventbus.Subscriber"/>
+   <property name="event.topics" type="String" value="org/eclipse/equinox/events/systrace/*"/>
+   <service>
+      <provide interface="org.osgi.service.event.EventHandler"/>
+   </service>>
+</scr:component>
