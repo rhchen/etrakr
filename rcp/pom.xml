@@ -33,6 +33,8 @@
 	<module>net.sf.etrakr.application</module>
 	<module>net.sf.etrakr.feature</module>
 	<module>net.sf.etrakr.repository</module>
+	<module>net.sf.etrakr.eventbus</module>
+	<module>net.sf.etrakr.eventbus.test</module>
   </modules>
 
 </project>
