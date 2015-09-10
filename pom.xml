@@ -190,6 +190,27 @@
                         </restrictTo>
                       </filter>
                     </filters>
+					<!--
+					<dependency-resolution>
+						 <extraRequirements>
+							<requirement>
+							   <type>eclipse-plugin</type>
+							   <id>org.eclipse.equinox.common</id>
+							   <versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+							   <type>eclipse-plugin</type>
+							   <id>org.eclipse.equinox.ds</id>
+							   <versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+							   <type>eclipse-plugin</type>
+							   <id>org.eclipse.equinox.event</id>
+							   <versionRange>0.0.0</versionRange>
+							</requirement>
+						 </extraRequirements>
+					</dependency-resolution>
+					-->
                 </configuration>
             </plugin>
             <plugin>
