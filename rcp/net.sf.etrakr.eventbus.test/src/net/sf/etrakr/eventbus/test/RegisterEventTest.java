@@ -25,7 +25,7 @@ import net.sf.etrakr.eventbus.ITkrEvent;
  * @author admin
  *
  */
-public class DummyTest {
+public class RegisterEventTest {
 
 	/**
 	 * @throws java.lang.Exception
@@ -54,13 +54,30 @@ public class DummyTest {
 	@After
 	public void tearDown() throws Exception {
 		
+		Thread.sleep(1000);
 	}
 
 	@Test
-	public void test() {
+	public void test1() {
 		
-		String str = "";
-		Assert.assertNotNull(str);
+		String SUBSCRIBE_ALL = ITkrEvent.TOPIC_ETRAKR + "/*";
+		
+		EventBus.registerEvent(new EventHandler(){
+
+			@Override
+			public void handleEvent(Event event) {
+				
+				System.out.println("DummyTest.EventHandler : "+ event);
+				
+			}
+			
+		}, SUBSCRIBE_ALL);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(IEventBroker.DATA, 3); 		
+		
+		Event event = new Event(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
+		EventBus.getEventBus().postEvent(event);
 	}
-	
+
 }

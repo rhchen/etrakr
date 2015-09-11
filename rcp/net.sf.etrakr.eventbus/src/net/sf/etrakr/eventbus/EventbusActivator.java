@@ -20,7 +20,7 @@ public class EventbusActivator implements BundleActivator {
 
 	private EventAdmin eventAdmin;
 	
-	static BundleContext getContext() {
+	public static BundleContext getContext() {
 		return context;
 	}
 
@@ -28,6 +28,7 @@ public class EventbusActivator implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
+	@SuppressWarnings("unchecked")
 	public void start(BundleContext bundleContext) throws Exception {
 		
 		EventbusActivator.context = bundleContext;
@@ -37,49 +38,50 @@ public class EventbusActivator implements BundleActivator {
 		 */
 		
 		/* Method 1 */
-		ServiceReference reference = context.getServiceReference(EventAdmin.class.getName());
-		eventAdmin = (EventAdmin) context.getService(reference);
-		
-		Job job1 = new Job("event"){
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put(IEventBroker.DATA, 1); 		
-				
-				Event event = new Event("org/eclipse/equinox/events/systrace/CRITICAL", map);
-				eventAdmin.postEvent(event);
-				
-				System.out.println("EventbusActivator.start post event");
-				
-				return Status.OK_STATUS;
-			}
-			
-		};
-		
-		job1.schedule(5000);
+//		@SuppressWarnings("rawtypes")
+//		ServiceReference reference = context.getServiceReference(EventAdmin.class.getName());
+//		eventAdmin = (EventAdmin) context.getService(reference);
+//		
+//		Job job1 = new Job("event"){
+//
+//			@Override
+//			protected IStatus run(IProgressMonitor monitor) {
+//				
+//				Map<String, Object> map = new HashMap<String, Object>();
+//				map.put(IEventBroker.DATA, 1); 		
+//				
+//				Event event = new Event(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
+//				eventAdmin.postEvent(event);
+//				
+//				System.out.println("EventbusActivator.start post event");
+//				
+//				return Status.OK_STATUS;
+//			}
+//			
+//		};
+//		
+//		job1.schedule(100);
 		
 		/* Method 2 */
-		Job job2 = new Job("event"){
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put(IEventBroker.DATA, 2); 		
-				
-				Event event = new Event("org/eclipse/equinox/events/systrace/CRITICAL", map);
-				EventBus.getEventBus().postEvent(event);
-				
-				System.out.println("EventbusActivator.start post event");
-				
-				return Status.OK_STATUS;
-			}
-			
-		};
-		
-		job2.schedule(5000);
+//		Job job2 = new Job("event"){
+//
+//			@Override
+//			protected IStatus run(IProgressMonitor monitor) {
+//				
+//				Map<String, Object> map = new HashMap<String, Object>();
+//				map.put(IEventBroker.DATA, 2); 		
+//				
+//				Event event = new Event(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
+//				EventBus.getEventBus().postEvent(event);
+//				
+//				System.out.println("EventbusActivator.start post event");
+//				
+//				return Status.OK_STATUS;
+//			}
+//			
+//		};
+//		
+//		job2.schedule(100);
 		
 		System.out.println("EventbusActivator.start Starting bundle");
 	}
