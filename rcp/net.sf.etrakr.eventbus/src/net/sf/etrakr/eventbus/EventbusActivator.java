@@ -14,6 +14,9 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
+/**
+ * Ref http://www.vogella.com/tutorials/OSGiServices/article.html
+ */
 public class EventbusActivator implements BundleActivator {
 
 	private static BundleContext context;
@@ -32,56 +35,6 @@ public class EventbusActivator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		
 		EventbusActivator.context = bundleContext;
-		
-		/*
-		 * Ref http://www.vogella.com/tutorials/OSGiServices/article.html
-		 */
-		
-		/* Method 1 */
-//		@SuppressWarnings("rawtypes")
-//		ServiceReference reference = context.getServiceReference(EventAdmin.class.getName());
-//		eventAdmin = (EventAdmin) context.getService(reference);
-//		
-//		Job job1 = new Job("event"){
-//
-//			@Override
-//			protected IStatus run(IProgressMonitor monitor) {
-//				
-//				Map<String, Object> map = new HashMap<String, Object>();
-//				map.put(IEventBroker.DATA, 1); 		
-//				
-//				Event event = new Event(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
-//				eventAdmin.postEvent(event);
-//				
-//				System.out.println("EventbusActivator.start post event");
-//				
-//				return Status.OK_STATUS;
-//			}
-//			
-//		};
-//		
-//		job1.schedule(100);
-		
-		/* Method 2 */
-//		Job job2 = new Job("event"){
-//
-//			@Override
-//			protected IStatus run(IProgressMonitor monitor) {
-//				
-//				Map<String, Object> map = new HashMap<String, Object>();
-//				map.put(IEventBroker.DATA, 2); 		
-//				
-//				Event event = new Event(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
-//				EventBus.getEventBus().postEvent(event);
-//				
-//				System.out.println("EventbusActivator.start post event");
-//				
-//				return Status.OK_STATUS;
-//			}
-//			
-//		};
-//		
-//		job2.schedule(100);
 		
 		System.out.println("EventbusActivator.start Starting bundle");
 	}
