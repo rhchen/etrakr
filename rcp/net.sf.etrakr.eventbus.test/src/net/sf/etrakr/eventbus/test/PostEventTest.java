@@ -20,6 +20,7 @@ import org.osgi.service.event.EventAdmin;
 import net.sf.etrakr.eventbus.EventBus;
 import net.sf.etrakr.eventbus.EventbusActivator;
 import net.sf.etrakr.eventbus.ITkrEvent;
+import net.sf.etrakr.eventbus.TkrEvent;
 
 public class PostEventTest {
 
@@ -62,6 +63,7 @@ public class PostEventTest {
 		map.put(IEventBroker.DATA, 1); 		
 		
 		Event event = new Event(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
+		
 		eventAdmin.postEvent(event);
 		
 		System.out.println("PostEventTest.test1 done");

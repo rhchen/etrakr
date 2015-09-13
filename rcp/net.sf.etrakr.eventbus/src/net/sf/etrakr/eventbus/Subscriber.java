@@ -13,6 +13,7 @@ public class Subscriber implements EventHandler{
 	public void handleEvent(Event event) {
 		
 		System.out.println("Subscriber.handleEvent "+ event);
+		
 	}
 
 }

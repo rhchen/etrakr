@@ -20,6 +20,7 @@ import org.osgi.service.event.EventHandler;
 
 import net.sf.etrakr.eventbus.EventBus;
 import net.sf.etrakr.eventbus.ITkrEvent;
+import net.sf.etrakr.eventbus.TkrEvent;
 
 /**
  * @author admin
@@ -67,16 +68,25 @@ public class RegisterEventTest {
 			@Override
 			public void handleEvent(Event event) {
 				
-				System.out.println("DummyTest.EventHandler : "+ event);
+				String topci = event.getTopic();
+				
+				if(event instanceof TkrEvent){
+					
+					TkrEvent tkreevent = (TkrEvent) event;
+					
+					String key = tkreevent.getDataKey(topci);
+					
+					tkreevent.getProperty(key);
+				}//if
 				
 			}
 			
 		}, SUBSCRIBE_ALL);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(IEventBroker.DATA, 3); 		
+		map.put(ITkrEvent.TOPIC_ETRAKR_COMMAND_DATA_KEY, 3); 		
 		
-		Event event = new Event(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
+		TkrEvent event = new TkrEvent(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
 		EventBus.getEventBus().postEvent(event);
 	}
 
