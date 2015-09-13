@@ -59,7 +59,9 @@ public class RegisterEventTest {
 	}
 
 	@Test
-	public void test1() {
+	public void test1() throws Exception {
+		
+		final int[] value = new int[]{1, 2, 3};
 		
 		String SUBSCRIBE_ALL = ITkrEvent.TOPIC_ETRAKR + "/*";
 		
@@ -68,25 +70,25 @@ public class RegisterEventTest {
 			@Override
 			public void handleEvent(Event event) {
 				
-				String topci = event.getTopic();
+				String topic = event.getTopic();
 				
-				if(event instanceof TkrEvent){
-					
-					TkrEvent tkreevent = (TkrEvent) event;
-					
-					String key = tkreevent.getDataKey(topci);
-					
-					tkreevent.getProperty(key);
-				}//if
+				String data = TkrEvent.getDataByKey(topic);
 				
+				int[] m = (int[]) event.getProperty(data);
+				
+				Assert.assertArrayEquals(value, m);
 			}
 			
 		}, SUBSCRIBE_ALL);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(ITkrEvent.TOPIC_ETRAKR_COMMAND_DATA_KEY, 3); 		
+		map.put(ITkrEvent.TOPIC_ETRAKR_COMMAND_DATA_KEY, value); 		
 		
-		TkrEvent event = new TkrEvent(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
+//		TkrEvent event = new TkrEvent(ITkrEvent.TOPIC_ETRAKR_COMMAND, map);
+//		EventBus.getEventBus().postEvent(event);
+		
+		Event event = TkrEvent.newEvent().topic(ITkrEvent.TOPIC_ETRAKR_COMMAND).message(map).build();
+		
 		EventBus.getEventBus().postEvent(event);
 	}
 

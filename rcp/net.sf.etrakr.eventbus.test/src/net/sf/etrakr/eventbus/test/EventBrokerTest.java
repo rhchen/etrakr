@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.EventAdmin;
 
@@ -22,6 +23,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.services.events.IEventBroker;
+//import org.eclipse.ui.PlatformUI;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -59,15 +61,18 @@ public class EventBrokerTest {
 
 
 	@Ignore
+	//@Test
 	public void test() {
 
-		
+		/*
+		 * To use IEventBroker, must depends org.eclipse.ui that is stupid
+		 */
 		new Subscriber();
 		
 		@SuppressWarnings("rawtypes")
 		ServiceReference service = context.getServiceReference(IEventBroker.class.getName());
 
-		//Object service2 = PlatformUI.getWorkbench().getService(IEventBroker.class);
+		//Object service = PlatformUI.getWorkbench().getService(IEventBroker.class);
 		
 		Assert.assertNotNull(service);
 

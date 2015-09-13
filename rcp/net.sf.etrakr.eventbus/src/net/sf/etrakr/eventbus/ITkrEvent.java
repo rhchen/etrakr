@@ -20,6 +20,5 @@ public interface ITkrEvent {
 	
 	public static final String TOPIC_ETRAKR_COMMAND_OPEN_TRACE_DATA_KEY = TOPIC_ETRAKR_COMMAND + ".OPEN_TRACE";
 	
-	/* Interface Methods */
-	public String getDataKey(String topic);
+	
 }
