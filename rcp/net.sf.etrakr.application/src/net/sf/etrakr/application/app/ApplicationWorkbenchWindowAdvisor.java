@@ -13,10 +13,15 @@ package net.sf.etrakr.application.app;
 
 import net.sf.etrakr.application.ApplicationActivator;
 import net.sf.etrakr.application.cli.CliParser;
+import net.sf.etrakr.eventbus.EventBus;
+import net.sf.etrakr.eventbus.ITkrEvent;
+import net.sf.etrakr.eventbus.TkrEvent;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.tracecompass.tmf.core.TmfCommonConstants;
 import org.eclipse.tracecompass.tmf.ui.project.model.TmfOpenTraceHelper;
 import org.eclipse.tracecompass.tmf.ui.project.model.TmfProjectRegistry;
@@ -28,6 +33,12 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * The WorkbenchAdvisor implementation of the LTTng RCP.
@@ -98,28 +109,106 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     @Override
     public void postWindowCreate() {
-        super.postWindowOpen();
-        ApplicationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(new PerspectiveListener());
-        IProject defaultProject = createDefaultProject();
-        hideActionSets();
+        
+    	super.postWindowOpen();
+        
+    	ApplicationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(new PerspectiveListener());
+        
+    	hideActionSets();
+        
+    	IProject defaultProject = createDefaultProject();
+        
         openTraceIfNecessary(defaultProject);
+        
+        hookTkrTraceCommand();
+		
+		
     }
 
+    private static void hookTkrTraceCommand(){
+    	
+    	String SUBSCRIBE_ALL = ITkrEvent.TOPIC_ETRAKR_COMMAND + "/*";
+    	
+    	EventBus.registerEvent(new EventHandler(){
 
+			@Override
+			public void handleEvent(Event event) {
+
+				String topic = event.getTopic();
+				
+				System.out.println("ApplicationWorkbenchWindowAdvisor.hookTkrTraceCommand topic : "+ topic);
+				
+				if(ITkrEvent.TOPIC_ETRAKR_COMMAND_OPEN_TRACE == topic){
+					
+					String data = TkrEvent.getDataByKey(topic);
+					
+					final String str = (String) event.getProperty(data);
+					
+					System.out.println("ApplicationWorkbenchWindowAdvisor.hookTkrTraceCommand str size : "+ str.length());
+					
+					ApplicationActivator.getDefault().getWorkbench().getDisplay().asyncExec(new Runnable(){
+
+						@Override
+						public void run() {
+							
+							try {
+								
+								final String TRACE_TYPE = "net.sf.notrace.ftrace.trace.FtraceTrace";
+						    	
+								String f = System.currentTimeMillis() + ".txt";
+								
+								String path = "D:\\tmp\\trace\\"+ f;
+								
+								Files.write(Paths.get(path), str.getBytes());
+								
+								IProject defaultProject = createDefaultProject();
+								
+								openTraceIfNecessary(defaultProject, path, TRACE_TYPE);
+								
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						}
+						
+					});
+					
+					
+					
+				}//if
+				
+				
+			}
+			
+		}, SUBSCRIBE_ALL);
+    }
 
     private static void openTraceIfNecessary(IProject project) {
+    	
         String traceToOpen = ApplicationActivator.getDefault().getCli().getArgument(CliParser.OPEN_FILE_LOCATION);
-        if (traceToOpen != null) {
+ 
+        openTraceIfNecessary(project, traceToOpen, null);
+    }
+    
+    private static void openTraceIfNecessary(IProject project, String traceToOpen, String traceType) {
+    	
+    	if (traceToOpen != null) {
+    		
             try {
-                TmfTraceFolder destinationFolder = TmfProjectRegistry.getProject(project, true).getTracesFolder();
-                TmfOpenTraceHelper.openTraceFromPath(destinationFolder, traceToOpen, ApplicationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell());
+                
+            	TmfTraceFolder destinationFolder = TmfProjectRegistry.getProject(project, true).getTracesFolder();
+                Shell shell = ApplicationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell();
+                
+            	TmfOpenTraceHelper.openTraceFromPath(destinationFolder, traceToOpen, shell, traceType);
+            
             } catch (CoreException e) {
             	ApplicationActivator.getDefault().logError(e.getMessage());
             }
 
         }
+    	
     }
-
+    
     // ------------------------------------------------------------------------
     // Helper methods
     // ------------------------------------------------------------------------

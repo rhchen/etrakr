@@ -13,6 +13,11 @@
 package net.sf.etrakr.tmf.remote.adb.ui.handlers;
 
 import java.net.URISyntaxException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -24,9 +29,19 @@ import org.eclipse.remote.core.exception.RemoteConnectionException;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
+import net.sf.etrakr.eventbus.EventBus;
+import net.sf.etrakr.eventbus.ITkrEvent;
+import net.sf.etrakr.eventbus.TkrEvent;
+import net.sf.etrakr.eventbus.TkrEventException;
 import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService;
 
+import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Command handler for opening the remote fetch wizard.
@@ -50,21 +65,88 @@ public class RemoteFetchLogHandler extends AbstractHandler {
             sec = (IStructuredSelection) currentSelection;
         }
 
-        TmfAdbService service;
-		try {
-			
-			service = new TmfAdbService();
-			
-			String str = service.getSystraceOutput();
-			
-			System.out.println("RemoteFetchLogHandler.execute "+ str);
-			
-			
-		} catch (RemoteConnectionException | URISyntaxException e) {
-			e.printStackTrace();
-			throw new ExecutionException("RemoteFetchLogHandler.execute failed ", e);
-		}
+//        try {
+//			
+//			TmfAdbService service = new TmfAdbService();
+//			
+//			String str = service.getSystraceOutput();
+//			
+//			//System.out.println("RemoteFetchLogHandler.execute "+ str);
+//			
+//			Map<String, Object> map = new HashMap<String, Object>();
+//			map.put(ITkrEvent.TOPIC_ETRAKR_COMMAND_OPEN_TRACE_DATA_KEY, str); 		
+//			
+//			Event tkrEvent = TkrEvent.newEvent().topic(ITkrEvent.TOPIC_ETRAKR_COMMAND_OPEN_TRACE).message(map).build();
+//			
+//			EventBus.getEventBus().postEvent(tkrEvent);
+//			
+//		} catch (RemoteConnectionException | URISyntaxException | TkrEventException e) {
+//			e.printStackTrace();
+//			throw new ExecutionException("RemoteFetchLogHandler.execute failed ", e);
+//		}
 
+//        ScheduledExecutorService executor = Executors.newScheduledThreadPool(3);
+//        Task task1 = new Task ("Task 1");
+//        Task task2 = new Task ("Task 2");
+//        Task task3 = new Task ("Task 3");
+//         
+//        System.out.println("The time is : " + new Date());
+//         
+//        executor.schedule(task1, 10 , TimeUnit.SECONDS);
+//        executor.schedule(task2, 20 , TimeUnit.SECONDS);
+//        executor.schedule(task3, 30 , TimeUnit.SECONDS);
+//         
+//        try {
+//              executor.awaitTermination(1, TimeUnit.MINUTES);
+//        } catch (InterruptedException e) {
+//              e.printStackTrace();
+//        }
+//         
+//        executor.shutdown();
+        
+        Timer timer = new Timer();
+        
+        timer.schedule(new Task("Profile Start"), 0, 15000);
+        
+        
+        //timer.cancel();
         return null;
     }
+    
+	class Task extends TimerTask implements Runnable {
+		
+		private String name;
+
+		public Task(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		@Override
+		public void run() {
+			
+			try {
+
+				TmfAdbService service = new TmfAdbService();
+
+				String str = service.getSystraceOutput();
+
+				// System.out.println("RemoteFetchLogHandler.execute "+ str);
+
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put(ITkrEvent.TOPIC_ETRAKR_COMMAND_OPEN_TRACE_DATA_KEY, str);
+
+				Event tkrEvent = TkrEvent.newEvent().topic(ITkrEvent.TOPIC_ETRAKR_COMMAND_OPEN_TRACE).message(map)
+						.build();
+
+				EventBus.getEventBus().postEvent(tkrEvent);
+
+			} catch (RemoteConnectionException | URISyntaxException | TkrEventException | ExecutionException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

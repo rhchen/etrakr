@@ -21,6 +21,7 @@ import org.osgi.service.event.EventHandler;
 import net.sf.etrakr.eventbus.EventBus;
 import net.sf.etrakr.eventbus.ITkrEvent;
 import net.sf.etrakr.eventbus.TkrEvent;
+import net.sf.etrakr.eventbus.TkrEventException;
 
 /**
  * @author admin
@@ -59,7 +60,7 @@ public class RegisterEventTest {
 	}
 
 	@Test
-	public void test1() throws Exception {
+	public void test1() throws TkrEventException {
 		
 		final int[] value = new int[]{1, 2, 3};
 		

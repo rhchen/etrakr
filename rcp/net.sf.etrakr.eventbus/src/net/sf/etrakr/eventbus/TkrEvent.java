@@ -69,9 +69,9 @@ public class TkrEvent implements ITkrEvent{
 		return this;
 	}
 	
-	public Event build() throws Exception{
+	public Event build() throws TkrEventException{
 		
-		if(!checkValid()) throw new Exception("event format not valid");
+		if(!checkValid()) throw new TkrEventException("event format not valid");
 		
 		Event event = constructEvent(topic, message);
 		

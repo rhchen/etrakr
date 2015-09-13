@@ -12,8 +12,15 @@ public class Subscriber implements EventHandler{
 	@Override
 	public void handleEvent(Event event) {
 		
-		System.out.println("Subscriber.handleEvent "+ event);
+		System.out.println("Subscriber.handleEvent ");
 		
+		String topic = event.getTopic();
+		
+		String data = TkrEvent.getDataByKey(topic);
+		
+		Object o =event.getProperty(data);
+		
+		System.out.println("Subscriber.handleEvent topic : "+ topic +" ,data key : "+ data);
 	}
 
 }
