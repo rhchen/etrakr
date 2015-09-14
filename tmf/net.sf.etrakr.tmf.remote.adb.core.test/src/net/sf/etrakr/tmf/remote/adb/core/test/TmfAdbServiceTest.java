@@ -15,7 +15,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService;
-import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService.SystraceTag;
+import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceOptions;
+import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceTag;
 
 public class TmfAdbServiceTest {
 
@@ -38,9 +39,7 @@ public class TmfAdbServiceTest {
 	@Test
 	public void testGetSystraceSupportTags() throws ExecutionException, RemoteConnectionException, URISyntaxException {
 		
-		TmfAdbService adbService = new TmfAdbService();
-		
-		List<SystraceTag> tags = adbService.getSystraceSupportTags();
+		List<SystraceTag> tags = TmfAdbService.init().getSystraceSupportTags();
 		
 		System.out.println("TmfAdbServiceTest.testGetSystraceSupportTags tags.size "+ tags.size());
 		
@@ -50,9 +49,9 @@ public class TmfAdbServiceTest {
 	@Test
 	public void testGetSystraceOutput() throws ExecutionException, RemoteConnectionException, URISyntaxException {
 		
-		TmfAdbService adbService = new TmfAdbService();
+		SystraceOptions options = SystraceOptions.newSystraceOptions().BufferSize(1024).Duration(1);
 		
-		String atraceOutput = adbService.getSystraceOutput();
+		String atraceOutput = TmfAdbService.init().push(options).go();
 		
 		System.out.println("TmfAdbServiceTest.testGetSystraceOutput "+ atraceOutput);
 		

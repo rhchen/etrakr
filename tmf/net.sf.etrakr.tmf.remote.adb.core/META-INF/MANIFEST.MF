@@ -16,4 +16,5 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.guava
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: net.sf.etrakr.tmf.remote.adb.core
+Export-Package: net.sf.etrakr.tmf.remote.adb.core,
+ net.sf.etrakr.tmf.remote.adb.core.systrace

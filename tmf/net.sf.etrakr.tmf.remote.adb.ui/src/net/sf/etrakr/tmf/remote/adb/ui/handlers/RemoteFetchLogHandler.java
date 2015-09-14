@@ -37,6 +37,7 @@ import net.sf.etrakr.eventbus.ITkrEvent;
 import net.sf.etrakr.eventbus.TkrEvent;
 import net.sf.etrakr.eventbus.TkrEventException;
 import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService;
+import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceOptions;
 
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -106,9 +107,10 @@ public class RemoteFetchLogHandler extends AbstractHandler {
         
         Timer timer = new Timer();
         
-        timer.schedule(new Task("Profile Start"), 0, 15000);
+        /* the time must ref AdbSession.executeRequest, default is await 5 sec */
+        timer.schedule(new Task("Profile Start"), 0, 1000);
         
-        
+        //new Thread(new Task("Profile Start")).run();
         //timer.cancel();
         return null;
     }
@@ -130,17 +132,16 @@ public class RemoteFetchLogHandler extends AbstractHandler {
 			
 			try {
 
-				TmfAdbService service = new TmfAdbService();
-
-				String str = service.getSystraceOutput();
-
+				SystraceOptions options = SystraceOptions.newSystraceOptions().BufferSize(1024).Duration(1);
+				
+				String str = TmfAdbService.init().push(options).go();
+				
 				// System.out.println("RemoteFetchLogHandler.execute "+ str);
 
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put(ITkrEvent.TOPIC_ETRAKR_COMMAND_OPEN_TRACE_DATA_KEY, str);
 
-				Event tkrEvent = TkrEvent.newEvent().topic(ITkrEvent.TOPIC_ETRAKR_COMMAND_OPEN_TRACE).message(map)
-						.build();
+				Event tkrEvent = TkrEvent.newEvent().topic(ITkrEvent.TOPIC_ETRAKR_COMMAND_OPEN_TRACE).message(map).build();
 
 				EventBus.getEventBus().postEvent(tkrEvent);
 

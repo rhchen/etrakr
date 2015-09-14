@@ -78,9 +78,9 @@ public class AdbSession implements Runnable {
 			// String cmd = "atrace --list_categories";
 			IDevice mDevice = AdbPlugin.getDefault().getAndroidDebugBridge().getDevices()[0];
 			
-			mDevice.executeShellCommand(strCmd, receiver, 5000, TimeUnit.MILLISECONDS);
+			mDevice.executeShellCommand(strCmd, receiver, 1, TimeUnit.MINUTES);
 		
-			setTagLatch.await(5, TimeUnit.SECONDS);
+			setTagLatch.await(100, TimeUnit.MILLISECONDS);
 
 			// String shellOutput = result.toString();
 

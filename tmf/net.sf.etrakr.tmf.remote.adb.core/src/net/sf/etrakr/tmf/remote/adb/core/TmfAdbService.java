@@ -29,6 +29,9 @@ import org.eclipse.tracecompass.tmf.remote.core.shell.ICommandShell;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 
+import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceOptions;
+import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceTag;
+
 public class TmfAdbService {
 
 	public static final String remoteServicesId = "net.sf.etrakr.remote.adb";
@@ -40,12 +43,32 @@ public class TmfAdbService {
 			
 	private RemoteSystemProxy proxy;
 	
-	public TmfAdbService() throws RemoteConnectionException, ExecutionException, URISyntaxException {
+	private SystraceOptions mOptions;
+	
+	public TmfAdbService() {
 		
-		init();
 	}
 
-	public String getSystraceOutput() throws ExecutionException{
+	public TmfAdbService(SystraceOptions systraceOptions) {
+		
+		this.mOptions = systraceOptions;
+	}
+
+	public static TmfAdbService init() throws URISyntaxException, RemoteConnectionException, ExecutionException{
+		
+		return new TmfAdbService().connect();
+		
+	}
+
+	public TmfAdbService push(SystraceOptions systraceOptions) throws RemoteConnectionException, ExecutionException, URISyntaxException{
+		
+		this.mOptions = systraceOptions;
+		
+		return this;
+		
+	}
+
+	public String go() throws ExecutionException{
 		
 		List<SystraceTag> l = getSystraceSupportTags();
 		
@@ -56,7 +79,7 @@ public class TmfAdbService {
 		 */
 		boolean COMPRESS_DATA = false;
 		
-		SystraceOptions mOptions = new SystraceOptions();
+		//SystraceOptions mOptions = new SystraceOptions();
 		
 		final String atraceOptions = mOptions.getOptions(l) + (COMPRESS_DATA ? " -z" : "");
 		
@@ -103,8 +126,8 @@ public class TmfAdbService {
 		
 		return l;
 	}
-	
-	private void init() throws URISyntaxException, RemoteConnectionException, ExecutionException{
+
+	private TmfAdbService connect() throws URISyntaxException, RemoteConnectionException, ExecutionException{
 		
 		URI hostUri = URIUtil.fromString(sHostUri);
 		
@@ -118,6 +141,7 @@ public class TmfAdbService {
 
 		proxy.connect(monitor);
 		
+		return this;
 	}
 	
 	private List<SystraceTag> parseSupportedTags(List<String> listCategoriesOutput) {
@@ -195,60 +219,8 @@ public class TmfAdbService {
         }
     }
 	
-	public class SystraceTag {
-		
-	    public final String tag;
-	    public final String info;
-
-	    public SystraceTag(String tagName, String details) {
-	        tag = tagName;
-	        info = details;
-	    }
-	}
 	
-	class SystraceOptions{
-		
-        private int mTraceBufferSize = 1024;
-        private int mTraceDuration = 5;
-        private String mTraceApp;
-
-        public String getOptions(List<SystraceTag> mSupportedTags) {
-        	
-            StringBuilder sb = new StringBuilder(5 * mSupportedTags.size());
-
-            if (mTraceApp != null) {
-                sb.append("-a ");   //$NON-NLS-1$
-                sb.append(mTraceApp);
-                sb.append(' ');
-            }
-
-            if (mTraceDuration > 0) {
-                sb.append("-t");    //$NON-NLS-1$
-                sb.append(mTraceDuration);
-                sb.append(' ');
-            }
-
-            if (mTraceBufferSize > 0) {
-                sb.append("-b ");   //$NON-NLS-1$
-                sb.append(mTraceBufferSize);
-                sb.append(' ');
-            }
-
-            Set<String> sEnabledTags = new HashSet<String>();
-			
-	        for (int i = 0; i < mSupportedTags.size(); i++) {
-	        	
-	        	sEnabledTags.add(mSupportedTags.get(i).tag);
-	        
-	        }
-	        
-            for (String s : sEnabledTags) {
-                sb.append(s);
-                sb.append(' ');
-            }
-
-            return sb.toString().trim();
-        }
-    }
+	
+	
 	
 }
