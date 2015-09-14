@@ -108,9 +108,9 @@ public class RemoteFetchLogHandler extends AbstractHandler {
         Timer timer = new Timer();
         
         /* the time must ref AdbSession.executeRequest, default is await 5 sec */
-        timer.schedule(new Task("Profile Start"), 0, 1000);
+        //timer.schedule(new Task("Profile Start"), 0, 1000);
         
-        //new Thread(new Task("Profile Start")).run();
+        new Thread(new Task("Profile Start")).run();
         //timer.cancel();
         return null;
     }
