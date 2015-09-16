@@ -159,6 +159,14 @@ public class TmfAdbPlugin extends AbstractUIPlugin {
         
     }
 
+    private TmfTimeRange fullRange;
+    
+    public TmfTimeRange getTmfTimeRange(){
+    
+    	return fullRange;
+    	
+    }
+    
     /**
      * Handles the trace updated signal. Used to update time limits (start and end time)
      * @param signal the trace updated signal
@@ -168,7 +176,7 @@ public class TmfAdbPlugin extends AbstractUIPlugin {
         if (signal.getTrace() != fTrace) {
             return;
         }
-        TmfTimeRange fullRange = signal.getTrace().getTimeRange();
+        fullRange = signal.getTrace().getTimeRange();
         fTraceStartTime = fullRange.getStartTime().normalize(0, ITmfTimestamp.NANOSECOND_SCALE).getValue();
         fTraceEndTime = fullRange.getEndTime().normalize(0, ITmfTimestamp.NANOSECOND_SCALE).getValue();
 
