@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.ui,
  net.sf.etrakr.tmf.remote.adb.core,
  org.eclipse.remote.core,
  net.sf.etrakr.eventbus,
- org.eclipse.osgi.services
+ org.eclipse.osgi.services,
+ org.eclipse.tracecompass.tmf.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
