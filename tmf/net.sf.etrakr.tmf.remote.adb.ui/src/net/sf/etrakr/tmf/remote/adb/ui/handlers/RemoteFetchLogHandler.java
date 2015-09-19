@@ -134,7 +134,7 @@ public class RemoteFetchLogHandler extends AbstractHandler {
 
 				SystraceOptions options = SystraceOptions.newSystraceOptions().BufferSize(1024).Duration(5);
 				
-				String str = TmfAdbService.init().push(options).go();
+				String str = TmfAdbService.init().push(options).timeout(60).go();
 				
 				// System.out.println("RemoteFetchLogHandler.execute "+ str);
 

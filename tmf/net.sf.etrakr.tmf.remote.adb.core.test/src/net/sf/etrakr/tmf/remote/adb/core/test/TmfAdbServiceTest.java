@@ -41,7 +41,7 @@ public class TmfAdbServiceTest {
 		
 		List<SystraceTag> tags = TmfAdbService.init().getSystraceSupportTags();
 		
-		System.out.println("TmfAdbServiceTest.testGetSystraceSupportTags tags.size "+ tags.size());
+		System.out.println("TmfAdbServiceTest2.testGetSystraceSupportTags tags.size "+ tags.size());
 		
 		Assert.assertNotNull(tags);
 	}
@@ -53,7 +53,7 @@ public class TmfAdbServiceTest {
 		
 		String atraceOutput = TmfAdbService.init().push(options).go();
 		
-		System.out.println("TmfAdbServiceTest.testGetSystraceOutput "+ atraceOutput);
+		System.out.println("TmfAdbServiceTest2.testGetSystraceOutput "+ atraceOutput);
 		
 		Assert.assertNotNull(atraceOutput);
 	}

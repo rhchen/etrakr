@@ -7,7 +7,7 @@ import java.util.Set;
 public class SystraceOptions{
 	
     protected int mTraceBufferSize = 1024;
-    protected int mTraceDuration = 5;
+    protected int mTraceDuration = 1;
     protected String mTraceApp;
 
     public static SystraceOptions newSystraceOptions(){
