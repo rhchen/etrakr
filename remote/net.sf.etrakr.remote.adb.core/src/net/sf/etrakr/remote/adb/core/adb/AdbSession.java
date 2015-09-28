@@ -13,8 +13,10 @@ import java.util.concurrent.TimeUnit;
 import com.android.ddmlib.AdbCommandRejectedException;
 import com.android.ddmlib.CollectingOutputReceiver;
 import com.android.ddmlib.IDevice;
+import com.android.ddmlib.IShellOutputReceiver;
 import com.android.ddmlib.ShellCommandUnresponsiveException;
 import com.android.ddmlib.TimeoutException;
+import com.google.common.primitives.Bytes;
 
 import net.sf.etrakr.remote.adb.core.AdbPlugin;
 import net.sf.etrakr.remote.adb.core.adb.AdbChannel.PassiveOutputStream;
@@ -42,7 +44,7 @@ public class AdbSession implements Runnable {
 	private AdbIO io;
 
 	/* Fix me. RH */
-	private String shellOutput;
+	private byte[] shellOutput;
 	private AdbChannel channel;
 	
 	AdbSession(Adb adb, String username, String host, int port) throws AdbException {
@@ -74,7 +76,9 @@ public class AdbSession implements Runnable {
 			
 			/* Fix me. RH */
 			CountDownLatch setTagLatch = new CountDownLatch(1);
-			CollectingOutputReceiver receiver = new CollectingOutputReceiver(setTagLatch);
+			//CollectingOutputReceiver receiver = new CollectingOutputReceiver(setTagLatch);
+			Receiver receiver = new Receiver(setTagLatch);
+			
 			// String cmd = "atrace --list_categories";
 			IDevice mDevice = AdbPlugin.getDefault().getAndroidDebugBridge().getDevices()[0];
 			
@@ -84,7 +88,8 @@ public class AdbSession implements Runnable {
 
 			// String shellOutput = result.toString();
 
-			shellOutput = receiver.getOutput();
+			//shellOutput = receiver.getOutput();
+			shellOutput = receiver.getAtraceOutput();
 
 			//System.out.println("shellOutput : " + shellOutput);
 
@@ -99,6 +104,68 @@ public class AdbSession implements Runnable {
 		
 	}
 	
+	private class Receiver implements IShellOutputReceiver {
+		
+		private final Object mLock = new Object();
+		private boolean mTraceComplete;
+	    private byte[] mBuffer = new byte[1024];
+	    private int mDataLength = 0;
+	    private volatile boolean mCancel;
+	    
+	    private CountDownLatch mCompletionLatch;
+	    
+	    public Receiver(CountDownLatch commandCompleteLatch) {
+	        mCompletionLatch = commandCompleteLatch;
+	    }
+	    
+	    public void cancel() {
+	        mCancel = true;
+	    }
+	    
+		public byte[] getAtraceOutput() {
+	        synchronized (mLock) {
+	            return mTraceComplete ? mBuffer : null;
+	        }
+	    }
+		
+        @Override
+        public void addOutput(byte[] data, int offset, int length) {
+            synchronized (mLock) {
+                if (mDataLength + length > mBuffer.length) {
+                    mBuffer = Bytes.ensureCapacity(mBuffer, mDataLength + length + 1, 1024);
+                }
+
+                for (int i = 0; i < length; i++) {
+                    mBuffer[mDataLength + i] = data[offset + i];
+                }
+                mDataLength += length;
+            }
+        }
+
+        @Override
+        public void flush() {
+            synchronized (mLock) {
+                // trim mBuffer to its final size
+                byte[] copy = new byte[mDataLength];
+                for (int i = 0; i < mDataLength; i++) {
+                    copy[i] = mBuffer[i];
+                }
+                mBuffer = copy;
+
+                mTraceComplete = true;
+            }
+            
+            if (mCompletionLatch != null) {
+                mCompletionLatch.countDown();
+            }
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return mCancel;
+        }
+    }
+
 	/* Runnable */
 	@Override
 	public void run() {
@@ -117,7 +184,7 @@ public class AdbSession implements Runnable {
 				
 				try {
 					
-					channel.io.out.write(shellOutput.getBytes());
+					channel.io.out.write(shellOutput);
 					
 					channel.io.out.flush();
 					

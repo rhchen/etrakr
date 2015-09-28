@@ -112,7 +112,7 @@ public class TmfAdbService {
 		 * Default disable data compress
 		 * A special implemented IShellOutputReceiver is required to handle the byte data, zip compressed
 		 */
-		boolean COMPRESS_DATA = false;
+		boolean COMPRESS_DATA = true;
 		
 		//SystraceOptions mOptions = new SystraceOptions();
 		
