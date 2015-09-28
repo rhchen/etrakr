@@ -50,8 +50,10 @@ import org.eclipse.tracecompass.tmf.remote.core.shell.ICommandShell;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
+import com.google.common.io.ByteStreams;
 
 import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceOptions;
+import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceParser;
 import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceTag;
 
 public class TmfAdbService {
@@ -139,9 +141,9 @@ public class TmfAdbService {
 		
 		String joined = Joiner.on(c).join(atraceOutput);
 		
-		String s = getSystraceData(joined.getBytes(Charsets.UTF_8), COMPRESS_DATA);
+		//String s = getSystraceData(joined.getBytes(Charsets.UTF_8), COMPRESS_DATA);
 		
-		return s;
+		return joined;
 	}
 	
 	public CommandResult gogo(final String[] cmdArray, final IProgressMonitor aMonitor) throws ExecutionException{
@@ -252,6 +254,32 @@ public class TmfAdbService {
 								
 								@Override
 								public CommandResult call() throws IOException, InterruptedException {
+									
+									/* Fix me. RH
+									 * Workarround for atrace command with -z option
+									 * Default handle split the command output to list array
+									 * This corrupt the zip format and hard to reassemble it
+									 */
+									if(command.toString().contains("-z")){
+										
+										IRemoteProcess process = fConnection.getService(IRemoteProcessService.class).getProcessBuilder(command.getInput()).start();
+										
+										byte[] b1 = ByteStreams.toByteArray(checkNotNull(process.getInputStream()));
+										
+										String stdout = SystraceParser.create().handleData(b1).getSystraceData(true);
+										
+										byte[] b2 = ByteStreams.toByteArray(checkNotNull(process.getErrorStream()));
+										
+										String stderr = new String(b2);
+										
+										return createResult(process.waitFor(), stdout, stderr);
+									}
+									
+									return Handle();
+								}
+								
+								private CommandResult Handle() throws IOException{
+									
 									IProgressMonitor monitor = aMonitor;
 									if (monitor == null) {
 										monitor = new NullProgressMonitor();
@@ -278,7 +306,9 @@ public class TmfAdbService {
 											process.destroy();
 										}
 									}
+									
 									return new CommandResult(1, new String[0], new String[] { "cancelled" }); //$NON-NLS-1$
+									
 								}
 							});
 
@@ -461,11 +491,11 @@ public class TmfAdbService {
         result = origResult;
         stdout = origStdout;
         stderr = origStderr;
-//        String[] output = splitLines(stdout);
-//        String[] error = splitLines(stderr);
+        String[] output = splitLines(stdout);
+        String[] error = splitLines(stderr);
         
-        String[] output = new String[]{origStdout};
-        String[] error  = new String[]{origStderr};
+//        String[] output = new String[]{origStdout};
+//        String[] error  = new String[]{origStderr};
         
         return new CommandResult(result, output, error);
     }
