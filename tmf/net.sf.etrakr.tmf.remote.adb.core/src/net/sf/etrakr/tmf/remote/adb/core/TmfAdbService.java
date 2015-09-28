@@ -41,6 +41,7 @@ import org.eclipse.tracecompass.internal.tmf.remote.core.Activator;
 import org.eclipse.tracecompass.internal.tmf.remote.core.messages.Messages;
 import org.eclipse.tracecompass.internal.tmf.remote.core.preferences.TmfRemotePreferences;
 import org.eclipse.tracecompass.internal.tmf.remote.core.shell.CommandResult;
+import org.eclipse.tracecompass.internal.tmf.remote.core.shell.CommandShell;
 import org.eclipse.tracecompass.tmf.remote.core.proxy.RemoteSystemProxy;
 import org.eclipse.tracecompass.tmf.remote.core.proxy.TmfRemoteConnectionFactory;
 import org.eclipse.tracecompass.tmf.remote.core.shell.ICommandInput;
@@ -225,6 +226,102 @@ public class TmfAdbService {
 
 		IRemoteConnection conn = TmfRemoteConnectionFactory.createConnection(hostUri, hostName);
 
+		proxy = new RemoteSystemProxy(conn){
+
+			@Override
+			public ICommandShell createCommandShell() {
+
+				return new CommandShell(super.getRemoteConnection()){
+
+					private final ExecutorService fExecutor = checkNotNull(Executors.newFixedThreadPool(1));
+					
+					@Override
+					public void dispose() {
+						fExecutor.shutdown();
+					}
+
+					@Override
+					public ICommandResult executeCommand(final ICommandInput command, final IProgressMonitor aMonitor)
+							throws ExecutionException {
+
+						final IRemoteConnection fConnection = proxy.getRemoteConnection();
+						
+						if (fConnection.isOpen()) {
+							
+							FutureTask<CommandResult> future = new FutureTask<>(new Callable<CommandResult>() {
+								
+								@Override
+								public CommandResult call() throws IOException, InterruptedException {
+									IProgressMonitor monitor = aMonitor;
+									if (monitor == null) {
+										monitor = new NullProgressMonitor();
+									}
+									if (!monitor.isCanceled()) {
+										IRemoteProcess process = fConnection.getService(IRemoteProcessService.class).getProcessBuilder(command.getInput()).start();
+
+										InputReader stdout = new InputReader(checkNotNull(process.getInputStream()));
+										InputReader stderr = new InputReader(checkNotNull(process.getErrorStream()));
+
+										try {
+											stdout.waitFor(monitor);
+											stderr.waitFor(monitor);
+											if (!monitor.isCanceled()) {
+
+												return createResult(process.waitFor(), stdout.toString(),stderr.toString());
+											}
+										} catch (OperationCanceledException e) {
+										} catch (InterruptedException e) {
+											return new CommandResult(1, new String[0], new String[] { e.getMessage() });
+										} finally {
+											stdout.stop();
+											stderr.stop();
+											process.destroy();
+										}
+									}
+									return new CommandResult(1, new String[0], new String[] { "cancelled" }); //$NON-NLS-1$
+								}
+							});
+
+							fExecutor.execute(future);
+
+							try {
+								return checkNotNull(
+										future.get(TmfRemotePreferences.getCommandTimeout(), TimeUnit.SECONDS));
+							} catch (InterruptedException ex) {
+								throw new ExecutionException(Messages.RemoteConnection_ExecutionCancelled, ex);
+							} catch (TimeoutException ex) {
+								throw new ExecutionException(Messages.RemoteConnection_ExecutionTimeout, ex);
+							} catch (Exception ex) {
+								throw new ExecutionException(Messages.RemoteConnection_ExecutionFailure, ex);
+							} finally {
+								future.cancel(true);
+							}
+						}
+						
+						throw new ExecutionException(Messages.RemoteConnection_ShellNotConnected, null);
+
+					}
+					
+				};
+			}
+			
+		};
+
+		IProgressMonitor monitor = new NullProgressMonitor();
+
+		proxy.connect(monitor);
+		
+		return this;
+	}
+	
+	private TmfAdbService connect2() throws URISyntaxException, RemoteConnectionException, ExecutionException{
+		
+		URI hostUri = URIUtil.fromString(sHostUri);
+		
+		TmfRemoteConnectionFactory.registerConnectionFactory(remoteServicesId, new TmfAdbConnectionFactory());
+
+		IRemoteConnection conn = TmfRemoteConnectionFactory.createConnection(hostUri, hostName);
+
 		proxy = new RemoteSystemProxy(conn);
 
 		IProgressMonitor monitor = new NullProgressMonitor();
@@ -364,8 +461,12 @@ public class TmfAdbService {
         result = origResult;
         stdout = origStdout;
         stderr = origStderr;
-        String[] output = splitLines(stdout);
-        String[] error = splitLines(stderr);
+//        String[] output = splitLines(stdout);
+//        String[] error = splitLines(stderr);
+        
+        String[] output = new String[]{origStdout};
+        String[] error  = new String[]{origStderr};
+        
         return new CommandResult(result, output, error);
     }
 
