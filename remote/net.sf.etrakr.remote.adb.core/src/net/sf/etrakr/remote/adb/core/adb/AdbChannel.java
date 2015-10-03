@@ -26,6 +26,17 @@ public abstract class AdbChannel implements Runnable {
 	volatile boolean close = false;
 	volatile int exitstatus = -1;
 
+	/* adb channel execute command blocking mode */
+	protected boolean block_mode = true;
+	
+	public boolean isBlock_mode() {
+		return block_mode;
+	}
+
+	public void setBlock_mode(boolean block_mode) {
+		this.block_mode = block_mode;
+	}
+	
 	void init() throws AdbException {
 	}
 

@@ -68,7 +68,7 @@ public class AdbSession implements Runnable {
 		}
 	}
 
-	public void executeRequest(String strCmd, AdbChannel channel) throws AdbException{
+	public void executeRequest(final String strCmd, final AdbChannel channel) throws AdbException{
 
 		try {
 			
@@ -77,31 +77,69 @@ public class AdbSession implements Runnable {
 			/* Fix me. RH */
 			CountDownLatch setTagLatch = new CountDownLatch(1);
 			//CollectingOutputReceiver receiver = new CollectingOutputReceiver(setTagLatch);
-			Receiver receiver = new Receiver(setTagLatch);
-			
+
 			// String cmd = "atrace --list_categories";
-			IDevice mDevice = AdbPlugin.getDefault().getAndroidDebugBridge().getDevices()[0];
+			final IDevice mDevice = AdbPlugin.getDefault().getAndroidDebugBridge().getDevices()[0];
 			
-			mDevice.executeShellCommand(strCmd, receiver, 1, TimeUnit.MINUTES);
-		
-			setTagLatch.await(100, TimeUnit.MILLISECONDS);
+			if(this.channel.isBlock_mode()){
+				
+				final Receiver receiver = new Receiver(setTagLatch);
+				
+				mDevice.executeShellCommand(strCmd, receiver, 1, TimeUnit.MINUTES);
+				
+				setTagLatch.await(100, TimeUnit.MILLISECONDS);
+				
+				shellOutput = receiver.getAtraceOutput();
+				
+			}else{
+				
+				final Receiver receiver = new Receiver(setTagLatch){
 
-			// String shellOutput = result.toString();
+					@Override
+					public void addOutput(byte[] data, int offset, int length) {
+						
+						if(channel.io.out != null){
+		                	
+		                	try {
+		    					channel.io.out.write(data);
+		    				} catch (IOException e) {
+		    					e.printStackTrace();
+		    				}
+		                }
+						
+					}
+					
+				};
+				
+				Thread t = new Thread(){
 
-			//shellOutput = receiver.getOutput();
-			shellOutput = receiver.getAtraceOutput();
+					@Override
+					public void run() {
+						try {
+							mDevice.executeShellCommand(strCmd, receiver, 1, TimeUnit.MINUTES);
+						} catch (TimeoutException | AdbCommandRejectedException | ShellCommandUnresponsiveException | IOException e) {
+							e.printStackTrace();
+						}
+					}
 
-			//System.out.println("shellOutput : " + shellOutput);
-
+				};
+				
+				t.start();
+				
+			}//if
 			
 			
+//			mDevice.executeShellCommand(strCmd, receiver, 1, TimeUnit.MINUTES);
+//		
+//			setTagLatch.await(100, TimeUnit.MILLISECONDS);
+//
+//			shellOutput = receiver.getAtraceOutput();
+
 		} catch (TimeoutException | AdbCommandRejectedException | ShellCommandUnresponsiveException | IOException | InterruptedException e) {
 			e.printStackTrace();
 			throw new AdbException(e.getMessage());
 		}
 
-		
-		
 	}
 	
 	private class Receiver implements IShellOutputReceiver {

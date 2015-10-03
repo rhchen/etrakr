@@ -49,6 +49,9 @@ public class AdbProcessBuilder extends AbstractRemoteProcessBuilder {
 	private boolean fPreamble = true;
 	private boolean fShell = false;
 
+	/* Flags for block | noneblock adb command */
+	public static int ADB_CMD_NONBLOCKING_MODE = 0x04;
+	
 	public AdbProcessBuilder(IRemoteConnection connection, List<String> command) {
 		super(connection, command);
 		fConnection = connection.getService(AdbConnection.class);
@@ -64,10 +67,20 @@ public class AdbProcessBuilder extends AbstractRemoteProcessBuilder {
 		}
 	}
 
+	/**
+	 * A process builder w command is a process execute
+	 * @param connection
+	 * @param command
+	 */
 	public AdbProcessBuilder(IRemoteConnection connection, String... command) {
 		this(connection, Arrays.asList(command));
 	}
 
+	/**
+	 * A process builder w/o command is a shell fork
+	 * Wait for user input
+	 * @param connection
+	 */
 	public AdbProcessBuilder(IRemoteConnection connection) {
 		this(connection, new ArrayList<String>());
 		fShell = true;
@@ -164,17 +177,26 @@ public class AdbProcessBuilder extends AbstractRemoteProcessBuilder {
 		}
 
 		try {
+			
+			/* process builder created w/o command is a shell */
 			if (fShell) {
+				
 				fChannel = fConnection.getShellChannel();
+				
 				if ((flags & ALLOCATE_PTY) == ALLOCATE_PTY) {
 					((AdbChannelShell) fChannel).setPty(true);
 					((AdbChannelShell) fChannel).setPtyType((flags & FORWARD_X11) == FORWARD_X11 ? "xterm" : "vt100"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
+				
 				RemoteDebugOptions.trace(RemoteDebugOptions.DEBUG_REMOTE_COMMANDS, "executing shell"); //$NON-NLS-1$
+				
 			} else {
+				
 				fChannel = fConnection.getExecChannel();
+				
 				String command = buildCommand(remoteCmd, env, clearEnv);
 				((AdbChannelExec) fChannel).setCommand(command);
+				
 				if ((flags & ALLOCATE_PTY) == ALLOCATE_PTY) {
 					((AdbChannelExec) fChannel).setPty(true);
 					((AdbChannelExec) fChannel).setPtyType((flags & FORWARD_X11) == FORWARD_X11 ? "xterm" : "vt100"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -182,10 +204,20 @@ public class AdbProcessBuilder extends AbstractRemoteProcessBuilder {
 				
 				RemoteDebugOptions.trace(RemoteDebugOptions.DEBUG_REMOTE_COMMANDS, "executing command: " + command); //$NON-NLS-1$
 			}
+			
 			fChannel.setXForwarding((flags & FORWARD_X11) == FORWARD_X11);
 			
+			/* ADB block | nonblock mode setting */
+			if ((flags & ADB_CMD_NONBLOCKING_MODE) == ADB_CMD_NONBLOCKING_MODE) {
+				
+				fChannel.setBlock_mode(false);
+			
+			}//if
+			
 			fChannel.connect();
+			
 			return new RemoteProcess(getRemoteConnection(), this);
+			
 		} catch (RemoteConnectionException e) {
 			throw new IOException(e.getMessage());
 		} catch (AdbException e) {
