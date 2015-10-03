@@ -48,6 +48,20 @@ public class TmfAdbServiceTest2 {
 	public void tearDown() throws Exception {
 	}
 
+	@Test
+	public void test2() throws ExecutionException, RemoteConnectionException, URISyntaxException, InterruptedException{
+		
+		SystraceOptions options = SystraceOptions.newSystraceOptions();
+		
+		TmfAdbService.init().push(options).async_start();
+		
+		TmfAdbService.init().pipe();
+		
+		Thread.sleep(3000);
+		
+		TmfAdbService.init().async_stop();
+	}
+	
 	@Ignore
 	public void test1() throws ExecutionException, RemoteConnectionException, URISyntaxException, InterruptedException {
 		

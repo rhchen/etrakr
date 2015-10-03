@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.remote.core.IRemoteConnection;
 import org.eclipse.remote.core.IRemoteProcess;
+import org.eclipse.remote.core.IRemoteProcessBuilder;
 import org.eclipse.remote.core.IRemoteProcessService;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
 import org.eclipse.tracecompass.internal.tmf.remote.core.Activator;
@@ -104,6 +105,81 @@ public class TmfAdbService {
 		defaultPreferences.put(TmfRemotePreferences.TRACE_CONTROL_COMMAND_TIMEOUT_PREF,String.valueOf(timeout));
 		
 		return this;
+	}
+	
+	public void pipe() throws ExecutionException{
+	
+		new Thread(){
+
+			@Override
+			public void run() {
+				
+				final String cmd = "cat /sys/kernel/debug/tracing/trace_pipe";
+				
+				final String[] cmdArray = cmd.split(" ");
+				ICommandShell shell = proxy.createCommandShell();
+
+				ICommandInput command = shell.createCommand();
+				command.addAll(checkNotNull(Arrays.asList(cmdArray)));
+				ICommandResult result;
+				
+				try {
+					
+					result = shell.executeCommand(command, new NullProgressMonitor());
+					
+					int r = result.getResult();
+					
+					if(r != 0) throw new ExecutionException("adb command fail : getSystraceSupportTags");
+					
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+
+		}.start();
+		
+		
+	}
+	
+	public void async_start() throws ExecutionException{
+		
+		List<SystraceTag> l = getSystraceSupportTags();
+		
+		boolean COMPRESS_DATA = true;
+		
+		final String atraceOptions = mOptions.getOptions(l) + (COMPRESS_DATA ? " -z" : "");
+		
+		final String cmd = "atrace " + atraceOptions + " --async_start";
+		
+		final String[] cmdArray = cmd.split(" ");
+		ICommandShell shell = proxy.createCommandShell();
+
+		ICommandInput command = shell.createCommand();
+		command.addAll(checkNotNull(Arrays.asList(cmdArray)));
+		ICommandResult result = shell.executeCommand(command, new NullProgressMonitor());
+		
+		int r = result.getResult();
+		
+		if(r != 0) throw new ExecutionException("adb command fail : getSystraceSupportTags");
+	}
+	
+	public void async_stop() throws ExecutionException{
+		
+		final String cmd = "atrace --async_stop";
+		
+		final String[] cmdArray = cmd.split(" ");
+		ICommandShell shell = proxy.createCommandShell();
+
+		ICommandInput command = shell.createCommand();
+		command.addAll(checkNotNull(Arrays.asList(cmdArray)));
+		ICommandResult result = shell.executeCommand(command, new NullProgressMonitor());
+		
+		int r = result.getResult();
+		
+		if(r != 0) throw new ExecutionException("adb command fail : getSystraceSupportTags");
 	}
 	
 	public String go() throws ExecutionException{
