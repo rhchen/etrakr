@@ -51,8 +51,11 @@ import org.eclipse.tracecompass.tmf.remote.core.shell.ICommandShell;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 
+import net.sf.etrakr.remote.adb.core.AdbProcessBuilder;
+import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService.InputReader;
 import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceOptions;
 import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceParser;
 import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceTag;
@@ -69,6 +72,9 @@ public class TmfAdbService {
 	private RemoteSystemProxy proxy;
 	
 	private SystraceOptions mOptions;
+	
+	/* go mode, sync | asyc for adb command */
+	private int goMode = 0;
 	
 	public TmfAdbService() {
 		
@@ -107,48 +113,66 @@ public class TmfAdbService {
 		return this;
 	}
 	
-	public void pipe() throws ExecutionException{
+	public ArrayList<InputStream> pipe() throws ExecutionException, IOException{
 	
-		new Thread(){
-
-			@Override
-			public void run() {
-				
-				final String cmd = "cat /sys/kernel/debug/tracing/trace_pipe";
-				
-				final String[] cmdArray = cmd.split(" ");
-				ICommandShell shell = proxy.createCommandShell();
-
-				ICommandInput command = shell.createCommand();
-				command.addAll(checkNotNull(Arrays.asList(cmdArray)));
-				ICommandResult result;
-				
-				try {
-					
-					result = shell.executeCommand(command, new NullProgressMonitor());
-					
-					int r = result.getResult();
-					
-					if(r != 0) throw new ExecutionException("adb command fail : getSystraceSupportTags");
-					
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				}
-				
-				
-			}
-			
-
-		}.start();
+		goMode = AdbProcessBuilder.ADB_CMD_NONBLOCKING_MODE;
 		
+//		new Thread(){
+//
+//			@Override
+//			public void run() {
+//				
+//				final String cmd = "cat /sys/kernel/debug/tracing/trace_pipe";
+//				
+//				final String[] cmdArray = cmd.split(" ");
+//				ICommandShell shell = proxy.createCommandShell();
+//
+//				ICommandInput command = shell.createCommand();
+//				command.addAll(checkNotNull(Arrays.asList(cmdArray)));
+//				ICommandResult result;
+//				
+//				try {
+//					
+//					result = shell.executeCommand(command, new NullProgressMonitor());
+//					
+//					int r = result.getResult();
+//					
+//					if(r != 0) throw new ExecutionException("adb command fail : getSystraceSupportTags");
+//					
+//				} catch (ExecutionException e) {
+//					e.printStackTrace();
+//				}
+//				
+//				
+//			}
+//			
+//
+//		}.start();
 		
+		NullProgressMonitor monitor = new NullProgressMonitor();
+		
+		final String cmd = "cat /sys/kernel/debug/tracing/trace_pipe";
+		
+		final String[] cmdArray = cmd.split(" ");
+		ICommandShell shell = proxy.createCommandShell();
+
+		ICommandInput command = shell.createCommand();
+		command.addAll(checkNotNull(Arrays.asList(cmdArray)));
+		
+		final IRemoteConnection fConnection = proxy.getRemoteConnection();
+
+		IRemoteProcess process = fConnection.getService(IRemoteProcessService.class).getProcessBuilder(command.getInput()).start(goMode);
+
+		
+		return Lists.newArrayList(checkNotNull(process.getInputStream()), process.getErrorStream());
 	}
 	
 	public void async_start() throws ExecutionException{
 		
 		List<SystraceTag> l = getSystraceSupportTags();
 		
-		boolean COMPRESS_DATA = true;
+		/* -z option not effect on aync_start */
+		boolean COMPRESS_DATA = false;
 		
 		final String atraceOptions = mOptions.getOptions(l) + (COMPRESS_DATA ? " -z" : "");
 		
@@ -183,6 +207,20 @@ public class TmfAdbService {
 	}
 	
 	public String go() throws ExecutionException{
+		
+		return go(0);
+	}
+	
+	
+	/**
+	 * 
+	 * @param mode AdbProcessBuilder.ADB_CMD_NONBLOCKING_MODE
+	 * @return
+	 * @throws ExecutionException
+	 */
+	public String go(int mode) throws ExecutionException{
+		
+		goMode = mode;
 		
 		List<SystraceTag> l = getSystraceSupportTags();
 		
@@ -361,7 +399,7 @@ public class TmfAdbService {
 										monitor = new NullProgressMonitor();
 									}
 									if (!monitor.isCanceled()) {
-										IRemoteProcess process = fConnection.getService(IRemoteProcessService.class).getProcessBuilder(command.getInput()).start();
+										IRemoteProcess process = fConnection.getService(IRemoteProcessService.class).getProcessBuilder(command.getInput()).start(goMode);
 
 										InputReader stdout = new InputReader(checkNotNull(process.getInputStream()));
 										InputReader stderr = new InputReader(checkNotNull(process.getErrorStream()));
@@ -512,7 +550,7 @@ public class TmfAdbService {
         }
     }
 	
-	class InputReader {
+	public class InputReader {
 	    private static final int JOIN_TIMEOUT = 300;
 	    private static final int BYTES_PER_KB = 1024;
 

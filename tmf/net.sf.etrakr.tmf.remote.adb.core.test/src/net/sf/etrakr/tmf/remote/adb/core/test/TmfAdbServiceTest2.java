@@ -4,6 +4,8 @@ import org.junit.Assert;
 
 import static org.eclipse.tracecompass.common.core.NonNullUtils.checkNotNull;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +26,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService;
+import net.sf.etrakr.tmf.remote.adb.core.TmfAdbService.InputReader;
 import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceOptions;
 import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceTag;
 
@@ -49,13 +52,13 @@ public class TmfAdbServiceTest2 {
 	}
 
 	@Test
-	public void test2() throws ExecutionException, RemoteConnectionException, URISyntaxException, InterruptedException{
+	public void test2() throws ExecutionException, RemoteConnectionException, URISyntaxException, InterruptedException, IOException{
 		
 		SystraceOptions options = SystraceOptions.newSystraceOptions();
 		
 		TmfAdbService.init().push(options).async_start();
 		
-		TmfAdbService.init().pipe();
+		List<InputStream> list = TmfAdbService.init().pipe();
 		
 		Thread.sleep(3000);
 		
