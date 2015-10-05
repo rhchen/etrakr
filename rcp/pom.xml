@@ -35,6 +35,8 @@
 	<module>net.sf.etrakr.repository</module>
 	<module>net.sf.etrakr.eventbus</module>
 	<module>net.sf.etrakr.eventbus.test</module>
+	<module>net.sf.etrakr.persistent.hdf</module>
+	<module>net.sf.etrakr.persistent.hdf.test</module>
   </modules>
 
 </project>
