@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HDF Lib x86_64
+Bundle-SymbolicName: ncsa.hdf.hdf5lib.win32.x86_64
+Bundle-Version: 2.11.0.qualifier
+Fragment-Host: ncsa.hdf.object;bundle-version="2.11.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: jarhdf5-2.11.0.jar,
+ .
+Export-Package: ncsa.hdf.hdf5lib,
+ ncsa.hdf.hdf5lib.callbacks,
+ ncsa.hdf.hdf5lib.exceptions,
+ ncsa.hdf.hdf5lib.structs
+Eclipse-PlatformFilter: (& (osgi.ws=win32) (osgi.os=win32) (osgi.arch=x86_64))

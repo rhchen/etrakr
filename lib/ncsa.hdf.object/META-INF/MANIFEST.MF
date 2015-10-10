@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HDF Object
+Bundle-SymbolicName: ncsa.hdf.object;singleton:=true
+Bundle-Version: 2.11.0.qualifier
+Bundle-Activator: ncsa.hdf.object.HdfActivator
+Require-Bundle: org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Eclipse-ExtensibleAPI: true
+Bundle-ClassPath: lib/jarhdfobj.jar,
+ lib/jarh5obj.jar,
+ lib/slf4j-api-1.7.5.jar,
+ lib/slf4j-nop-1.7.5.jar,
+ .
+Export-Package: ncsa.hdf.object,
+ ncsa.hdf.object.h5
