@@ -14,7 +14,7 @@ import ncsa.hdf.object.FileFormat;
 import ncsa.hdf.object.h5.H5File;
 import net.sf.etrakr.persistent.hdf.HdfActivator;
 
-public class H5_Create_Test {
+public class H5_File_Create_Test {
 
 	private static String fname = "D:\\tmp\\H5FileCreate.h5";
 	
@@ -29,6 +29,8 @@ public class H5_Create_Test {
 	@Before
 	public void setUp() throws Exception {
 		
+		/* Load dll before test starts*/
+		HdfDLLLoader.loadDLL();
 		
 	}
 
@@ -36,11 +38,22 @@ public class H5_Create_Test {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+	 * <p>
+	 * Title: HDF Object Package (Java) Example
+	 * </p>
+	 * <p>
+	 * Description: This example shows how to create an empty HDF5 file using the
+	 * "HDF Object Package (Java)". If the file (H5FileCreate.h5) already exists, it
+	 * will be truncated to zero length.
+	 * </p>
+	 * 
+	 * @author Peter X. Cao
+	 * @version 2.4
+	 */
 	@Test
 	public void test() throws Exception {
 		
-		/* Load dll before test starts*/
-		HdfDLLLoader.loadDLL();
 		// Retrieve an instance of the implementing class for the HDF5 format
         FileFormat fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);
 
