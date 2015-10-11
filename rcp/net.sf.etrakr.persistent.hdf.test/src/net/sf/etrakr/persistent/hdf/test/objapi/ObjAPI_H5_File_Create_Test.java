@@ -1,4 +1,4 @@
-package net.sf.etrakr.persistent.hdf.test;
+package net.sf.etrakr.persistent.hdf.test.objapi;
 
 import static org.junit.Assert.*;
 
@@ -14,8 +14,9 @@ import ncsa.hdf.object.FileFormat;
 import ncsa.hdf.object.h5.H5File;
 import net.sf.etrakr.persistent.hdf.HdfActivator;
 
-public class H5_File_Create_Test {
+public class ObjAPI_H5_File_Create_Test {
 
+	 //private static String fname = "H5FileCreate.h5";
 	private static String fname = "D:\\tmp\\H5FileCreate.h5";
 	
 	@BeforeClass

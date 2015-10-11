@@ -12,13 +12,15 @@
  * help@hdfgroup.org.                                                        *
  ****************************************************************************/
 
-package net.sf.etrakr.persistent.hdf.test.obj;
+package net.sf.etrakr.persistent.hdf.test.ori.objapi;
 
+import java.util.List;
+
+import ncsa.hdf.object.Attribute;
 import ncsa.hdf.object.Dataset;
 import ncsa.hdf.object.Datatype;
 import ncsa.hdf.object.FileFormat;
 import ncsa.hdf.object.Group;
-import ncsa.hdf.object.HObject;
 import ncsa.hdf.object.h5.H5File;
 
 /**
@@ -26,18 +28,14 @@ import ncsa.hdf.object.h5.H5File;
  * Title: HDF Object Package (Java) Example
  * </p>
  * <p>
- * Description: this example shows how to retrieve HDF file structure using the
- * "HDF Object Package (Java)". The example created the group structure and
- * datasets, and print out the file structure:
+ * Description: this example shows how to create/read/write HDF attribute using
+ * the "HDF Object Package (Java)". The example creates an attribute and, read
+ * and write the attribute value:
  * 
  * <pre>
  *     "/" (root)
- *         integer arrays
  *             2D 32-bit integer 20x10
- *             3D unsigned 8-bit integer 20x10x5
- *         float arrays
- *             2D 64-bit double 20x10
- *             3D 32-bit float  20x10x5
+ *             (attribute: name="data range", value=[0, 10000])
  * </pre>
  * 
  * </p>
@@ -45,13 +43,13 @@ import ncsa.hdf.object.h5.H5File;
  * @author Peter X. Cao
  * @version 2.4
  */
-public class H5FileStructure {
-    private static String fname  = "H5FileStructure.h5";
+public class H5AttributeCreate {
+    private static String fname  = "H5AttributeCreate.h5";
+    private static String dsname  = "2D 32-bit integer 20x10";
     private static long[] dims2D = { 20, 10 };
-    private static long[] dims3D = { 20, 10, 5 };
 
     public static void main(String args[]) throws Exception {
-        // create the file and add groups ans dataset into the file
+        // create the file and add groups and dataset into the file
         createFile();
 
         // retrieve an instance of H5File
@@ -62,8 +60,8 @@ public class H5FileStructure {
             return;
         }
 
-        // open the file with read-only access
-        FileFormat testFile = fileFormat.createInstance(fname, FileFormat.READ);
+        // open the file with read and write access
+        FileFormat testFile = fileFormat.createInstance(fname, FileFormat.WRITE);
 
         if (testFile == null) {
             System.err.println("Failed to open file: " + fname);
@@ -74,36 +72,35 @@ public class H5FileStructure {
         testFile.open();
         Group root = (Group) ((javax.swing.tree.DefaultMutableTreeNode) testFile.getRootNode()).getUserObject();
 
-        printGroup(root, "");
+        // retrieve athe dataset "2D 32-bit integer 20x10"
+        Dataset dataset = (Dataset) root.getMemberList().get(0);
+
+        // create 2D 32-bit (4 bytes) integer dataset of 20 by 10
+        Datatype dtype = testFile.createDatatype(Datatype.CLASS_INTEGER, 4, Datatype.NATIVE, Datatype.NATIVE);
+        long[] attrDims = { 2 }; // 1D of size two
+        int[] attrValue = { 0, 10000 }; // attribute value
+
+        // create a attribute of 1D integer of size two
+        Attribute attr = new Attribute("data range", dtype, attrDims);
+        attr.setValue(attrValue); // set the attribute value
+
+        // attach the attribute to the dataset
+        dataset.writeMetadata(attr);
+
+        // read the attribute into memory
+        List attrList = dataset.getMetadata();
+        attr = (Attribute) attrList.get(0);
+
+        // print out attribute value
+        System.out.println(attr.toString());
+        System.out.println(attr.toString("  "));
 
         // close file resource
         testFile.close();
     }
 
     /**
-     * Recursively print a group and its members.
-     * 
-     * @throws Exception
-     */
-    private static void printGroup(Group g, String indent) throws Exception {
-        if (g == null) return;
-
-        java.util.List members = g.getMemberList();
-
-        int n = members.size();
-        indent += "    ";
-        HObject obj = null;
-        for (int i = 0; i < n; i++) {
-            obj = (HObject) members.get(i);
-            System.out.println(indent + obj);
-            if (obj instanceof Group) {
-                printGroup((Group) obj, indent);
-            }
-        }
-    }
-
-    /**
-     * create the file and add groups and dataset into the file, which is the
+     * create the file and add groups ans dataset into the file, which is the
      * same as javaExample.H5DatasetCreate
      * 
      * @see javaExample.HDF5DatasetCreate
@@ -130,27 +127,21 @@ public class H5FileStructure {
         testFile.open();
         Group root = (Group) ((javax.swing.tree.DefaultMutableTreeNode) testFile.getRootNode()).getUserObject();
 
-        // create groups at the root
-        Group g1 = testFile.createGroup("integer arrays", root);
-        Group g2 = testFile.createGroup("float arrays", root);
+        // set the data values
+        int[] dataIn = new int[20 * 10];
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 10; j++) {
+                dataIn[i * 10 + j] = i * 100 + j;
+            }
+        }
 
         // create 2D 32-bit (4 bytes) integer dataset of 20 by 10
         Datatype dtype = testFile.createDatatype(Datatype.CLASS_INTEGER, 4, Datatype.NATIVE, Datatype.NATIVE);
-        Dataset dataset = testFile.createScalarDS("2D 32-bit integer 20x10", g1, dtype, dims2D, null, null, 0, null);
-
-        // create 3D 8-bit (1 byte) unsigned integer dataset of 20 by 10 by 5
-        dtype = testFile.createDatatype(Datatype.CLASS_INTEGER, 1, Datatype.NATIVE, Datatype.SIGN_NONE);
-        dataset = testFile.createScalarDS("3D 8-bit unsigned integer 20x10x5", g1, dtype, dims3D, null, null, 0, null);
-
-        // create 2D 64-bit (8 bytes) double dataset of 20 by 10
-        dtype = testFile.createDatatype(Datatype.CLASS_FLOAT, 8, Datatype.NATIVE, -1);
-        dataset = testFile.createScalarDS("2D 64-bit double 20x10", g2, dtype, dims2D, null, null, 0, null);
-
-        // create 3D 32-bit (4 bytes) float dataset of 20 by 10 by 5
-        dtype = testFile.createDatatype(Datatype.CLASS_FLOAT, 4, Datatype.NATIVE, -1);
-        dataset = testFile.createScalarDS("3D 32-bit float  20x10x5", g2, dtype, dims3D, null, null, 0, null);
+        Dataset dataset = testFile
+                .createScalarDS(dsname, root, dtype, dims2D, null, null, 0, dataIn);
 
         // close file resource
         testFile.close();
     }
+
 }

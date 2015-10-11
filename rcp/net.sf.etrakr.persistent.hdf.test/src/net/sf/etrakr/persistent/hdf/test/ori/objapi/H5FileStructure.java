@@ -12,12 +12,13 @@
  * help@hdfgroup.org.                                                        *
  ****************************************************************************/
 
-package net.sf.etrakr.persistent.hdf.test.obj;
+package net.sf.etrakr.persistent.hdf.test.ori.objapi;
 
 import ncsa.hdf.object.Dataset;
 import ncsa.hdf.object.Datatype;
 import ncsa.hdf.object.FileFormat;
 import ncsa.hdf.object.Group;
+import ncsa.hdf.object.HObject;
 import ncsa.hdf.object.h5.H5File;
 
 /**
@@ -25,28 +26,90 @@ import ncsa.hdf.object.h5.H5File;
  * Title: HDF Object Package (Java) Example
  * </p>
  * <p>
- * Description: this example shows how to create HDF5 datasets using the
+ * Description: this example shows how to retrieve HDF file structure using the
  * "HDF Object Package (Java)". The example created the group structure and
- * datasets:
+ * datasets, and print out the file structure:
  * 
  * <pre>
  *     "/" (root)
  *         integer arrays
  *             2D 32-bit integer 20x10
- *             3D 16-bit integer 20x10x5
+ *             3D unsigned 8-bit integer 20x10x5
  *         float arrays
  *             2D 64-bit double 20x10
  *             3D 32-bit float  20x10x5
  * </pre>
  * 
  * </p>
+ * 
+ * @author Peter X. Cao
+ * @version 2.4
  */
-public class H5DatasetCreate {
-    private static String fname  = "H5DatasetCreate.h5";
+public class H5FileStructure {
+    private static String fname  = "H5FileStructure.h5";
     private static long[] dims2D = { 20, 10 };
     private static long[] dims3D = { 20, 10, 5 };
 
     public static void main(String args[]) throws Exception {
+        // create the file and add groups ans dataset into the file
+        createFile();
+
+        // retrieve an instance of H5File
+        FileFormat fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);
+
+        if (fileFormat == null) {
+            System.err.println("Cannot find HDF5 FileFormat.");
+            return;
+        }
+
+        // open the file with read-only access
+        FileFormat testFile = fileFormat.createInstance(fname, FileFormat.READ);
+
+        if (testFile == null) {
+            System.err.println("Failed to open file: " + fname);
+            return;
+        }
+
+        // open the file and retrieve the file structure
+        testFile.open();
+        Group root = (Group) ((javax.swing.tree.DefaultMutableTreeNode) testFile.getRootNode()).getUserObject();
+
+        printGroup(root, "");
+
+        // close file resource
+        testFile.close();
+    }
+
+    /**
+     * Recursively print a group and its members.
+     * 
+     * @throws Exception
+     */
+    private static void printGroup(Group g, String indent) throws Exception {
+        if (g == null) return;
+
+        java.util.List members = g.getMemberList();
+
+        int n = members.size();
+        indent += "    ";
+        HObject obj = null;
+        for (int i = 0; i < n; i++) {
+            obj = (HObject) members.get(i);
+            System.out.println(indent + obj);
+            if (obj instanceof Group) {
+                printGroup((Group) obj, indent);
+            }
+        }
+    }
+
+    /**
+     * create the file and add groups and dataset into the file, which is the
+     * same as javaExample.H5DatasetCreate
+     * 
+     * @see javaExample.HDF5DatasetCreate
+     * @throws Exception
+     */
+    private static void createFile() throws Exception {
         // retrieve an instance of H5File
         FileFormat fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);
 

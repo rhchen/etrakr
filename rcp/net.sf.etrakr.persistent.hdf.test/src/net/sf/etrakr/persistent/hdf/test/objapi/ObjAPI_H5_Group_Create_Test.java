@@ -1,4 +1,4 @@
-package net.sf.etrakr.persistent.hdf.test;
+package net.sf.etrakr.persistent.hdf.test.objapi;
 
 import static org.junit.Assert.*;
 
@@ -14,10 +14,10 @@ import ncsa.hdf.object.FileFormat;
 import ncsa.hdf.object.Group;
 import ncsa.hdf.object.h5.H5File;
 
-public class H5_Group_Create_Test {
+public class ObjAPI_H5_Group_Create_Test {
 
 	//private static String fname = "H5GroupCreate.h5";
-	private static String fname = "D:\\tmp\\H5FileCreate.h5";
+	private static String fname = "D:\\tmp\\H5GroupCreate.h5";
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

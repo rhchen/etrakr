@@ -11,7 +11,7 @@
  * If you do not have access to either file, you may request a copy from     *
  * help@hdfgroup.org.                                                        *
  ****************************************************************************/
-package net.sf.etrakr.persistent.hdf.test.obj;
+package net.sf.etrakr.persistent.hdf.test.ori.objapi;
 
 
 import ncsa.hdf.hdf5lib.HdfDLLLoader;
@@ -43,7 +43,7 @@ public class H5FileCreate {
         
     	//System.loadLibrary("jhdf5");
     	
-    	//HdfLibActivator.loadDLL();
+    	//HdfDLLLoader.loadDLL();
     	
     	// Retrieve an instance of the implementing class for the HDF5 format
         FileFormat fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);

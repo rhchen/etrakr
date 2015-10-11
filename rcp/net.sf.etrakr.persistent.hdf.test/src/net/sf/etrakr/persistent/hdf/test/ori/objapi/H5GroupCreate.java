@@ -12,7 +12,7 @@
  * help@hdfgroup.org.                                                        *
  ****************************************************************************/
 
-package net.sf.etrakr.persistent.hdf.test.obj;
+package net.sf.etrakr.persistent.hdf.test.ori.objapi;
 
 import ncsa.hdf.object.FileFormat;
 import ncsa.hdf.object.Group;

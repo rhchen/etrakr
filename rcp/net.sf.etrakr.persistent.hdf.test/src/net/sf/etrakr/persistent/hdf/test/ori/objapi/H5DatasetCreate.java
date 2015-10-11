@@ -1,91 +1,68 @@
-package net.sf.etrakr.persistent.hdf.test;
+/*****************************************************************************
+ * Copyright by The HDF Group.                                               *
+ * Copyright by the Board of Trustees of the University of Illinois.         *
+ * All rights reserved.                                                      *
+ *                                                                           *
+ * This file is part of the HDF Java Products distribution.                  *
+ * The full copyright notice, including terms governing use, modification,   *
+ * and redistribution, is contained in the files COPYING and Copyright.html. *
+ * COPYING can be found at the root of the source code distribution tree.    *
+ * Or, see http://hdfgroup.org/products/hdf-java/doc/Copyright.html.         *
+ * If you do not have access to either file, you may request a copy from     *
+ * help@hdfgroup.org.                                                        *
+ ****************************************************************************/
 
-import static org.junit.Assert.*;
+package net.sf.etrakr.persistent.hdf.test.ori.objapi;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import ncsa.hdf.hdf5lib.HdfDLLLoader;
 import ncsa.hdf.object.Dataset;
 import ncsa.hdf.object.Datatype;
 import ncsa.hdf.object.FileFormat;
 import ncsa.hdf.object.Group;
 import ncsa.hdf.object.h5.H5File;
 
-public class H5_Dataset_Create_Test {
-
-	//private static String fname  = "H5DatasetCreate.h5";
-	private static String fname = "D:\\tmp\\H5FileCreate.h5";
+/**
+ * <p>
+ * Title: HDF Object Package (Java) Example
+ * </p>
+ * <p>
+ * Description: this example shows how to create HDF5 datasets using the
+ * "HDF Object Package (Java)". The example created the group structure and
+ * datasets:
+ * 
+ * <pre>
+ *     "/" (root)
+ *         integer arrays
+ *             2D 32-bit integer 20x10
+ *             3D 16-bit integer 20x10x5
+ *         float arrays
+ *             2D 64-bit double 20x10
+ *             3D 32-bit float  20x10x5
+ * </pre>
+ * 
+ * </p>
+ */
+public class H5DatasetCreate {
+    private static String fname  = "H5DatasetCreate.h5";
     private static long[] dims2D = { 20, 10 };
     private static long[] dims3D = { 20, 10, 5 };
-    
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		
-		/* Load dll before test starts*/
-		HdfDLLLoader.loadDLL();
-		
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	/**
-	 * <p>
-	 * Title: HDF Object Package (Java) Example
-	 * </p>
-	 * <p>
-	 * Description: this example shows how to create HDF5 datasets using the
-	 * "HDF Object Package (Java)". The example created the group structure and
-	 * datasets:
-	 * 
-	 * <pre>
-	 *     "/" (root)
-	 *         integer arrays
-	 *             2D 32-bit integer 20x10
-	 *             3D 16-bit integer 20x10x5
-	 *         float arrays
-	 *             2D 64-bit double 20x10
-	 *             3D 32-bit float  20x10x5
-	 * </pre>
-	 * 
-	 * </p>
-	 */
-	@Test
-	public void test() throws Exception {
-		
-		
-		// retrieve an instance of H5File
+    public static void main(String args[]) throws Exception {
+        // retrieve an instance of H5File
         FileFormat fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);
 
         if (fileFormat == null) {
             System.err.println("Cannot find HDF5 FileFormat.");
+            return;
         }
 
-        Assert.assertNotNull(fileFormat);
-		
         // create a new file with a given file name.
         H5File testFile = (H5File) fileFormat.createFile(fname, FileFormat.FILE_CREATE_DELETE);
 
         if (testFile == null) {
             System.err.println("Failed to create file:" + fname);
+            return;
         }
 
-        Assert.assertNotNull(testFile);
-        
         // open the file and retrieve the root group
         testFile.open();
         Group root = (Group) ((javax.swing.tree.DefaultMutableTreeNode) testFile.getRootNode()).getUserObject();
@@ -112,8 +89,5 @@ public class H5_Dataset_Create_Test {
 
         // close file resource
         testFile.close();
-        
-        System.out.println("exit");
-	}
-
+    }
 }
