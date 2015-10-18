@@ -6,3 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: net.sf.etrakr.persistent.hdf;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit
+Bundle-ClassPath: lib/slf4j-api-1.7.5.jar,
+ lib/slf4j-nop-1.7.5.jar,
+ .
