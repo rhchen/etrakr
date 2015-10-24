@@ -23,6 +23,9 @@ import org.junit.Test;
  * 
  */
 public class ScalarDSTest {
+	
+	private static String NAME_FILE_H5;
+	
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScalarDSTest.class);
     private static final H5File H5FILE = new H5File();
 
@@ -48,7 +51,9 @@ public class ScalarDSTest {
             ex.printStackTrace();
         }
         try {
-            H5TestFile.createTestFile(null);
+        	H5File f5 = H5TestFile.createTestFile(null);
+        	
+        	NAME_FILE_H5 = f5.getAbsolutePath();
         }
         catch (final Exception ex) {
             System.out.println("*** Unable to create HDF5 test file. " + ex);
@@ -79,7 +84,8 @@ public class ScalarDSTest {
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        testFile = (H5File) H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.READ);
+        //testFile = (H5File) H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.READ);
+        testFile = (H5File) H5FILE.open(NAME_FILE_H5, FileFormat.READ);
         assertNotNull(testFile);
         testGroup = (H5Group) testFile.get(H5TestFile.NAME_GROUP_ATTR);
         assertNotNull(testGroup);

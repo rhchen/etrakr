@@ -20,7 +20,7 @@ import ncsa.hdf.object.h5.H5File;
 public class ObjAPI_H5_File_Structure_Test {
 
 	//private static String fname  = "H5FileStructure.h5";
-	private static String fname = "D:\\tmp\\H5FileStructure.h5";
+	private static String fname = "C:\\tmp\\H5FileStructure.h5";
     private static long[] dims2D = { 20, 10 };
     private static long[] dims3D = { 20, 10, 5 };
     

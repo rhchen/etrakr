@@ -30,6 +30,9 @@ import org.junit.Test;
  * 
  */
 public class GroupTest {
+	
+	private static String NAME_FILE_H5;
+	
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GroupTest.class);
 
     private H5File testFile = null;
@@ -46,7 +49,9 @@ public class GroupTest {
             ex.printStackTrace();
         }
         try {
-            H5TestFile.createTestFile(null);
+        	H5File f5 = H5TestFile.createTestFile(null);
+        	
+        	NAME_FILE_H5 = f5.getAbsolutePath();
         }
         catch (final Exception ex) {
             System.out.println("*** Unable to create HDF5 test file. " + ex);
@@ -78,7 +83,8 @@ public class GroupTest {
             ex.printStackTrace();
         }
         H5File H5FILE = new H5File();
-        testFile = (H5File) H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        //testFile = (H5File) H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        testFile = (H5File) H5FILE.open(NAME_FILE_H5, FileFormat.WRITE);
         assertNotNull(testFile);
         testGroup = (Group) testFile.get(H5TestFile.NAME_GROUP);
         assertNotNull(testGroup);

@@ -26,6 +26,9 @@ import org.junit.Test;
  * 
  */
 public class MetadataTest {
+	
+	private static String NAME_FILE_H5;
+	
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MetadataTest.class);
     private static final H5File H5FILE = new H5File();
 
@@ -37,7 +40,9 @@ public class MetadataTest {
     @BeforeClass
     public static void createFile() throws Exception {
         try {
-            H5TestFile.createTestFile(null);
+        	H5File f5 = H5TestFile.createTestFile(null);
+        	
+        	NAME_FILE_H5 = f5.getAbsolutePath();
         }
         catch (final Exception ex) {
             System.out.println("*** Unable to create HDF5 test file. " + ex);
@@ -60,7 +65,8 @@ public class MetadataTest {
 
     @Before
     public void openFiles() throws Exception {
-        testFile = (H5File) H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        //testFile = (H5File) H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        testFile = (H5File) H5FILE.open(NAME_FILE_H5, FileFormat.WRITE);
         assertNotNull(testFile);
         testGroup = (H5Group) testFile.get(H5TestFile.NAME_GROUP_ATTR);
         assertNotNull(testGroup);

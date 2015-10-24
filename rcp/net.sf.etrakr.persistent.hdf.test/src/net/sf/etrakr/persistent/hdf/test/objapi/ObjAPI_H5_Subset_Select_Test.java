@@ -19,7 +19,7 @@ import ncsa.hdf.object.h5.H5File;
 public class ObjAPI_H5_Subset_Select_Test {
 
 	//private static String fname  = "H5SubsetSelect.h5";
-	private static String fname = "D:\\tmp\\H5SubsetSelect.h5";
+	private static String fname = "C:\\tmp\\H5SubsetSelect.h5";
     private static long[] dims2D = { 20, 10 };
     
 	@BeforeClass

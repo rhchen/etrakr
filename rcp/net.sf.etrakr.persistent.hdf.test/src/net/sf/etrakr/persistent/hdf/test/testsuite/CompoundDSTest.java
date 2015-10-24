@@ -31,6 +31,8 @@ public class CompoundDSTest {
     private H5File testFile = null;
     private CompoundDS testDS = null;
 
+    private static String NAME_FILE_H5;
+    
     @BeforeClass
     public static void createFile() throws Exception {
         try {
@@ -42,7 +44,9 @@ public class CompoundDSTest {
             ex.printStackTrace();
         }
         try {
-            H5TestFile.createTestFile(null);
+        	H5File f5 = H5TestFile.createTestFile(null);
+        	
+        	NAME_FILE_H5 = f5.getAbsolutePath();
         }
         catch (final Exception ex) {
             System.out.println("*** Unable to create HDF5 test file. " + ex);
@@ -73,7 +77,8 @@ public class CompoundDSTest {
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        testFile = (H5File) H5FILE.createInstance(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        //testFile = (H5File) H5FILE.createInstance(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        testFile = (H5File) H5FILE.createInstance(NAME_FILE_H5, FileFormat.WRITE);
         assertNotNull(testFile);
         testDS = (CompoundDS) testFile.get(H5TestFile.NAME_DATASET_COMPOUND);
         assertNotNull(testDS);

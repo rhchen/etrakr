@@ -27,6 +27,9 @@ import org.junit.Test;
  * 
  */
 public class FileFormatTest {
+	
+	private static String NAME_FILE_H5;
+	
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileFormatTest.class);
     private static final H5File H5FILE = new H5File();
 
@@ -43,7 +46,9 @@ public class FileFormatTest {
             ex.printStackTrace();
         }
         try {
-            H5TestFile.createTestFile(null);
+        	H5File f5 = H5TestFile.createTestFile(null);
+        	
+        	NAME_FILE_H5 = f5.getAbsolutePath();
         }
         catch (final Exception ex) {
             System.out.println("*** Unable to create HDF5 test file. " + ex);
@@ -74,7 +79,8 @@ public class FileFormatTest {
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        testFile = H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        //testFile = H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        testFile = H5FILE.open(NAME_FILE_H5, FileFormat.WRITE);
         assertNotNull(testFile);
         testFile.open();
     }
@@ -235,7 +241,8 @@ public class FileFormatTest {
         assertNull(f);
 
         try {
-            f = (H5File) FileFormat.getInstance(H5TestFile.NAME_FILE_H5);
+            //f = (H5File) FileFormat.getInstance(H5TestFile.NAME_FILE_H5);
+            f = (H5File) FileFormat.getInstance(NAME_FILE_H5);
         }
         catch (Exception ex) {
             fail("getInstance() failed" + ex.getMessage());

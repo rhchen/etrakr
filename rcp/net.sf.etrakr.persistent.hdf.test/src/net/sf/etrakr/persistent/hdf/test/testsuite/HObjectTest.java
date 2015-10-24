@@ -23,6 +23,9 @@ import org.junit.Test;
  * 
  */
 public class HObjectTest {
+	
+	private static String NAME_FILE_H5;
+	
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HObjectTest.class);
     private static final H5File H5FILE = new H5File();
     private static final String GNAME = H5TestFile.NAME_GROUP;
@@ -42,7 +45,9 @@ public class HObjectTest {
             ex.printStackTrace();
         }
         try {
-            H5TestFile.createTestFile(null);
+        	H5File f5 = H5TestFile.createTestFile(null);
+        	
+        	NAME_FILE_H5 = f5.getAbsolutePath();
         }
         catch (final Exception ex) {
             System.out.println("*** Unable to create HDF5 test file. " + ex);
@@ -73,7 +78,8 @@ public class HObjectTest {
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        testFile = new H5File(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        //testFile = new H5File(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        testFile = new H5File(NAME_FILE_H5, FileFormat.WRITE);
         assertNotNull(testFile);
         testObj = testFile.get(GNAME);
         assertNotNull(testObj);
@@ -112,7 +118,8 @@ public class HObjectTest {
     public void testGetFile() {
         log.debug("testGetFile");
         String fullFileName = testObj.getFile();
-        if (!fullFileName.endsWith(H5TestFile.NAME_FILE_H5)) {
+        //if (!fullFileName.endsWith(H5TestFile.NAME_FILE_H5)) {
+        if (!fullFileName.endsWith(NAME_FILE_H5)) {
             fail("Wrong File");
         }
         int nObjs = 0;

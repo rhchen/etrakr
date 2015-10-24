@@ -17,7 +17,7 @@ import ncsa.hdf.object.h5.H5File;
 public class ObjAPI_H5_Group_Create_Test {
 
 	//private static String fname = "H5GroupCreate.h5";
-	private static String fname = "D:\\tmp\\H5GroupCreate.h5";
+	private static String fname = "C:\\tmp\\H5GroupCreate.h5";
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

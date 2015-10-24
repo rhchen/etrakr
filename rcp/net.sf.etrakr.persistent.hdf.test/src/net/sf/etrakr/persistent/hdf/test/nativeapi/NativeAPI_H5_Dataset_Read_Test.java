@@ -17,7 +17,7 @@ import net.sf.etrakr.persistent.hdf.test.ori.nativeapi.HDF5DatasetCreate;
 public class NativeAPI_H5_Dataset_Read_Test {
 
 	//private static String fname  = "HDF5DatasetRead.h5";
-	private static String fname = "D:\\tmp\\HDF5DatasetRead.h5";
+	private static String fname = "C:\\tmp\\HDF5DatasetRead.h5";
     private static String dsname  = "2D 32-bit integer 20x10";
     private static long[] dims2D = { 20, 10 };
     

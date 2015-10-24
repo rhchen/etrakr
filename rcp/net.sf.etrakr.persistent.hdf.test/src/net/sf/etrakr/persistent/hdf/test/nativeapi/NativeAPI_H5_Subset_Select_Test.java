@@ -16,7 +16,7 @@ import ncsa.hdf.hdf5lib.HdfDLLLoader;
 public class NativeAPI_H5_Subset_Select_Test {
 
 	//private static String fname  = "HDF5SubsetSelect.h5";
-	private static String fname = "D:\\tmp\\HDF5SubsetSelect.h5";
+	private static String fname = "C:\\tmp\\HDF5SubsetSelect.h5";
     private static String dsname  = "2D 32-bit integer 20x10";
     private static long[] dims2D = { 20, 10 };
     

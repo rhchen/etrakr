@@ -22,7 +22,7 @@ import ncsa.hdf.object.h5.H5File;
 public class ObjAPI_H5_Attribute_Create_Test {
 
 	//private static String fname  = "H5AttributeCreate.h5";
-	private static String fname = "D:\\tmp\\H5AttributeCreate.h5";
+	private static String fname = "C:\\tmp\\H5AttributeCreate.h5";
     private static String dsname  = "2D 32-bit integer 20x10";
     private static long[] dims2D = { 20, 10 };
     

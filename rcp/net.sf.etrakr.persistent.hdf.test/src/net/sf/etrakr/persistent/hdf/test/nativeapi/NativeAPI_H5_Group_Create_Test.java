@@ -16,7 +16,7 @@ import ncsa.hdf.hdf5lib.HdfDLLLoader;
 public class NativeAPI_H5_Group_Create_Test {
 
 	//private static String fname = "HDF5GroupCreate.h5";
-	private static String fname = "D:\\tmp\\HDF5GroupCreate.h5";
+	private static String fname = "C:\\tmp\\HDF5GroupCreate.h5";
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

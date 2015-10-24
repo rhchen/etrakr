@@ -35,6 +35,8 @@ public class DataFormatTest {
     private H5File testFile = null;
     private DataFormat testGroup = null;
 
+    private static String NAME_FILE_H5;
+    
     @BeforeClass
     public static void createFile() throws Exception {
         try {
@@ -46,7 +48,9 @@ public class DataFormatTest {
             ex.printStackTrace();
         }
         try {
-            H5TestFile.createTestFile(null);
+        	H5File f5 = H5TestFile.createTestFile(null);
+        	
+        	NAME_FILE_H5 = f5.getAbsolutePath();
         }
         catch (final Exception ex) {
             System.out.println("*** Unable to create HDF5 test file. " + ex);
@@ -77,7 +81,8 @@ public class DataFormatTest {
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        testFile = (H5File) H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        //testFile = (H5File) H5FILE.open(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        testFile = (H5File) H5FILE.open(NAME_FILE_H5, FileFormat.WRITE);
         assertNotNull(testFile);
         testGroup = testFile.get(H5TestFile.NAME_GROUP_ATTR);
         assertNotNull(testGroup);
@@ -112,7 +117,8 @@ public class DataFormatTest {
     @Test
     public void testGetFile() {
         log.debug("testGetFile");
-        if (!testGroup.getFile().equals(H5TestFile.NAME_FILE_H5)) {
+        //if (!testGroup.getFile().equals(H5TestFile.NAME_FILE_H5)) {
+        if (!testGroup.getFile().equals(NAME_FILE_H5)) {
             fail("getFile() fails.");
         }
         int nObjs = 0;

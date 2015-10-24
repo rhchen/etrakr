@@ -17,7 +17,7 @@ import ncsa.hdf.hdf5lib.structs.H5G_info_t;
 public class NativeAPI_H5_File_Structure_Test {
 
 	//private static String fname  = "HDF5FileStructure.h5";
-	private static String fname = "D:\\tmp\\HDF5FileStructure.h5";
+	private static String fname = "C:\\tmp\\HDF5FileStructure.h5";
     private static long[] dims2D = { 20, 10 };
     private static long[] dims3D = { 20, 10, 5 };
     

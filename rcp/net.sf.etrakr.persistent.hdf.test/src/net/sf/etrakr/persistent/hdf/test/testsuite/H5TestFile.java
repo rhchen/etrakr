@@ -1,6 +1,9 @@
 package net.sf.etrakr.persistent.hdf.test.testsuite;
 
+import java.io.File;
 import java.util.Vector;
+
+import org.junit.Rule;
 
 import ncsa.hdf.hdf5lib.HDF5Constants;
 import ncsa.hdf.object.Attribute;
@@ -10,6 +13,7 @@ import ncsa.hdf.object.FileFormat;
 import ncsa.hdf.object.Group;
 import ncsa.hdf.object.h5.H5Datatype;
 import ncsa.hdf.object.h5.H5File;
+import net.sf.etrakr.persistent.hdf.test.ResourceFile;
 
 /**
  * Creates an HDF5 file for unit tests.
@@ -20,7 +24,9 @@ import ncsa.hdf.object.h5.H5File;
 public class H5TestFile {
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(H5TestFile.class);
     
-    public final static String NAME_FILE_H5 = "C:\\tmp\\H5FileCreate.h5";
+    private final static String NAME_FILE_H5 = "/target/h5/TestHDF5.h5";
+    public final static String _NAME_FILE_H5 = "/target/h5/TestHDF5.h5";
+    //public final static String _NAME_FILE_H5 = "C:\\tmp\\H5FileCreate.h5";
     //public final static String NAME_FILE_H5 = "TestHDF5.h5";
     public final static String NAME_GROUP = "/g0";
     public final static String NAME_GROUP_ATTR = "/g0_attr";
@@ -92,6 +98,18 @@ public class H5TestFile {
             Datatype.CLASS_INTEGER, DATATYPE_SIZE, -1, -1), new long[] { 10 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9,
             10 });
 
+	public static final H5File createTestFile(String fileName) throws Exception {
+
+		if ((fileName == null) || (fileName.length() < 1)) {
+			fileName = NAME_FILE_H5;
+		}
+
+		ResourceFile res = new ResourceFile(fileName);
+
+		String f = res.getFile().getAbsolutePath();
+		
+		return _createTestFile(f);
+	}
     /**
      * Creates an HDF5 test file.
      * <p>
@@ -114,7 +132,7 @@ public class H5TestFile {
      * 
      * @throws Exception
      */
-    public static final H5File createTestFile(String fileName) throws Exception {
+    public static final H5File _createTestFile(String fileName) throws Exception {
         log.debug("createTestFile {}", fileName);
         H5File file = null;
         Group g0, g1, g00;

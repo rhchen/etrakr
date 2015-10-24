@@ -21,6 +21,9 @@ import org.junit.Test;
  * 
  */
 public class DatatypeTest {
+	
+	private static String NAME_FILE_H5;
+	
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DatatypeTest.class);
 
     private Datatype[] baseTypes = null;

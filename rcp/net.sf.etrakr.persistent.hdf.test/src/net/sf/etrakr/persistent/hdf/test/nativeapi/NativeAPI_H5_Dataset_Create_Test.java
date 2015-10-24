@@ -16,7 +16,7 @@ import ncsa.hdf.hdf5lib.HdfDLLLoader;
 public class NativeAPI_H5_Dataset_Create_Test {
 
 	//private static String fname  = "HDF5DatasetCreate.h5";
-	private static String fname = "D:\\tmp\\HDF5DatasetCreate.h5";
+	private static String fname = "C:\\tmp\\HDF5DatasetCreate.h5";
     private static long[] dims2D = { 20, 10 };
     private static long[] dims3D = { 20, 10, 5 };
     

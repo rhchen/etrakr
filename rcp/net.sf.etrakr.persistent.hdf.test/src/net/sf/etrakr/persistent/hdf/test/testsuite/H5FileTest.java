@@ -161,7 +161,9 @@ public class H5FileTest {
         typeFloat = new H5Datatype(Datatype.CLASS_FLOAT, H5TestFile.DATATYPE_SIZE, -1, -1);
         typeStr = new H5Datatype(Datatype.CLASS_STRING, H5TestFile.STR_LEN, -1, -1);
 
-        testFile = new H5File(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        File file = new File(".", H5TestFile._NAME_FILE_H5);
+        
+        testFile = new H5File(file.getAbsolutePath(), FileFormat.WRITE);
         assertNotNull(testFile);
 
         testFile.open();
@@ -205,7 +207,9 @@ public class H5FileTest {
         for (int i = 0; i < NLOOPS; i++) {
             int nObjs = 0;
             int fid = -1;
-            final H5File file = new H5File(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+            
+            File f = new File(".", H5TestFile._NAME_FILE_H5);
+            final H5File file = new H5File(f.getAbsolutePath(), FileFormat.WRITE);
 
             try {
                 fid = file.open(); // open the full tree
@@ -695,7 +699,9 @@ public class H5FileTest {
     @Test
     public void testIsThisTypeString() {
         log.debug("testIsThisTypeString");
-        assertTrue(H5FILE.isThisType(H5TestFile.NAME_FILE_H5));
+        
+        File f = new File(".", H5TestFile._NAME_FILE_H5);
+        assertTrue(H5FILE.isThisType(f.getAbsolutePath()));
         assertFalse(H5FILE.isThisType("No such file"));
         int nObjs = 0;
         try {
@@ -1199,7 +1205,8 @@ public class H5FileTest {
         int plist = -1;
         ;
 
-        final H5File file = new H5File(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        File f = new File(".", H5TestFile._NAME_FILE_H5);
+        final H5File file = new H5File(f.getAbsolutePath(), FileFormat.WRITE);
 
         try {
             plist = H5.H5Pcreate(HDF5Constants.H5P_FILE_ACCESS);
@@ -1438,7 +1445,8 @@ public class H5FileTest {
         int low = HDF5Constants.H5F_LIBVER_LATEST;
         int high = HDF5Constants.H5F_LIBVER_LATEST;
 
-        final H5File file = new H5File(H5TestFile.NAME_FILE_H5, FileFormat.WRITE);
+        File f = new File(".", H5TestFile._NAME_FILE_H5);
+        final H5File file = new H5File(f.getAbsolutePath(), FileFormat.WRITE);
 
         try {
             file.open();
