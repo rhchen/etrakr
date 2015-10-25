@@ -3,7 +3,6 @@
 
 <product name="net.sf.etrakr" uid="net.sf.etrakr" id="net.sf.etrakr.application.product" application="net.sf.etrakr.application.etrakr" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -30,7 +29,6 @@
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
       <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6</linux>
@@ -60,7 +58,6 @@
       <feature id="net.sf.etrakr.lib.feature"/>
       <feature id="org.eclipse.linuxtools.dataviewers.feature"/>
       <feature id="org.eclipse.remote"/>
-      <feature id="org.eclipse.tracecompass.tmf.remote"/>
    </features>
 
    <configurations>

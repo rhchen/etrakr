@@ -30,6 +30,9 @@
               	<plugin id="org.swtchart"/>
 				<plugin id="org.eclipse.ui.trace"/>
 				<plugin id="org.eclipse.jdt.annotation"/>
+				<plugin id="org.eclipse.tracecompass.common.core"/>
+				<plugin id="org.eclipse.tracecompass.tmf.remote.ui"/>
+				<plugin id="org.eclipse.tracecompass.tmf.remote.core"/>
               </excludes>
             </configuration>
           </execution>
