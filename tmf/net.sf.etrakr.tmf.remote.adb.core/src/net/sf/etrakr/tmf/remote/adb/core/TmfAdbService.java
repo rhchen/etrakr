@@ -614,7 +614,7 @@ public class TmfAdbService {
         return new CommandResult(result, output, error);
     }
 
-    private static @NonNull String[] splitLines(String output) {
+    private static String[] splitLines(String output) {
         return checkNotNull(output.split("\\r?\\n")); //$NON-NLS-1$
     }
 	

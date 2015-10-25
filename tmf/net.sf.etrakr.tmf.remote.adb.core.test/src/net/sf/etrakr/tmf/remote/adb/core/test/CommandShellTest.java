@@ -48,9 +48,9 @@ public class CommandShellTest {
 
     private static final boolean IS_NOT_UNIX = Platform.getOS().equals(Platform.OS_WIN32);
 
-    private static final @NonNull String[] CMD_INPUT_UNIX = { "cmd" , "/C", "dir", "/W" };
-    private static final @NonNull String[] CMD_ERROR_INPUT_UNIX = { "dir", "/Z" };
-    private static final @NonNull String[] CMD_UNKNOWN_COMMAND_UNIX = { "blablablabla" };
+    private static final String[] CMD_INPUT_UNIX = { "cmd" , "/C", "dir", "/W" };
+    private static final String[] CMD_ERROR_INPUT_UNIX = { "dir", "/Z" };
+    private static final String[] CMD_UNKNOWN_COMMAND_UNIX = { "blablablabla" };
 
     private static final IRemoteConnection LOCAL_CONNECTION = TmfRemoteConnectionFactory.getLocalConnection();
     private static final RemoteSystemProxy LOCAL_PROXY = new RemoteSystemProxy(checkNotNull(LOCAL_CONNECTION));
@@ -147,7 +147,7 @@ public class CommandShellTest {
         return new CommandResult(result, output, error);
     }
 
-    private static @NonNull String[] splitLines(String output) {
+    private static String[] splitLines(String output) {
         return checkNotNull(output.split("\\r?\\n")); //$NON-NLS-1$
     }
 }

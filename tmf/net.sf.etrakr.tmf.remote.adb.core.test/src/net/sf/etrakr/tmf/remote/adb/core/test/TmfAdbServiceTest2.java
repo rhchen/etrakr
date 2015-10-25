@@ -32,7 +32,7 @@ import net.sf.etrakr.tmf.remote.adb.core.systrace.SystraceTag;
 
 public class TmfAdbServiceTest2 {
 
-	private static final @NonNull String[] CMD_INPUT_ADB = { "cat","/sys/kernel/debug/tracing/trace_pipe"};
+	private static final String[] CMD_INPUT_ADB = { "cat","/sys/kernel/debug/tracing/trace_pipe"};
 	//private static final @NonNull String[] CMD_INPUT_ADB = { "cat","/sys/kernel/debug/tracing/trace"};
 	
 	@BeforeClass

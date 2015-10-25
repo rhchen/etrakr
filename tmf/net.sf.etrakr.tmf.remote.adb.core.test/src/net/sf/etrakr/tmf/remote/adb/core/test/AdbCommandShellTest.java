@@ -59,7 +59,7 @@ import net.sf.etrakr.tmf.remote.adb.core.TmfAdbConnectionFactory;
  */
 public class AdbCommandShellTest {
 
-    private static final @NonNull String[] CMD_INPUT_ADB = { "printenv"};
+    private static final String[] CMD_INPUT_ADB = { "printenv"};
     
     @Test
     public void _testPrintenv()
@@ -114,7 +114,7 @@ public class AdbCommandShellTest {
         return new CommandResult(result, output, error);
     }
 
-    private static @NonNull String[] splitLines(String output) {
+    private static String[] splitLines(String output) {
         return checkNotNull(output.split("\\r?\\n")); //$NON-NLS-1$
     }
     
