@@ -21,6 +21,7 @@
           <configuration>
             <useUIHarness>false</useUIHarness>
             <useUIThread>false</useUIThread>
+            <testFailureIgnore>false</testFailureIgnore>
           </configuration>
       </plugin>
 	</plugins>
