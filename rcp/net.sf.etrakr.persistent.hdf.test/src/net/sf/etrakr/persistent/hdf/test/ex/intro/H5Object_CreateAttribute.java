@@ -10,12 +10,17 @@ import ncsa.hdf.object.h5.H5Datatype;
 import ncsa.hdf.object.h5.H5File;
 import ncsa.hdf.object.h5.H5Group;
 import ncsa.hdf.object.h5.H5ScalarDS;
+import net.sf.etrakr.persistent.hdf.test.ResourceFile;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,7 +29,8 @@ import org.junit.Test;
 
 public class H5Object_CreateAttribute {
 	//private static String FILENAME = "H5Object_CreateAttribute.h5";
-	private static String FILENAME = "D:\\tmp\\H5Object_CreateAttribute.h5";
+	//private static String FILENAME = "D:\\tmp\\H5Object_CreateAttribute.h5";
+	private static String FILENAME = "/target/h51/H5Object_CreateAttribute.h5";
 	private static String DATASETNAME = "dset";
     private static final int DIM_X = 4;
     private static final int DIM_Y = 6;
@@ -84,7 +90,13 @@ public class H5Object_CreateAttribute {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws IOException {
+		
+		ResourceFile res = new ResourceFile(FILENAME);
+		File pf =  res.getFile().getParentFile();
+    	if(!pf.exists()) pf.mkdirs();
+    	FILENAME = res.getFile().getAbsolutePath();
+    	
 		H5Object_CreateAttribute.CreateDatasetAttribute();
 	}
 }
