@@ -106,6 +106,11 @@ public class H5TestFile {
 
 		ResourceFile res = new ResourceFile(fileName);
 
+		
+		File pf =  res.getFile().getParentFile();
+    	
+    	if(!pf.exists()) pf.mkdirs();
+    	
 		String f = res.getFile().getAbsolutePath();
 		
 		return _createTestFile(f);

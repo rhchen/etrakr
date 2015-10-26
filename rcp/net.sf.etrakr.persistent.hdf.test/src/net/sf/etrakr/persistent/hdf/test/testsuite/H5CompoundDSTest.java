@@ -122,6 +122,7 @@ public class H5CompoundDSTest {
         }
         catch (final Exception ex) {
             System.out.println("*** Unable to create HDF5 test file. " + ex);
+            ex.printStackTrace();
             System.exit(-1);
         }
     }
