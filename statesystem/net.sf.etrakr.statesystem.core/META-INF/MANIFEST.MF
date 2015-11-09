@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: StateSystem Core
+Bundle-SymbolicName: net.sf.etrakr.statesystem.core
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.sf.etrakr.statesystem.core.StateystemActivator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.tracecompass.statesystem.core,
+ org.eclipse.tracecompass.common.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

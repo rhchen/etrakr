@@ -136,6 +136,7 @@
     <module>rcp</module>
     <module>tmf</module>
 	<module>remote</module>
+	<module>statesystem</module>
   </modules>
 
     <build>
