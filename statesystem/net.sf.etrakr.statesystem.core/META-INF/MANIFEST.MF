@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.sf.etrakr.statesystem.core.StateystemActivator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.tracecompass.statesystem.core,
- org.eclipse.tracecompass.common.core
+ org.eclipse.tracecompass.common.core,
+ org.eclipse.jdt.annotation
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

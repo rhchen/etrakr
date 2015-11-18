@@ -3,6 +3,8 @@ package net.sf.etrakr.persistent.hdf;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import ncsa.hdf.hdf5lib.HdfDLLLoader;
+
 public class HdfActivator implements BundleActivator {
 
 	private static BundleContext context;
@@ -17,6 +19,9 @@ public class HdfActivator implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		HdfActivator.context = bundleContext;
+		
+		/* Load platform depend dll */
+		HdfDLLLoader.loadDLL();
 	}
 
 	/*

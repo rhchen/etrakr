@@ -369,4 +369,18 @@ public class FtraceService implements IFtraceService {
 		/* +1 to return to next line start */
 		return positionStart;
 	}
+
+	
+	@Override
+	public void serialize() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public IFtraceService deserialize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

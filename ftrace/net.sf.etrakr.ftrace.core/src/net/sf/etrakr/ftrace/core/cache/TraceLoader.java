@@ -193,15 +193,19 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 	
 		public short cpuId    = 0;
 		public long timeStamp = 0L;
+		public int time_prefix = 0;
+		public int time_postfix = 0;
 		public String title   = "undefine";
 		public String suffStr = "undefine";
 		
-		public Head(final short cpuId, final long timeStamp, final String title, final String suffStr){
+		public Head(final short cpuId, final long timeStamp, final String title, final String suffStr, int time_prefix, int time_postfix){
 			
-			this.cpuId     = cpuId;
-			this.timeStamp = timeStamp;
-			this.title     = title;
-			this.suffStr   = suffStr;
+			this.cpuId        = cpuId;
+			this.timeStamp    = timeStamp;
+			this.title        = title;
+			this.suffStr      = suffStr;
+			this.time_prefix  = time_prefix;
+			this.time_postfix = time_postfix;
 		}
 	}
 	
@@ -210,8 +214,12 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(line);
 		
-		short cpuId    = 0;
-		long timeStamp = 0L;
+		short cpuId      = 0;
+		long timeStamp   = 0L;
+		
+		int time_prefix  = 0;
+		int time_postfix = 0;
+		
 		String title   = "undefine";
 		String suffStr = "undefine";
 		
@@ -233,7 +241,15 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 				if(sn.length() == 4) sn = scan.next();
 				
 				sn = StringUtil.remove(sn, ":");
+				
+				String[] sa = StringUtil.split(sn, ".");
+				time_prefix = StringUtil.parseInt(sa[0]);
+				time_postfix = StringUtil.parseInt(sa[1]);
+				
 				sn = StringUtil.remove(sn, ".");
+				/*
+				 * Fix me, RH, cross 1000L should be reviewed
+				 */
 				timeStamp =Long.parseLong(sn) * 1000L;
 				
 				/* Get Event Type Ex. sched_wakeup: */
@@ -253,7 +269,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 			
 		}//while
 		
-		return new Head(cpuId, timeStamp, title, suffStr);
+		return new Head(cpuId, timeStamp, title, suffStr, time_prefix, time_postfix);
 	}
 	
 	private final ITmfEvent handleSchedleProcessFreeEvent(String line){

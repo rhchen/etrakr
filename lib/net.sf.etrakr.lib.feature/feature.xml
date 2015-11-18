@@ -18,6 +18,9 @@
 
    <requires>
       <import plugin="com.fasterxml.jackson" version="2.4.3" match="greaterOrEqual"/>
+      <import plugin="com.google.guava"/>
+      <import plugin="ncsa.hdf.object" version="2.11.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime"/>
    </requires>
 
    <plugin
@@ -74,5 +77,23 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="ncsa.hdf.hdf5lib.win32.x86_64"
+         os="win32"
+         ws="win32"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="ncsa.hdf.object"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

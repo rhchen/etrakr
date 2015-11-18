@@ -18,4 +18,8 @@ public interface IFtraceService {
 	public BiMap<Long, Integer> getRankTable(URI fileUri);
 	
 	public ITmfEvent getTmfEvent(URI fileUri, long rank) throws ExecutionException;
+	
+	public void serialize();
+	
+	public IFtraceService deserialize();
 }

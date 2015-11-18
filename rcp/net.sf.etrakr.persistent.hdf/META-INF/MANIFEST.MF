@@ -5,6 +5,6 @@ Bundle-SymbolicName: net.sf.etrakr.persistent.hdf
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.sf.etrakr.persistent.hdf.HdfActivator
 Require-Bundle: org.eclipse.core.runtime,
- ncsa.hdf.object;bundle-version="2.11.0"
+ ncsa.hdf.object
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

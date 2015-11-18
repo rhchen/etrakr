@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
 
 import net.sf.etrakr.ftrace.core.service.IFtraceService;
 import net.sf.etrakr.ftrace.core.service.impl.FtraceService;
@@ -41,7 +42,7 @@ public class DummyTest {
 	}
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws IOException, ExecutionException {
 		
 		IFtraceService service = new FtraceService();
 		
@@ -65,6 +66,8 @@ public class DummyTest {
 			
 			System.out.println("IFtraceService entryData = "+ entryData);
 		}
+		
+		service.getTmfEvent(_file.toURI(), 0);
 	}
 	
 }
