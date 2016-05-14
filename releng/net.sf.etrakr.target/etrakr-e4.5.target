@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="etrakr-e4.5" sequenceNumber="56">
+<?pde version="3.8"?><target name="etrakr-e4.5" sequenceNumber="57">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.platform.ide" version="0.0.0"/>
@@ -48,11 +48,11 @@
 <repository location="http://download.eclipse.org/tools/ptp/builds/remote/2.0.0/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.tracecompass.tmf.pcap.feature.group" version="1.1.0.201509141028"/>
-<unit id="org.eclipse.tracecompass.lttng2.kernel.feature.group" version="1.1.0.201509141028"/>
-<unit id="org.eclipse.tracecompass.gdbtrace.feature.group" version="1.1.0.201509141028"/>
-<unit id="org.eclipse.tracecompass.lttng2.ust.feature.group" version="1.1.0.201509141028"/>
-<unit id="org.eclipse.tracecompass.btf.feature.group" version="1.1.0.201509141028"/>
+<unit id="org.eclipse.tracecompass.tmf.pcap.feature.group" version="1.2.1.201603240337"/>
+<unit id="org.eclipse.tracecompass.btf.feature.group" version="1.2.1.201603240337"/>
+<unit id="org.eclipse.tracecompass.lttng2.ust.feature.group" version="1.2.1.201603240337"/>
+<unit id="org.eclipse.tracecompass.gdbtrace.feature.group" version="1.2.1.201603240337"/>
+<unit id="org.eclipse.tracecompass.lttng2.kernel.feature.group" version="1.2.1.201603240337"/>
 <repository location="http://download.eclipse.org/tracecompass/stable/repository/"/>
 </location>
 </locations>
